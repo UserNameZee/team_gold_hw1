@@ -17,7 +17,7 @@ public class User{
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private String username;
-    private String password;
+    private String pass_hash;
 
 
     public Integer getId() {
@@ -36,11 +36,11 @@ public class User{
         this.username = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPass_hash() {
+        return pass_hash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPass_hash(String pass_hash) {
+        this.pass_hash = pass_hash;
     }
 }
