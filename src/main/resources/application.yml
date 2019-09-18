@@ -1,14 +1,6 @@
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/stratego
+    url: jdbc:mysql://localhost:3306/
     username: root
     password: 123456
-<<<<<<< HEAD
-=======
-
-  #data.mongodb:
-  #  host: localhost
-  #  port: 27017
-  #  database: stratego
->>>>>>> 39f310a30d0fff4265d2d9cc8c233204d1652259
