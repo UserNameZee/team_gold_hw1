@@ -1,4 +1,10 @@
 spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
   datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://cs-goldteam-server.mysql.database.azure.com:3306/stratego
