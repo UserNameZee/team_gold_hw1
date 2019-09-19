@@ -1,49 +1,45 @@
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<body class="w3-content" style="max-width:1300px">
+<link rel="stylesheet" type="text/css" href="style.css">
 
-<!-- First Grid: Logo & About -->
-<div class="w3-row">
-  <div class="w3-half w3-black w3-container w3-center" style="height:700px">
-    <div class="w3-padding-64">
-      <h1>User Info</h1>
-    </div>
-    <div class="w3-padding-64">
-      <a href="#" class="w3-button w3-black w3-block w3-hover-blue-grey w3-padding-16"></a>
-      <a href="#work" class="w3-button w3-black w3-block w3-hover-teal w3-padding-16">User Name</a>
-      <a href="#work" class="w3-button w3-black w3-block w3-hover-dark-grey w3-padding-16">Start New Game</a>
-      <a href="#contact" class="w3-button w3-black w3-block w3-hover-brown w3-padding-16">Continue</a>
+  <div class="sidenav">
+    <a href="#">User Info</a>
+    <p ></p>
+    <a href="game.html">Start New Game</a>
+    <a href="game.html">Continue</a>
+    <p ></p>
+  </div>
+
+<body>
+  <div class = "content">
+    <h1 class="info-title"> Game History</h1>
+  <table id="js/info.js" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+      <th class="th-sm">Time
+      </th>
+      <th class="th-sm">Game Info
+      </th>
+    </tr>
+    </thead>
+    <tbody class="info-center">
+    <tr>
+      <td>time</td>
+      <td>Some Game info</td>
+    </tr>
+    <tr>
+      <td>time</td>
+      <td>Some Game info</td>
+    </tr>
+    </tbody>
+  </table>
+    <div class="info-right">
+    <button class="btn prev">prev</button>
+    <button class="btn next">next</button>
     </div>
   </div>
-    <div class="w3-half w3-indigo w3-container" style="min-height:800px">
-      <div class="w3-padding-64 w3-center">
-        <h2>Game History</h2>
-        <div class="w3-container w3-responsive">
-          <table class="w3-table">
-            <tr>
-                <th>Time</th>
-            </tr>
-            <tr class="w3-white">
-                <th>Time</th>
-            </tr>
-            <tr class="w3-white">
-                <th>Time</th>
-            </tr>
-            <tr class="w3-white">
-                <th>Time</th>
-            </tr>
-          </table>
-        </div>
-        <button type="submit" class="w3-button w3-teal w3-left">Prev</button>
-        <button type="submit" class="w3-button w3-teal w3-right">Next</button>
-      </div>
-    </div>
 </div>
-
-
 </body>
 </html>
