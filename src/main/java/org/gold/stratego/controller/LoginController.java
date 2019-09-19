@@ -42,13 +42,16 @@ public class LoginController{
      * @return
      */
     @PostMapping("/login")
-    public LoginInfo login(@RequestParam("userName") String userName,
-                      @RequestParam("password") String password){
+    public String login(@RequestParam("userName") String userName,
+                      @RequestParam("password") String password,
+                           Model model){
         LoginInfo info = new LoginInfo();
         info.setUsername(userName);
         info.setPassword(password);
         info.setStatus(true);
-        return info;
-
+        model.addAttribute(info);
+        model.addAttribute("information", info);
+        model.addAttribute("555", "99999");
+        return "redirect:info.html";
     }
 }

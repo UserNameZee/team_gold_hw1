@@ -12,10 +12,12 @@
             console.log("111")
 
             $.post("/login", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
-                console.log("3333")
-                if(result.userName){
-                    window.location.href="info.html"
-                }
+                // console.log("3333")
+                // if(result.userName){
+                //     window.location.href="info.html"
+                // }
+                console.log("555")
+                window.location.href="info.html"
             })
         })
     })
