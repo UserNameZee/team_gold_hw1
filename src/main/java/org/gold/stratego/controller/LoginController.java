@@ -1,11 +1,17 @@
 package org.gold.stratego.controller;
 
+
+import org.gold.stratego.database.entities.User;
 import org.gold.stratego.model.LoginInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller for /login based on below tutorial for form submission:
@@ -36,10 +42,13 @@ public class LoginController{
      * @return
      */
     @PostMapping("/login")
-    public String loginPost(@ModelAttribute LoginInfo loginInfo){
-
-        //return to login screen on login failure
-        return "login.html";
+    public LoginInfo login(@RequestParam("userName") String userName,
+                      @RequestParam("password") String password){
+        LoginInfo info = new LoginInfo();
+        info.setUsername(userName);
+        info.setPassword(password);
+        info.setStatus(true);
+        return info;
 
     }
 }

@@ -3,6 +3,31 @@
 <meta charset="utf-8">
 <title>strateGo</title>
 <link rel="stylesheet" type="text/css" href="style.css">
+
+<script src="static/js/jquery.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#loginbtn").click(function(){
+            console.log("111")
+
+            $.post("/login", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
+                console.log("3333")
+                if(result.userName){
+                    window.location.href="info.html"
+                }
+            })
+        })
+    })
+
+
+
+
+</script>
+
+
+
+
 </head>
 <body>
     
@@ -18,7 +43,7 @@
         <div class="login-center clearfix">
             <div class="login-center-img"><img src="img/name.png"></div>
             <div class="login-center-input">
-                <input type="text" name="" value="" placeholder="please enter your username" 
+                <input id="userName" type="text" name="" value="" placeholder="please enter your username"
                     onfocus="this.placeholder=''" onblur="this.placeholder='please enter your username'">
 
             </div>
@@ -26,16 +51,14 @@
         <div class="login-center clearfix">
             <div class="login-center-img"><img src="img/password.png"></div>
             <div class="login-center-input">
-                <input type="password" name="" value="" placeholder="enter your password" 
+                <input id= "password" type="password" name="" value="" placeholder="enter your password"
                     onfocus="this.placeholder=''" onblur="this.placeholder='enter your password'">
 
             </div>
         </div>
-        <a href="info.html">
-            <button class="login-button">
-            Login
-            </button>
-        </a>
+
+
+        <input  id = "loginbtn" class= "login-button" type="button" value = "log in" />
         <a href="info.html">
             <button class="login-button">
             Signup

@@ -1,9 +1,18 @@
 package org.gold.stratego.model;
 
 public class LoginInfo{
+    private Boolean status;
     private String username;
     private String password;
 
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
     public String getUsername() {
         return username;
