@@ -1,4 +1,10 @@
+/*
+ *@author Zihao Zheng
+ */
 
+/*
+ * This is where Stratego game start.
+ */
  class Stratego {
     start(){
         this.canvas = $("#canvas_cb")[0];

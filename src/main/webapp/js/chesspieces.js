@@ -1,4 +1,6 @@
-
+/*
+ * @author Zihao Zheng
+ */
 TOTAL_PIECE_FOR_EACH_RANK = [
     6, //B
     1, //1
@@ -11,7 +13,7 @@ TOTAL_PIECE_FOR_EACH_RANK = [
     2, //8
     1, //9
     1, //10
-    1 //F
+    0 //F
 ]
 
 MOVE_TYPE_WITH_DIFF_RANK = [
@@ -30,6 +32,9 @@ MOVE_TYPE_WITH_DIFF_RANK = [
 ]
 
 
+/*
+ * ChessPiece Entity
+ */
 class Piece {
     id = 0;
     team = 0;
@@ -66,7 +71,9 @@ class Piece {
     }
 }
 
-
+/*
+ * ChessPiece group
+ */
 class ChessPieces {
     team1 = new Array(12);
     team2 = new Array(12);

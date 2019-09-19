@@ -1,3 +1,8 @@
+/*
+ * @author Zihao Zheng
+ * Painter is use to draw chess board
+ */
+
 class Painter{
 
     canvas = $("#canvas_cb")[0];
@@ -24,10 +29,16 @@ class Painter{
         };
     }
 
+    /*
+     * Clean canvas
+     */
+
     clean(){
 
     }
-
+    /*
+     * Draw ChessBoard
+     */
     drawBoard(){
         let context = this.canvas.getContext("2d");
         //draw horizontal line
@@ -48,6 +59,9 @@ class Painter{
         }
     }
 
+    /*
+     * Draw Chess Pieces
+     */
     drawPiece(piece){
         let shiftX = this.cell_w * piece.pos.x;
         let shiftY = this.cell_h * piece.pos.y;
