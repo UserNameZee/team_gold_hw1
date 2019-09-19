@@ -83,6 +83,13 @@
     font-size: large;
     color: black;
 }
+.info-center{
+    text-align:center;
+}
+.info-right{
+    text-align: right;
+}
+
 
 .my-custom-scrollbar {
     position: relative;
