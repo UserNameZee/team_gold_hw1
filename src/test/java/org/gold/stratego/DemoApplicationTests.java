@@ -16,7 +16,7 @@ import org.gold.stratego.database.UserDB;
 import org.gold.stratego.database.UserDB.UserAuthenticationStatus;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.ApplicationContext;
-import org.gold.stratego.database.UserDB.UsernameTakenException;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -121,11 +121,11 @@ public class DemoApplicationTests {
         testusernames.add(username);
         String password = "generic password";
 
-        try {
+
             userDB.insertUser(username, password);
             userDB.insertUser(username, password);
             assertTrue(false);
-        } catch(UsernameTakenException e){assertTrue(true);}
+
 
     }
 
