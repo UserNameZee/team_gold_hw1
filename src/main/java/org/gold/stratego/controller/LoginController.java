@@ -78,10 +78,15 @@ public class LoginController{
 
     @ResponseBody
         @PostMapping("/signup")
-        public Map<String, String> signup(@RequestParam("userName") String userName,
-                @RequestParam("password") String password){
-//            UserDB newUser=new UserDB();
-//            newUser.insertUser(userName,password);
+        public Map<String, String> signup(@RequestParam("userName") String userName, @RequestParam("password") String password){
+
+            //***Jacob Thomas - inserted code
+            @Autowired
+            UserDB userDB;
+            //***Jacob Thomas - end
+
+            userDB.insertUser(userName, password);
+
             Map<String, String> hashMap = new HashMap<>();
             hashMap.put("success", "true");
             return hashMap;
