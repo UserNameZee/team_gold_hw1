@@ -24,27 +24,21 @@ public class UserDB{
         SUCCESSFUL;
     }
 
-    public class UsernameTakenException extends Exception{
-
-        public String toString(){
-            return "The username is already taken";
-        }
-    }
 
     @Autowired
     private UserRepository userRepository;
 
-    public void insertUser(String username, String password) throws UsernameTakenException{
+    public Boolean insertUser(String username, String password){
 
-        //Cannot have duplicate usernames.
         if (findUser(username) != null){
-            throw new UsernameTakenException();
+            return false;
         }
 
         User user = new User();
         user.setUsername(username);
         user.setPass_hash(getHash(password));
         userRepository.save(user);
+        return true;
 
     }
 

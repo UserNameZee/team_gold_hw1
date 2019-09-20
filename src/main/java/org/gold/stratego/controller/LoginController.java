@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.gold.stratego.database.UserDB.UsernameTakenException;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -50,13 +50,18 @@ public class LoginController{
     @ResponseBody
     @PostMapping("/login")
         public Map<String, String> login(@RequestParam("userName") String userName,
+                                         @RequestParam("password") String password,
                                          HttpServletRequest request) {
             Map<String, String> hashMap = new HashMap<>();
-            hashMap.put("success", "true");
-            HttpSession sessoin=request.getSession();
-            sessoin.setAttribute("name",userName);
+            if(userDB.authenticateUser(userName,password)== UserDB.UserAuthenticationStatus.SUCCESSFUL){
+                hashMap.put("success", "true");
+                HttpSession sessoin=request.getSession();
+                sessoin.setAttribute("name",userName);
 
-            return hashMap;
+            }else{
+                hashMap.put("success", "false");
+            }
+        return hashMap;
     }
 
 
@@ -84,12 +89,12 @@ public class LoginController{
     @ResponseBody
         @PostMapping("/signup")
         public Map<String, String> signup(@RequestParam("userName") String userName, @RequestParam("password") String password){
-
-            //add try/catch here
-            userDB.insertUser(userName, password);
-
             Map<String, String> hashMap = new HashMap<>();
-            hashMap.put("success", "true");
+            if( userDB.insertUser(userName, password)){
+                hashMap.put("success", "true");
+            }else{
+                hashMap.put("success", "false");
+            }
             return hashMap;
     }
 
