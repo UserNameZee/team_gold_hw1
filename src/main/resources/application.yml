@@ -10,4 +10,7 @@ spring:
     url: jdbc:mysql://cs-goldteam-server.mysql.database.azure.com:3306/stratego
     username: goldroot@cs-goldteam-server
     password: Cse#)*Gold
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
 

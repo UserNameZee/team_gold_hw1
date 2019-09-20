@@ -4,12 +4,11 @@ package org.gold.stratego.controller;
 import org.gold.stratego.database.entities.User;
 import org.gold.stratego.model.LoginInfo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +16,7 @@ import java.util.Map;
  * Controller for /login based on below tutorial for form submission:
  * https://spring.io/guides/gs/handling-form-submission/
  */
+
 @Controller
 public class LoginController{
 
@@ -41,17 +41,30 @@ public class LoginController{
      * @param loginInfo - instance of LoginInfo class with fields filled according to POST data.
      * @return
      */
+
+    @ResponseBody
     @PostMapping("/login")
-    public String login(@RequestParam("userName") String userName,
-                      @RequestParam("password") String password,
-                           Model model){
-        LoginInfo info = new LoginInfo();
-        info.setUsername(userName);
-        info.setPassword(password);
-        info.setStatus(true);
-        model.addAttribute(info);
-        model.addAttribute("information", info);
-        model.addAttribute("555", "99999");
-        return "redirect:info.html";
+        public Map<String, String> login(@RequestParam("userName") String userName,
+                                         HttpServletRequest request) {
+            Map<String, String> hashMap = new HashMap<>();
+            hashMap.put("success", "true");
+            HttpSession sessoin=request.getSession();
+            sessoin.setAttribute("name",userName);
+
+            return hashMap;
     }
+
+    @ResponseBody
+    @GetMapping("/loadUserInfo")
+    public String loadUserInfo(HttpSession session)throws Exception{
+        return session.getAttribute("name").toString();
+    }
+
+    @ResponseBody
+    @PostMapping("/loadMenuInfo")
+    public String loadMenuInfo(HttpSession session)throws Exception{
+        return session.getAttribute("name").toString();
+    }
+
+
 }

@@ -3,9 +3,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="style.css">
-<div th:text="${555}">1</div>
+<script src="static/js/jquery.js"></script>
+<script>
+  $(document).ready(function () {
+   // console.log($("#userName").load("/loadUserInfo"))
+    $("#userName").load("/loadUserInfo"); // 加载用户信息
+  })
+
+</script>
   <div class="sidenav">
     <p ></p>
+<!--    <a href="#" th:text="${borrowingBooks.getBook().getBookName()}">Title ...</a>-->
+    <a id="userName"></a>
+    <a th:text="${papa}">should be username</a>
     <a href="game.html">Start New Game</a>
     <a href="game.html">Continue</a>
     <p ></p>

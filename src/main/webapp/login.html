@@ -9,15 +9,11 @@
 <script>
     $(document).ready(function () {
         $("#loginbtn").click(function(){
-            console.log("111")
-
             $.post("/login", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
-                // console.log("3333")
-                // if(result.userName){
-                //     window.location.href="info.html"
-                // }
-                console.log("555")
-                window.location.href="info.html"
+                if(result.success=="true"){
+                   window.location.href= "info.html";
+                }
+
             })
         })
     })
@@ -60,7 +56,7 @@
 
 
         <input  id = "loginbtn" class= "login-button" type="button" value = "log in" />
-        <a href="info.html">
+        <a href="../resources/template/info.html">
             <button class="login-button">
             Signup
             </button>
