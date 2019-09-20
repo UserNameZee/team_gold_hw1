@@ -18,17 +18,29 @@ public class UserDB{
     /**
      * Enum used to check the result of a login attempt in method authenticateUser()
      */
-    public enum UserAuthenticationStatus
-    {
+    public enum UserAuthenticationStatus {
         USERNAME_NOT_FOUND,
         INVALID_PASSWORD,
         SUCCESSFUL;
     }
 
+    public class UsernameTakenException extends Exception{
+
+        public String toString(){
+            return "The username is already taken";
+        }
+    }
+
     @Autowired
     private UserRepository userRepository;
 
-    public void insertUser(String username, String password){
+    public void insertUser(String username, String password) throws UsernameTakenException{
+
+        //Cannot have duplicate usernames.
+        if (findUser(username) != null){
+            throw new UsernameTakenException();
+        }
+
         User user = new User();
         user.setUsername(username);
         user.setPass_hash(getHash(password));

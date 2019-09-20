@@ -16,6 +16,7 @@ import org.gold.stratego.database.UserDB;
 import org.gold.stratego.database.UserDB.UserAuthenticationStatus;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.ApplicationContext;
+import org.gold.stratego.database.UserDB.UsernameTakenException;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -54,13 +55,16 @@ public class DemoApplicationTests {
     //Test insertion
 	@Test
     public void DB_CRUDTests(){
-	    //TODO: update this test with hashing
 	    String username = generateRandomString();
 	    testusernames.add(username);
 
 	    String password = "test_user_password";
 
-	    userDB.insertUser(username, password);
+        try {
+            userDB.insertUser(username, password);
+        } catch (Exception e) {
+            //TODO: do something with this
+        }
         System.out.println("*** DB_CRUDTest: CREATE: Test user inserted.");
 
 	    System.out.println("*** DB_CRUDTest: RETRIEVE: Retrieving test user...");
@@ -92,8 +96,11 @@ public class DemoApplicationTests {
 		testusernames.add(username);
 
 		String password = "this_is_A_PASSWORD!";
-
-		userDB.insertUser(username, password);
+		try {
+            userDB.insertUser(username, password);
+        } catch (Exception e) {
+		    //TODO: do something with this
+        }
 		UserAuthenticationStatus status = userDB.authenticateUser(username, password);
 		assertEquals(status, UserAuthenticationStatus.SUCCESSFUL);
 
@@ -104,6 +111,25 @@ public class DemoApplicationTests {
 		assertEquals(status, UserAuthenticationStatus.INVALID_PASSWORD);
 
 	}
+
+    /**
+     * Expect exception when trying to add 2 users with duplicate usernames.
+     */
+	@Test
+    public void DB_DuplicateUserTest(){
+        String username = generateRandomString();
+        testusernames.add(username);
+        String password = "generic password";
+
+        try {
+            userDB.insertUser(username, password);
+            userDB.insertUser(username, password);
+            assertTrue(false);
+        } catch(UsernameTakenException e){assertTrue(true);}
+
+    }
+
+
 
 	/**
 	 * Make sure all the test users we created are deleted after tests.
