@@ -11,8 +11,6 @@
         $("#signupbtn").click(function(){
             console.log("sign up pressed")
             $.post("/signup", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
-                console.log("user name:  "+result.userName);
-                console.log("password is:  "+result.password);
                 if(result.success=="true"){
                    window.location.href= "login.html";
                 }
