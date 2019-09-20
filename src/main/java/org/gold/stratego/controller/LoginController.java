@@ -1,6 +1,7 @@
 package org.gold.stratego.controller;
 
 
+import org.gold.stratego.database.UserDB;
 import org.gold.stratego.database.entities.User;
 import org.gold.stratego.model.LoginInfo;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,6 @@ public class LoginController{
      * @param loginInfo - instance of LoginInfo class with fields filled according to POST data.
      * @return
      */
-
     @ResponseBody
     @PostMapping("/login")
         public Map<String, String> login(@RequestParam("userName") String userName,
@@ -54,11 +54,13 @@ public class LoginController{
             return hashMap;
     }
 
+
     @ResponseBody
     @GetMapping("/loadUserInfo")
     public String loadUserInfo(HttpSession session)throws Exception{
         return session.getAttribute("name").toString();
     }
+
 
     @ResponseBody
     @PostMapping("/loadMenuInfo")
@@ -66,5 +68,25 @@ public class LoginController{
         return session.getAttribute("name").toString();
     }
 
+
+    @GetMapping("/signup")
+    public String signupGet(Model model){
+        model.addAttribute("loginInfo", new LoginInfo());
+        return "signup.html";
+    }
+
+
+    @ResponseBody
+    @PostMapping("/signup")
+    public Map<String, String> signup(@RequestParam("userName") String userName,
+                                      @RequestParam("password") String password){
+//        UserDB newUser=new UserDB();
+//        newUser.insertUser(userName,password);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("success", "true");
+        hashMap.put("userName", userName);
+        hashMap.put("password", password);
+        return hashMap;
+    }
 
 }
