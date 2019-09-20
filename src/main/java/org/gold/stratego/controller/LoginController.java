@@ -6,6 +6,7 @@ import org.gold.stratego.database.entities.User;
 import org.gold.stratego.model.LoginInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,9 @@ import java.util.Map;
 
 @Controller
 public class LoginController{
+
+    @Autowired
+    UserDB userDB;
 
     /**
      * Handles GET requests to /login
@@ -80,9 +84,7 @@ public class LoginController{
         @PostMapping("/signup")
         public Map<String, String> signup(@RequestParam("userName") String userName, @RequestParam("password") String password){
 
-            //***Jacob Thomas - inserted code
-            @Autowired
-            UserDB userDB;
+            //***Jacob Thomas - inserted cod
             //***Jacob Thomas - end
 
             userDB.insertUser(userName, password);
