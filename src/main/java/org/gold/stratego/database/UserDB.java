@@ -18,21 +18,27 @@ public class UserDB{
     /**
      * Enum used to check the result of a login attempt in method authenticateUser()
      */
-    public enum UserAuthenticationStatus
-    {
+    public enum UserAuthenticationStatus {
         USERNAME_NOT_FOUND,
         INVALID_PASSWORD,
         SUCCESSFUL;
     }
 
+
     @Autowired
     private UserRepository userRepository;
 
-    public void insertUser(String username, String password){
+    public Boolean insertUser(String username, String password){
+
+        if (findUser(username) != null){
+            return false;
+        }
+
         User user = new User();
         user.setUsername(username);
         user.setPass_hash(getHash(password));
         userRepository.save(user);
+        return true;
 
     }
 

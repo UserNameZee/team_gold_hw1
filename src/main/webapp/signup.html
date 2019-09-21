@@ -1,47 +1,27 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>strateGo</title>
+<title>sign up</title>
 <link rel="stylesheet" type="text/css" href="style.css">
 
 <script src="static/js/jquery.js"></script>
 
 <script>
     $(document).ready(function () {
-        $("#loginbtn").click(function(){
-            $.post("/login", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
+        $("#signupbtn").click(function(){
+            console.log("sign up pressed")
+            $.post("/signup", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
                 if(result.success=="true"){
-                   window.location.href= "info.html";
+                   window.location.href= "login.html";
                 }else{
-                    alert("Please check your password!")
+                    alert("The username has been used,please use another username");
                 }
 
             })
         })
-
-    $(document).ready(function (){
-        $("#signupbtn").click(function(){
-            window.location.href= "signup.html";
-        })
-
-    })
-
-
-
-
-
-
-
-
-
-
-
     })
 
 </script>
-
-
-
 
 </head>
 <body>
@@ -52,7 +32,7 @@
 
     <div class="login">
             <div class="login-top">
-            Login
+            Sign Up
             </div>
         <div class="login-center clearfix">
             <div class="login-center-img"><img src="img/name.png"></div>
@@ -67,12 +47,9 @@
             <div class="login-center-input">
                 <input id= "password" type="password" name="" value="" placeholder="enter your password"
                     onfocus="this.placeholder=''" onblur="this.placeholder='enter your password'">
-
             </div>
         </div>
 
-
-        <input  id = "loginbtn" class= "login-button" type="button" value = "log in" />
         <input  id = "signupbtn" class= "login-button" type="button" value = "sign up" />
     </div>    
 </body>

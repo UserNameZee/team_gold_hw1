@@ -1,11 +1,14 @@
 package org.gold.stratego.controller;
 
 
+import org.gold.stratego.database.UserDB;
 import org.gold.stratego.database.entities.User;
 import org.gold.stratego.model.LoginInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,6 +22,9 @@ import java.util.Map;
 
 @Controller
 public class LoginController{
+
+    @Autowired
+    UserDB userDB;
 
     /**
      * Handles GET requests to /login
@@ -41,18 +47,23 @@ public class LoginController{
      * @param loginInfo - instance of LoginInfo class with fields filled according to POST data.
      * @return
      */
-
     @ResponseBody
     @PostMapping("/login")
         public Map<String, String> login(@RequestParam("userName") String userName,
+                                         @RequestParam("password") String password,
                                          HttpServletRequest request) {
             Map<String, String> hashMap = new HashMap<>();
-            hashMap.put("success", "true");
-            HttpSession sessoin=request.getSession();
-            sessoin.setAttribute("name",userName);
+            if(userDB.authenticateUser(userName,password)== UserDB.UserAuthenticationStatus.SUCCESSFUL){
+                hashMap.put("success", "true");
+                HttpSession sessoin=request.getSession();
+                sessoin.setAttribute("name",userName);
 
-            return hashMap;
+            }else{
+                hashMap.put("success", "false");
+            }
+        return hashMap;
     }
+
 
     @ResponseBody
     @GetMapping("/loadUserInfo")
@@ -60,11 +71,31 @@ public class LoginController{
         return session.getAttribute("name").toString();
     }
 
+
     @ResponseBody
     @PostMapping("/loadMenuInfo")
     public String loadMenuInfo(HttpSession session)throws Exception{
         return session.getAttribute("name").toString();
     }
 
+
+    @GetMapping("/signup")
+    public String signupGet(Model model){
+        model.addAttribute("loginInfo", new LoginInfo());
+        return "signup.html";
+    }
+
+
+    @ResponseBody
+        @PostMapping("/signup")
+        public Map<String, String> signup(@RequestParam("userName") String userName, @RequestParam("password") String password){
+            Map<String, String> hashMap = new HashMap<>();
+            if( userDB.insertUser(userName, password)){
+                hashMap.put("success", "true");
+            }else{
+                hashMap.put("success", "false");
+            }
+            return hashMap;
+    }
 
 }
