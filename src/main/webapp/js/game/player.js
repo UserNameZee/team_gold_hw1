@@ -1,8 +1,17 @@
 class Player {
     id = 0;
+    isTurn = true;
     isSelect = false;
     selectPos = new Point(-1, -1);
     selectPiece = null;
+
+    moves = {
+        rounds : new Array(),
+        append(piece, from, to){
+            rounds.append(new Move(piece, from, to))
+        }
+    }
+
     lastMove = {
         from : new Point(0, 0),
         to : new Point(0, 0),
@@ -20,5 +29,16 @@ class Player {
         this.isSelect = false;
         this.selectPos = new Point(-1, -1);
         this.selectPiece = null;
+    }
+}
+
+Move = class {
+    piece = null;
+    from = null;
+    to = null;
+    constructor(piece, from, to){
+        this.piece = piece;
+        this.from = from;
+        this.to = to;
     }
 }

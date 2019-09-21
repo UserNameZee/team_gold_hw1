@@ -37,7 +37,9 @@ function preLoadImages() {
 
     init(ImageObjs){
         this.player1 = new Player(1);
+        this.player1.isTurn = false;
         this.player2 = new Player(2);
+        this.player2.isTurn = true;
         this.ai = new AI();
 
         this.imageObjs = ImageObjs;
@@ -66,12 +68,25 @@ function preLoadImages() {
                 stratego.player2.selectPos.setXY(x, y)
                 stratego.player2.selectPiece = chessBoardData[y][x];
             }
-            //Move chess piece
-            if((chessBoardData[y][x] == null || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true){
-                stratego.moveChessPiece(stratego.player2, x, y);
-            }
 
+            //Move chess piece
+            if(stratego.player2.isTurn && (chessBoardData[y][x] == null || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true){
+                let result = stratego.moveChessPiece(stratego.player2, x, y);
+                switch (result) {
+                    case "WIN":
+                        break;
+                    case "LOSS":
+                        break;
+                    default:
+                        stratego.player2.isTurn = false
+                        stratego.player1.isTurn = true;
+
+
+                }
+            }
             stratego.painter.draw();
+            stratego.player2.isTurn = true
+            stratego.player1.isTurn = false;
             console.log(chessBoardData[y][x]);
         }
     }
@@ -79,6 +94,15 @@ function preLoadImages() {
     initChessBoardData(){
         for (let y = 0; y < 10; y++){
             this.chessBoardData[y] = new Array(10);
+            for(let x = 0; x < 10; x++){
+                this.chessBoardData[y][x] = undefined;
+            }
+            if(y == 4 || y == 5){
+                this.chessBoardData[y][2] = "water"
+                this.chessBoardData[y][3] = "water"
+                this.chessBoardData[y][6] = "water"
+                this.chessBoardData[y][7] = "water"
+            }
         };
     };
 
@@ -126,34 +150,35 @@ function preLoadImages() {
                     break;
                 case "KILLED":
                     this.chessPieces.removePiece(this.chessBoardData, sPiece)
+                    this["player" + sPiece.team].deSelect();
                     break;
                 case "WIN":
                     this.chessPieces.removePiece(this.chessBoardData, this.chessBoardData[y][x])
                     if (sPiece.team == 2 ){
                         console.log("You Win");
+                        return "WIN";
                     }else{
-                        console.log("You lose");
+                        console.log("You loss");
+                        return "LOSS";
                     }
                     break;
                 default:
                     this.chessPieces.removePiece(this.chessBoardData, this.chessBoardData[y][x]);
                     this.chessPieces.removePiece(this.chessBoardData, sPiece);
                     this["player" + sPiece.team].deSelect();
-                    return;
+                    return "TURN_END";
                     break;
             }
         }
-
         if(this.chessBoardData[y][x] == null){
             this.chessBoardData[sPiece.pos.y][sPiece.pos.x] = null;
             this.chessBoardData[y][x] = sPiece;
             player.selectPiece.pos.setXY(x, y);
             player.selectPos.setXY(x, y);
         }
-        return ""
+        return "TURN_END";
     }
 }
-
  var Game ={
     start : function (){
         preLoadImages();

@@ -98,7 +98,7 @@ class ChessPieces {
                 this.team1[r][p] = new Piece(id, 1, r, MOVE_TYPE_WITH_DIFF_RANK[r], new Point(tx, ty), true);
                 chessBoardData[ty][tx] = this.team1[r][p];
                 this.team2[r][p] = new Piece(id, 2, r, MOVE_TYPE_WITH_DIFF_RANK[r], new Point(bx, by), false);
-                this.team2[r][p].isHide = false
+                this.team2[r][p].isHide = false;
                 chessBoardData[by][bx] = this.team2[r][p];
                 id++;
                 tx = (tx+1) % 10; ty = tx == 0 ? ty - 1 : ty;
