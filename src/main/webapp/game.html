@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
-<script src="js/point.js"></script>
-<script src="js/painter.js"></script>
-<script src="js/chesspieces.js"></script>
-<script src="js/game.js"></script>
-
+<script src="js/game/point.js"></script>
+<script src="js/game/painter.js"></script>
+<script src="js/game/chesspieces.js"></script>
+<script src="js/game/player.js"></script>
+<script src="js/game/ai.js"></script>
+<script src="js/game/game.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <div>
-    <canvas id="canvas_cb" width="640" height="640" style="border:1px solid #000000;">
+    <canvas id="canvas_cb" width="640" height="640">
     </canvas>
 </div>
 </body>
 
 <script >
+
     Game.start();
 </script>
 
