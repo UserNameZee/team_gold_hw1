@@ -123,10 +123,7 @@ public class DemoApplicationTests {
 
 
             userDB.insertUser(username, password);
-            userDB.insertUser(username, password);
-            assertTrue(false);
-
-
+            assertFalse(userDB.insertUser(username, password));
     }
 
 
