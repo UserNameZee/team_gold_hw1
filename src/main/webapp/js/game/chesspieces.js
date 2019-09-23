@@ -31,23 +31,6 @@ MOVE_TYPE_WITH_DIFF_RANK = [
     0  //F
 ]
 
-// class RandomPos {
-//     numSet = new Array(40);
-//     constructor(start, end)   {
-//         for (let i = start; i < end; i++){
-//             this.numSet[i] = i;
-//         }
-//     }
-//     getRandomPos(){
-//         if (this.rdNumbers.length == 0) return;
-//         let index = Math.floor(Math.random() * this.numSet.length) + 0;
-//         let result = this.numSet[index];
-//         this.numSet.splice(index, 1);
-//         return result;
-//     }
-// }
-
-
 /*
  * ChessPiece Entity
  */

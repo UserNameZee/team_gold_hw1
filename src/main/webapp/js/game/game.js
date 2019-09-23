@@ -40,7 +40,7 @@ function preLoadImages() {
         this.player1.isTurn = false;
         this.player2 = new Player(2);
         this.player2.isTurn = true;
-        this.ai = new AI();
+        this.ai = new AI(this);
 
         this.imageObjs = ImageObjs;
         this.canvas = $("#canvas_cb")[0];
@@ -68,25 +68,12 @@ function preLoadImages() {
                 stratego.player2.selectPos.setXY(x, y)
                 stratego.player2.selectPiece = chessBoardData[y][x];
             }
-
             //Move chess piece
             if(stratego.player2.isTurn && (chessBoardData[y][x] == null || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true){
                 let result = stratego.moveChessPiece(stratego.player2, x, y);
-                switch (result) {
-                    case "WIN":
-                        break;
-                    case "LOSS":
-                        break;
-                    default:
-                        stratego.player2.isTurn = false
-                        stratego.player1.isTurn = true;
-
-
-                }
             }
+            stratego.ai.fakeMove();
             stratego.painter.draw();
-            stratego.player2.isTurn = true
-            stratego.player1.isTurn = false;
             console.log(chessBoardData[y][x]);
         }
     }
@@ -105,6 +92,16 @@ function preLoadImages() {
             }
         };
     };
+
+     switchTurn(){
+        if(this.player1.isTurn == true){
+            this.player1.isTurn = false;
+            this.player2.isTurn = true;
+        }else{
+            this.player1.isTurn = true;
+            this.player2.isTurn = false;
+        }
+    }
 
     moveChessPiece(player, x, y){
         let sPiece = player.selectPiece;
@@ -166,16 +163,15 @@ function preLoadImages() {
                     this.chessPieces.removePiece(this.chessBoardData, this.chessBoardData[y][x]);
                     this.chessPieces.removePiece(this.chessBoardData, sPiece);
                     this["player" + sPiece.team].deSelect();
-                    return "TURN_END";
                     break;
             }
-        }
-        if(this.chessBoardData[y][x] == null){
+        }else if(this.chessBoardData[sPiece.pos.y][sPiece.pos.x] != null){
             this.chessBoardData[sPiece.pos.y][sPiece.pos.x] = null;
             this.chessBoardData[y][x] = sPiece;
             player.selectPiece.pos.setXY(x, y);
             player.selectPos.setXY(x, y);
         }
+        this.switchTurn();
         return "TURN_END";
     }
 }
