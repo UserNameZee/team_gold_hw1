@@ -31,6 +31,22 @@ MOVE_TYPE_WITH_DIFF_RANK = [
     0  //F
 ]
 
+// class RandomPos {
+//     numSet = new Array(40);
+//     constructor(start, end)   {
+//         for (let i = start; i < end; i++){
+//             this.numSet[i] = i;
+//         }
+//     }
+//     getRandomPos(){
+//         if (this.rdNumbers.length == 0) return;
+//         let index = Math.floor(Math.random() * this.numSet.length) + 0;
+//         let result = this.numSet[index];
+//         this.numSet.splice(index, 1);
+//         return result;
+//     }
+// }
+
 
 /*
  * ChessPiece Entity
@@ -91,15 +107,25 @@ class ChessPieces {
         let id = 0;
         let tx = 0, ty = 3;
         let bx = 0, by = 6;
+
+        let sis1 = Tools.getSlotsIdSet(0);
+        let sis2 = Tools.getSlotsIdSet(60);
+
         for(let r = 0; r < 13; r++){
             this.team1[r] = new Array(TOTAL_PIECE_FOR_EACH_RANK[r]);
             this.team2[r] = new Array(TOTAL_PIECE_FOR_EACH_RANK[r]);
             for(let p = 0; p < TOTAL_PIECE_FOR_EACH_RANK[r]; p++){
-                this.team1[r][p] = new Piece(id, 1, r, MOVE_TYPE_WITH_DIFF_RANK[r], new Point(tx, ty), true);
-                chessBoardData[ty][tx] = this.team1[r][p];
-                this.team2[r][p] = new Piece(id, 2, r, MOVE_TYPE_WITH_DIFF_RANK[r], new Point(bx, by), false);
+
+                let p1 = Tools.slotId2Pos(sis1[id]);
+                let p2 = Tools.slotId2Pos(sis2[id]);
+                // console.log(p1)
+                // console.log(p2)
+                this.team1[r][p] = new Piece(id, 1, r, MOVE_TYPE_WITH_DIFF_RANK[r], p1, true);
+                chessBoardData[p1.y][p1.x] = this.team1[r][p];
+                this.team2[r][p] = new Piece(id, 2, r, MOVE_TYPE_WITH_DIFF_RANK[r], p2, false);
+                chessBoardData[p2.y][p2.x] = this.team2[r][p];
                 this.team2[r][p].isHide = false;
-                chessBoardData[by][bx] = this.team2[r][p];
+
                 id++;
                 tx = (tx+1) % 10; ty = tx == 0 ? ty - 1 : ty;
                 bx = (bx+1) % 10; by = bx == 0 ? by + 1 : by;
@@ -114,4 +140,5 @@ class ChessPieces {
         chessBoardData[piece.pos.y][piece.pos.x] = undefined;
         team.splice(index, 1);
     }
+
 }
