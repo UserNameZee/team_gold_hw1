@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.gold.stratego.database.UserDB;
+import org.gold.stratego.database.GameRepository;
 import org.gold.stratego.database.entities.User;
+import org.gold.stratego.database.entities.MongoTest;
 
 /**
  * Maps the REST endpoint for storing game data.
@@ -20,11 +21,11 @@ import org.gold.stratego.database.entities.User;
 public class GameRESTController{
 
     @Autowired
-    UserDB userDB;
+    GameRepository gr;
 
     @GetMapping(path="/users")
-    public @ResponseBody Iterable<User> getAllUsers(){
-        return userDB.DEBUG_getUserRepository().findAll();
+    public @ResponseBody Iterable<MongoTest> getAllUsers(){
+        return gr.findAll();
 
     }
 
