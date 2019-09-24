@@ -16,7 +16,8 @@ IMAGE_PATH = [
 */
 var ImageObjs = new Map();
 var locker = 0;
-function preLoadImages() {
+function preLoad(stratego, btnSetup) {
+
     for (let i = 0; i < IMAGE_PATH.length; i++){
         locker ++;
         var imageObj = new Image();
@@ -25,7 +26,8 @@ function preLoadImages() {
         imageObj.onload = function () {
             locker--;
             if (locker == 0) {
-                new Stratego().init(ImageObjs);
+                stratego.init(ImageObjs);
+
 
             }
         }
@@ -49,9 +51,10 @@ function preLoadImages() {
 
 
         this.initChessBoardData();
-        this.chessPieces.init(this.chessBoardData);
+        // this.chessPieces.init(this.chessBoardData);
         this.painter.draw();
-        this.initMouseEvent();
+        // this.initMouseEvent();
+        this.initButton();
     };
 
     initMouseEvent(){
@@ -78,6 +81,66 @@ function preLoadImages() {
             stratego.painter.draw();
             console.log(chessBoardData[y][x]);
         }
+    }
+
+    initButton(){
+        let stratego = this;
+        let chessBoardData = this.chessBoardData;
+        let cell_w = this.painter.cell_w, cell_h = this.painter.cell_h;;
+        $("#setup").prop("disabled", false);
+        //select function
+        let select = function (x, y) {
+            if (chessBoardData[y][x] != null && chessBoardData[y][x].team == 2){
+                stratego.player2.isSelect = true;
+                stratego.player2.lastSelectPos.assign(stratego.player2.selectPos);
+                stratego.player2.lastSelectPiece = stratego.player2.selectPiece;
+                stratego.player2.selectPos.setXY(x, y);
+                stratego.player2.selectPiece = chessBoardData[y][x];
+            }
+        }
+        /*
+        * setup: random the pieces on board, and allow player to switch piece
+        * but not allow player to move piece
+        */
+        $("#setup").on("click", function (){
+            $("#start").prop("disabled", false);
+            stratego.chessPieces.init(chessBoardData);
+            stratego.painter.draw();
+            $("#canvas_cb").on('click', function (e){
+                let x = Math.ceil(e.offsetX/cell_w) - 1, y = Math.ceil(e.offsetY/cell_h) - 1;
+                select(x, y);
+                if (stratego.player2.lastSelectPiece != null){
+                    stratego.switchPiece(stratego.player2.lastSelectPiece, stratego.player2.selectPiece);
+                    stratego.player2.deSelect();
+                }
+                stratego.painter.draw();
+            })
+        });
+
+        $("#start").on("click", function() {
+            $("#setup").prop("disabled", true);
+            $("#canvas_cb").off("click");
+            $("#canvas_cb").on("click", function (e) {
+                let x = Math.ceil(e.offsetX / cell_w) - 1, y = Math.ceil(e.offsetY / cell_h) - 1;
+                if (chessBoardData[y][x] != null && chessBoardData[y][x].team == 2) {
+                    select(x, y);
+                }
+                if (stratego.player2.isTurn && (chessBoardData[y][x] == null || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
+                    let result = stratego.moveChessPiece(stratego.player2, x, y);
+                    stratego.switchTurn();
+                }
+                stratego.painter.draw();
+                console.log(chessBoardData[y][x]);
+            });
+            $("#start").prop("disabled", true);
+            $("#surrender").prop("disabled", false);
+        });
+
+        $("#surrender").on("click", function (){
+            $("#setup").prop("disabled", false);
+            $("#surrender").prop("disabled", true);
+            //send game data to server
+        })
     }
 
     initChessBoardData(){
@@ -177,10 +240,22 @@ function preLoadImages() {
         this.switchTurn();
         return "TURN_END";
     }
+
+    switchPiece(piece1, piece2){
+         let pos1 = piece1.pos;
+         let pos2 = piece2.pos;
+         piece1.pos = pos2;
+         piece2.pos = pos1;
+         this.chessBoardData[piece1.pos.y][piece1.pos.x] = piece1;
+         this.chessBoardData[piece2.pos.y][piece2.pos.x] = piece2;
+         return;
+    }
 }
  var Game ={
+
     start : function (){
-        preLoadImages();
+        var stratego = new Stratego();
+        preLoad(stratego);
     }
  }
 

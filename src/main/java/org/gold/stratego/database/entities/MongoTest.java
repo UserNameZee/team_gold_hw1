@@ -1,10 +1,8 @@
 package org.gold.stratego.database.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Id;
 
 @Document(collection="mongotest")
 public class MongoTest{

@@ -4,6 +4,8 @@ class Player {
     isSelect = false;
     selectPos = new Point(-1, -1);
     selectPiece = null;
+    lastSelectPos = new Point(-1, -1);
+    lastSelectPiece = null;
 
     moves = {
         rounds : new Array(),

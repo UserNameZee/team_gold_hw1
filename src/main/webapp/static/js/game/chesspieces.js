@@ -114,18 +114,16 @@ class ChessPieces {
             this.team1[r] = new Array(TOTAL_PIECE_FOR_EACH_RANK[r]);
             this.team2[r] = new Array(TOTAL_PIECE_FOR_EACH_RANK[r]);
             for(let p = 0; p < TOTAL_PIECE_FOR_EACH_RANK[r]; p++){
-
                 let p1 = Tools.slotId2Pos(sis1[id]);
                 let p2 = Tools.slotId2Pos(sis2[id]);
-                // console.log(p1)
-                // console.log(p2)
+
                 this.team1[r][p] = new Piece(id, 1, r, MOVE_TYPE_WITH_DIFF_RANK[r], p1, true);
                 chessBoardData[p1.y][p1.x] = this.team1[r][p];
-                this.team1[r][p].isHide = false;
+                this.team1[r][p].isHide = true;
+
                 this.team2[r][p] = new Piece(id, 2, r, MOVE_TYPE_WITH_DIFF_RANK[r], p2, false);
                 chessBoardData[p2.y][p2.x] = this.team2[r][p];
                 this.team2[r][p].isHide = false;
-
                 id++;
                 tx = (tx+1) % 10; ty = tx == 0 ? ty - 1 : ty;
                 bx = (bx+1) % 10; by = bx == 0 ? by + 1 : by;

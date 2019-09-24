@@ -134,7 +134,7 @@ class Painter{
             context.font="10px Verdana";
             context.fillStyle= colorW;
             rank = rank == 0 ? "B" : (rank == "11" ? "F" : rank);
-            context.fillText("RANK " + rank, shiftX + ssx + 5, shiftY + ssy + 45);
+            context.fillText("RANK " + rank, shiftX + ssx + 2, shiftY + ssy + 45);
         }
         context.restore();
     }
@@ -237,14 +237,20 @@ class Painter{
         context.fill();
         context.stroke();
         context.restore();
-
-        context.save;
+        //title
+        context.save();
         context.font="30px Verdana";
-        context.fillStyle= "#000000";
+        context.fillStyle= "#ffffff";
         context.textAlign = "center";
+        context.shadowOffsetX = 3;
+        context.shadowOffsetY = 3;
+        context.shadowColor = "rgba(0,0,0,1)";
+        context.shadowBlur = 5;
         context.fillText("STANDING", cw / 2, 30);
+
         context.restore();
 
+        if (team1[0] == undefined || team2[0] == undefined) return;
         for (let i = 0; i < 12; i++){
             let ib = this.game.imageObjs.get(IMAGE_PATH[0]);
             let iw = this.game.imageObjs.get(IMAGE_PATH[1]);
@@ -282,8 +288,6 @@ class Painter{
             context.textAlign = "left";
             context.fillText("X" + team2[i].length, cw/2 + 55 , marginY + i * imageW + gap * i + 30);
             context.restore();
-
-
         }
     }
 }
