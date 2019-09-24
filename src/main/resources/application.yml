@@ -15,9 +15,9 @@ spring:
   data:
     mongodb:
       uri: mongodb://goldroot:Cse#)*Gold@40.85.171.57:27017/test
+      #IP: 40.85.171.57 Port: 27017
+      #Username: goldroot Password: Cse#)*Gold
   thymeleaf:
     mode: LEGACYHTML5
     cache: false
-
-#mongodb: ip: 40.85.171.57 port 27017 user: goldroot pass: Cse#)*Gold
 
