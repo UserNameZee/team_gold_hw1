@@ -58,6 +58,7 @@ class AI{
 
     markingThePoint( ){
 
+
     }
 
     getAllMove(start,board) {
