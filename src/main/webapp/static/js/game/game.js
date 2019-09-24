@@ -7,8 +7,8 @@
  */
 
 IMAGE_PATH = [
-    "img/cards_w.png",
-    "img/cards_b.png"
+    "static/img/cards_w.png",
+    "static/img/cards_b.png"
 ]
 
 /*
@@ -61,7 +61,8 @@ function preLoadImages() {
         let chessBoardData = this.chessBoardData;
         let stratego = this;
         this.canvas.onclick = function (e){
-            let x = Math.ceil(e.clientX/cell_w) - 1, y = Math.ceil(e.clientY/cell_h) - 1;
+            // console.log("Offset" + e.offsetX + " " + e.offsetY);
+            let x = Math.ceil(e.offsetX/cell_w) - 1, y = Math.ceil(e.offsetY/cell_h) - 1;
             //Highlight chess piece When player2 click on his/her chess piece.
             if (chessBoardData[y][x] != null && chessBoardData[y][x].team == 2){
                 stratego.player2.isSelect = true;
@@ -71,8 +72,9 @@ function preLoadImages() {
             //Move chess piece
             if(stratego.player2.isTurn && (chessBoardData[y][x] == null || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true){
                 let result = stratego.moveChessPiece(stratego.player2, x, y);
+                stratego.ai.fakeMove();
             }
-            stratego.ai.fakeMove();
+
             stratego.painter.draw();
             console.log(chessBoardData[y][x]);
         }
@@ -165,7 +167,8 @@ function preLoadImages() {
                     this["player" + sPiece.team].deSelect();
                     break;
             }
-        }else if(this.chessBoardData[sPiece.pos.y][sPiece.pos.x] != null){
+        }
+        if(this.chessBoardData[sPiece.pos.y][sPiece.pos.x] != null){
             this.chessBoardData[sPiece.pos.y][sPiece.pos.x] = null;
             this.chessBoardData[y][x] = sPiece;
             player.selectPiece.pos.setXY(x, y);

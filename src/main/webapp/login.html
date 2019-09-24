@@ -19,24 +19,12 @@
 
             })
         })
+        $(document).ready(function (){
+            $("#signupbtn").click(function(){
+                window.location.href= "signup.html";
+            })
 
-    $(document).ready(function (){
-        $("#signupbtn").click(function(){
-            window.location.href= "signup.html";
         })
-
-    })
-
-
-
-
-
-
-
-
-
-
-
     })
 
 </script>
@@ -48,7 +36,6 @@
 <body>
     
     <div class = background>
-    <img src="img/background.png">
     </div>
 
     <div class="login">
@@ -56,7 +43,7 @@
             Login
             </div>
         <div class="login-center clearfix">
-            <div class="login-center-img"><img src="img/name.png"></div>
+            <div class="login-center-img"><img src="static/img/name.png"></div>
             <div class="login-center-input">
                 <input id="userName" type="text" name="" value="" placeholder="please enter your username"
                     onfocus="this.placeholder=''" onblur="this.placeholder='please enter your username'">
@@ -64,7 +51,7 @@
             </div>
         </div>
         <div class="login-center clearfix">
-            <div class="login-center-img"><img src="img/password.png"></div>
+            <div class="login-center-img"><img src="static/img/password.png"></div>
             <div class="login-center-input">
                 <input id= "password" type="password" name="" value="" placeholder="enter your password"
                     onfocus="this.placeholder=''" onblur="this.placeholder='enter your password'">

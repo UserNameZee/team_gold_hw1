@@ -1,6 +1,22 @@
 /*
  * @author Zihao Zheng
  */
+
+RANK_TO_NAME = [
+    "Boom",
+    "Spy",
+    "Scout",
+    "Miner",
+    "Sergeant",
+    "Lieutenant",
+    "Captain",
+    "Major",
+    "Colonel",
+    "General",
+    "Marshal",
+    "Flag"
+]
+
 TOTAL_PIECE_FOR_EACH_RANK = [
     6, //B
     1, //1
@@ -105,6 +121,7 @@ class ChessPieces {
                 // console.log(p2)
                 this.team1[r][p] = new Piece(id, 1, r, MOVE_TYPE_WITH_DIFF_RANK[r], p1, true);
                 chessBoardData[p1.y][p1.x] = this.team1[r][p];
+                this.team1[r][p].isHide = false;
                 this.team2[r][p] = new Piece(id, 2, r, MOVE_TYPE_WITH_DIFF_RANK[r], p2, false);
                 chessBoardData[p2.y][p2.x] = this.team2[r][p];
                 this.team2[r][p].isHide = false;
@@ -117,11 +134,10 @@ class ChessPieces {
     }
     removePiece(chessBoardData, piece){
         let team = this["team" + piece.team];
-        let index = team.findIndex(function(elem) {
+        let index = team[piece.rank].findIndex(function(elem) {
             return elem.id == piece.id;
         })
         chessBoardData[piece.pos.y][piece.pos.x] = undefined;
-        team.splice(index, 1);
+        team[piece.rank].splice(index, 1);
     }
-
 }

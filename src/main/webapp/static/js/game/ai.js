@@ -7,8 +7,12 @@ class AI{
         let s = this.stratego
         setTimeout(function (){
             s.switchTurn();
+<<<<<<< HEAD:src/main/webapp/static/js/game/ai.js
+        }, 1000);
+=======
         }, 5000);
         return true;
+>>>>>>> f3637e4143a0bd59e4277dd16779f978e008d582:src/main/webapp/js/game/ai.js
     }
     aiMove(){
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,this.stratego.team1)

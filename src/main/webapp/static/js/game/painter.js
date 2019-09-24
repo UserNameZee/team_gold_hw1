@@ -3,16 +3,21 @@
  * Painter is use to draw chess board
  */
 
+
+
 class Painter{
 
-    canvas = $("#canvas_cb")[0];
-    cell_w = this.canvas.width / 10;
-    cell_h = this.canvas.height / 10;
-    trangle_h = this.cell_h * Math.sin(Math.PI/3);
-    
+    // canvas = null;
+    // standing_tr = null;
+    // cell_w = this.canvas.width / 10;
+    // cell_h = this.canvas.height / 10;
 
     constructor(game){
         this.game = game;
+        this.canvas = $("#canvas_cb")[0];
+        this.canvas_st = $("#canvas_st")[0];
+        this.cell_w = this.canvas.width / 10;
+        this.cell_h = this.canvas.height / 10;
     }
 
     draw(){
@@ -21,6 +26,7 @@ class Painter{
         this.darwAllPiece();
         this.drawHighLight();
         this.drawMovePath();
+        this.updataStanding();
     }
 
     /*
@@ -205,5 +211,40 @@ class Painter{
         context.closePath();
         context.stroke();
         context.restore();
+    }
+
+    updataStanding(){
+        let context = this.canvas_st.getContext("2d");
+        let imageW = 64 * 0.65;
+        let imageH = 64 * 0.65;
+        let margin = 48;
+        let gap = 8;
+
+        for (let i = 0; i < 12; i++){
+            let ib = this.game.imageObjs.get(IMAGE_PATH[0]);
+            let iw = this.game.imageObjs.get(IMAGE_PATH[1]);
+
+            context.save();
+            context.lineWidth = "2";
+            context.fillStyle= "#000000";
+            context.strokeStyle = "#000000";
+            context.beginPath();
+            context.rect(0, margin + i * imageW + gap * i, this.cell_w * 0.65, this.cell_h * 0.65);
+            context.closePath()
+            context.stroke();
+            context.fill();
+
+            context.fillStyle= "#ffffff";
+            context.beginPath();
+            context.rect(98, margin + i * imageW + gap * i, this.cell_w * 0.65, this.cell_h * 0.65);
+            context.closePath()
+            context.stroke();
+            context.fill();
+            context.restore();
+
+            context.drawImage(ib, i * this.cell_w, 0, this.cell_w, this.cell_h, 0, margin + i * imageW + gap * i + 5, imageW, imageH);
+            context.drawImage(iw, i * this.cell_w, 0, this.cell_w, this.cell_h, 98, margin + i * imageW + gap * i + 5, imageW, imageH);
+
+        }
     }
 }
