@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GameRESTController{
 
     @Autowired
-    UserDB userDB;
+    GameRepository gr;
 
     @GetMapping(path="/users")
-    public @ResponseBody Iterable<User> getAllUsers(){
-        return userDB.DEBUG_getUserRepository().findAll();
+    public @ResponseBody Iterable<MongoTest> getAllUsers(){
+        return gr.findAll();
 
     }
 
