@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
-<script src="js/game/point.js"></script>
-<script src="js/game/painter.js"></script>
-<script src="js/game/chesspieces.js"></script>
-<script src="js/game/player.js"></script>
-<script src="js/game/ai.js"></script>
-<script src="js/game/game.js"></script>
-<script src="js/game/utilities.js"></script>
+<script src="static/js/game/point.js"></script>
+<script src="static/js/game/painter.js"></script>
+<script src="static/js/game/chesspieces.js"></script>
+<script src="static/js/game/player.js"></script>
+<script src="static/js/game/ai.js"></script>
+<script src="static/js/game/game.js"></script>
+<script src="static/js/game/utilities.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<table id = tb width="840" height="640" align="center" valign="middle">
+    <tr>
+        <td id = "tb_canvas" width="640" height="640">
+            <canvas id="canvas_cb" width="640" height="640"> </canvas>
+        </td>
+        <td id = "tb_right1" width="200" height="640">
+            <canvas id="canvas_st" width="160" height="640"></canvas>
+        </td>
+    </tr>
 
-<div id="main" style="width:900px;heigh：640">
-    <div id="left" style="width:640px;float:left;">
-        <canvas id="canvas_cb" width="640" height="640"> </canvas>
-    </div>
-    <div id="right" style="width:900px;float:left;"></div>
-<div>
+</table>
 
-
-</div>
 </body>
 
 <script >

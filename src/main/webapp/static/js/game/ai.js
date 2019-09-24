@@ -7,6 +7,6 @@ class AI{
         let s = this.stratego
         setTimeout(function (){
             s.switchTurn();
-        }, 5000);
+        }, 1000);
     }
 }
