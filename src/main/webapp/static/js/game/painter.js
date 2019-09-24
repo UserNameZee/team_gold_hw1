@@ -36,6 +36,8 @@ class Painter{
     clean(){
         let context = this.canvas.getContext("2d");
         context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        context = this.canvas_st.getContext("2d");
+        context.clearRect(0, 0, this.canvas_st.width, this.canvas_st.height);
     }
     /*
      * Draw ChessBoard
@@ -123,12 +125,13 @@ class Painter{
             imageObj = this.game.imageObjs.get(IMAGE_PATH[1]);
         }
         context.fillStyle= colorB;
-        context.stroke();
         context.fill();
+        context.stroke();
+
 
         if (!piece.isHide){
             context.drawImage(imageObj, piece.rank * this.cell_w, 0, this.cell_w, this.cell_h, shiftX + ssx, shiftY + ssy, imageW, imageH)
-            context.font="10 Verdana";
+            context.font="10px Verdana";
             context.fillStyle= colorW;
             rank = rank == 0 ? "B" : (rank == "11" ? "F" : rank);
             context.fillText("RANK " + rank, shiftX + ssx + 5, shiftY + ssy + 45);
@@ -214,36 +217,72 @@ class Painter{
     }
 
     updataStanding(){
+        let team1 = this.game.chessPieces.team1, team2 = this.game.chessPieces.team2;
         let context = this.canvas_st.getContext("2d");
+        let cw = this.canvas_st.width, ch = this.canvas_st.height; //200, 640
         let imageW = 64 * 0.65;
         let imageH = 64 * 0.65;
-        let margin = 48;
+        let marginY = 40;
+        let marginX = 5;
         let gap = 8;
+
+        //background
+        context.save();
+        context.lineWidth = "2";
+        context.fillStyle= "#D3AA45";
+        context.strokeStyle = "#000000";
+        context.beginPath();
+        context.rect(0, 0, cw, ch);
+        context.closePath()
+        context.fill();
+        context.stroke();
+        context.restore();
+
+        context.save;
+        context.font="30px Verdana";
+        context.fillStyle= "#000000";
+        context.textAlign = "center";
+        context.fillText("STANDING", cw / 2, 30);
+        context.restore();
 
         for (let i = 0; i < 12; i++){
             let ib = this.game.imageObjs.get(IMAGE_PATH[0]);
             let iw = this.game.imageObjs.get(IMAGE_PATH[1]);
-
-            context.save();
+            //black
+            context.save;
             context.lineWidth = "2";
             context.fillStyle= "#000000";
             context.strokeStyle = "#000000";
             context.beginPath();
-            context.rect(0, margin + i * imageW + gap * i, this.cell_w * 0.65, this.cell_h * 0.65);
+            context.rect(cw/2 - imageW - marginX, marginY + i * imageW + gap * i, this.cell_w * 0.65, this.cell_h * 0.65);
             context.closePath()
-            context.stroke();
             context.fill();
+            context.stroke();
 
+            //white
             context.fillStyle= "#ffffff";
             context.beginPath();
-            context.rect(98, margin + i * imageW + gap * i, this.cell_w * 0.65, this.cell_h * 0.65);
-            context.closePath()
-            context.stroke();
+            context.rect(cw/2 + marginX, marginY + i * imageW + gap * i, this.cell_w * 0.65, this.cell_h * 0.65);
+            context.closePath();
             context.fill();
+            context.stroke();
             context.restore();
 
-            context.drawImage(ib, i * this.cell_w, 0, this.cell_w, this.cell_h, 0, margin + i * imageW + gap * i + 5, imageW, imageH);
-            context.drawImage(iw, i * this.cell_w, 0, this.cell_w, this.cell_h, 98, margin + i * imageW + gap * i + 5, imageW, imageH);
+
+            context.drawImage(ib, i * this.cell_w, 0, this.cell_w, this.cell_h, cw/2 - imageW - marginX, marginY + i * imageW + gap * i + 5, imageW, imageH);
+            context.drawImage(iw, i * this.cell_w, 0, this.cell_w, this.cell_h, cw/2 + marginX, marginY + i * imageW + gap * i + 5, imageW, imageH);
+
+
+            context.save;
+            context.font="20px Verdana";
+            context.fillStyle= "#000000";
+            context.textAlign = "right";
+            context.fillText(team1[i].length + "X", cw/2 - 55, marginY + i * imageW + gap * i + 30);
+            context.fillStyle= "#ffffff";
+            context.textAlign = "left";
+            context.fillText("X" + team2[i].length, cw/2 + 55 , marginY + i * imageW + gap * i + 30);
+            context.restore();
+
 
         }
     }

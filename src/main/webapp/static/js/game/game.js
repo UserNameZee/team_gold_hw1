@@ -32,7 +32,6 @@ function preLoadImages() {
     }
 }
 
-
  class Stratego {
 
     init(ImageObjs){
@@ -40,7 +39,7 @@ function preLoadImages() {
         this.player1.isTurn = false;
         this.player2 = new Player(2);
         this.player2.isTurn = true;
-        this.ai = new AI(this);
+        // this.ai = new AI(this);
 
         this.imageObjs = ImageObjs;
         this.canvas = $("#canvas_cb")[0];
@@ -72,7 +71,8 @@ function preLoadImages() {
             //Move chess piece
             if(stratego.player2.isTurn && (chessBoardData[y][x] == null || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true){
                 let result = stratego.moveChessPiece(stratego.player2, x, y);
-                stratego.ai.fakeMove();
+                // stratego.ai.fakeMove();
+                stratego.switchTurn();
             }
 
             stratego.painter.draw();
