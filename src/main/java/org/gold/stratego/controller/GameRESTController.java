@@ -1,5 +1,4 @@
 package org.gold.stratego.controller;
-
 import org.gold.stratego.database.GameRepository;
 import org.gold.stratego.database.entities.MongoTest;
 import org.springframework.beans.factory.annotation.Autowired;
