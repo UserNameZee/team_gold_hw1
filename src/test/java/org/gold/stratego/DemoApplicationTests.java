@@ -2,6 +2,7 @@ package org.gold.stratego;
 
 import org.gold.stratego.database.UserRepository;
 import org.gold.stratego.database.entities.User;
+import org.gold.stratego.database.entities.MongoTest;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.runner.RunWith;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.gold.stratego.database.UserDB;
+import org.gold.stratego.database.GameRepository;
 import org.gold.stratego.database.UserDB.UserAuthenticationStatus;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.ApplicationContext;
@@ -31,6 +33,9 @@ public class DemoApplicationTests {
     @Autowired
     private UserRepository userRepository;
 
+	@Autowired
+	private GameRepository gr;
+
 	//store all the test users we make here so we can delete afterwards.
     private ArrayList<String> testusernames = new ArrayList();
 
@@ -46,7 +51,7 @@ public class DemoApplicationTests {
 	    //Ensure the repository beans are correctly loaded by Spring.
 	    assertNotNull(userDB);
 	    assertNotNull(userRepository);
-
+	    assertNotNull(gr);
 	}
 
     /**
@@ -125,6 +130,16 @@ public class DemoApplicationTests {
             userDB.insertUser(username, password);
             assertFalse(userDB.insertUser(username, password));
     }
+
+	/**
+	 * Demo MongoDB test
+	 */
+	@Test
+	public void MongoDB_test(){
+		MongoTest mt = new MongoTest();
+		mt.setName(generateRandomString());
+		gr.save(mt);
+	}
 
 
 

@@ -7,13 +7,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.gold.stratego.database.UserRepository;
+import org.gold.stratego.database.GameRepository;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.Arrays;
 
 @SpringBootApplication
 @ComponentScan({"org.gold.stratego"})
 @EnableJpaRepositories(basePackageClasses={UserRepository.class})
+@EnableMongoRepositories(basePackageClasses ={GameRepository.class})
+
 public class DemoApplication {
 
 	public static void main(String[] args) {
