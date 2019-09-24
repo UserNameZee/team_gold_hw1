@@ -107,7 +107,7 @@ class ChessPieces {
         let tx = 0, ty = 3;
         let bx = 0, by = 6;
 
-        let sis1 = Tools.getSlotsIdSet(0);
+        let sis1 = Tools.getAiIdSet();
         let sis2 = Tools.getSlotsIdSet(60);
 
         for(let r = 0; r < 13; r++){
