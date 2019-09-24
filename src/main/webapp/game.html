@@ -12,28 +12,59 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link href="static/css/game.css" rel="stylesheet" type="text/css" />
+    <title>Welcom Come Back</title>
 </head>
-<body>
-<div>
-    <button type = "button" id = setup disabled> SETUP </button>
-    <button type = "button" id = start disabled> START </button>
-    <button type = "button" id = surrender disabled> SURRENDER </button>
-</div>
-<div class = "chessboard_parent">
-    <div  class = "chessboard">
-        <table id = tb width="840" height="640">
+
+<body class = background>
+<div style = "display:inline">
+    <div class = "c_left_div" id = "left_div">
+        <table style = "witdh: 252px; border-collapse: separate; border-spacing: 0px 0px; padding: 0px;">
             <tr>
-                <td id = "tb_canvas" width="640" height="640">
-                    <canvas id="canvas_cb" width="640" height="640"> </canvas>
+                <td>
+                    <p style="font-size: xx-large">User Name</p>
                 </td>
-                <td id = "tb_right1" width="200" height="640">
-                    <canvas id="canvas_st" width="200" height="640"></canvas>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>
+                    <button class = btn type = "button" id = start disabled> START </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class = btn type = "button" id = setup disabled> SETUP </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button  class = btn type = "button" id = surrender disabled> SURRENDER </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button  class = btn type = "button" id = back disabled> BACK </button>
                 </td>
             </tr>
         </table>
     </div>
+    <div id="clear"></div>
+    <div class = "chessboard_parent" style="float:left">
+        <div  class = "chessboard">
+            <table id = tb width="840" height="640">
+                <tr>
+                    <td id = "tb_canvas" width="640" height="640">
+                        <canvas id="canvas_cb" width="640" height="640"> </canvas>
+                    </td>
+                    <td id = "tb_right1" width="200" height="640">
+                        <canvas id="canvas_st" width="200" height="640"></canvas>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
+
 
 </body>
 

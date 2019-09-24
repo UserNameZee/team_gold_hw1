@@ -8,11 +8,11 @@ class AI{
         setTimeout(function (){
             s.switchTurn();
         }, 1000);
-
     }
     aiMove(){
-        let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,this.stratego.team1)
-        this.makeGuesses(mov_arr,this.stratego.chessBoardData)
+        let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,this.stratego.team1);
+        this.makeGuesses(mov_arr,this.stratego.chessBoardData);
+
     }
 
     /*
@@ -26,6 +26,37 @@ class AI{
     makeGuesses(movableArr,board){
         //  做一个 for loop for movable pieces
         // 每一个 可以移动的棋子检测 周围 的分数
+        if (movableArr == undefined)
+            return;
+        for (let i  in movableArr){
+
+        }
+
+    }
+
+    // 保护国旗移动加分。
+    // 分数小要逃跑
+    // 冲锋： 对面棋子却大分数越高   对棋子分类{
+    // 分数/2.5
+    // 踩地雷   	  -1
+    //
+    // 优先级：
+    // 1.间谍：8
+    // 2.冲锋  1
+    // 3.工兵  4     最后一个和对手地雷不小于1变为     7
+    //
+    // 4    3
+    // 5    4
+    // 6    5
+    // 7    6
+    // 8    7
+    // 9    8
+    // 10司令   10
+    // B炸弹    7
+    // F国旗    999
+
+    markingThePoint( ){
+
 
     }
 
@@ -59,15 +90,13 @@ class AI{
     movablePieces(target,x,y) {
         if (x < 0 && y <0 && x > 9 && y > 9)
             return false;
-        if (target == "water")
+        if (target == undefined)
+            return true;
+        else if (target == "water")
             return false;
         else if (target.team == 1)
             return false
         else
             return true;
     }
-
-
-
-
 }
