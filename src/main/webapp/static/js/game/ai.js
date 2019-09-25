@@ -225,12 +225,6 @@ class AI{
 
     }
 
-    calScore(obj,board){
-        return 1;
-    }
-
-
-
 
     comparePieces(att,def) {
         if (att.rank > def.rank)
