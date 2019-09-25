@@ -23,13 +23,13 @@ class AI{
 
     }
     makeGuesses(movableArr,board){
-        // //  做一个 for loop for movable pieces
-        // // 每一个 可以移动的棋子检测 周围 的分数
-        // let minMax= new Node();
-        // if (movableArr == undefined)
-        //     return  null;
-        // for (let i  in movableArr){
-        //     minMax.appendChild()
+        //  做一个 for loop for movable pieces
+        // 每一个 可以移动的棋子检测 周围 的分数
+        let minMax= new Node();
+        if (movableArr == undefined)
+            return  null;
+        for (let i  in movableArr){
+            minMax.appendChild()
 
 
 
