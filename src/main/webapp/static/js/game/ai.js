@@ -12,7 +12,6 @@ class AI{
     aiMove(){
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,this.stratego.team1);
         this.makeGuesses(mov_arr,this.stratego.chessBoardData);
-
     }
 
     /*
@@ -26,13 +25,24 @@ class AI{
     makeGuesses(movableArr,board){
         //  做一个 for loop for movable pieces
         // 每一个 可以移动的棋子检测 周围 的分数
+        let minMax= new Node();
         if (movableArr == undefined)
-            return;
+            return  null;
         for (let i  in movableArr){
+            minMax.appendChild()
+
+
+
+
+
+
+
+
+
 
         }
-
     }
+
 
     // 保护国旗移动加分。
     // 分数小要逃跑
@@ -69,19 +79,29 @@ class AI{
 
     /*寻找所有棋子，可移动棋子加入array */
     findMovablePieces(board,AI){
-        let movable_pieces = [];
+        let movable_pieces = new Array();
         for (let y = 0 ; y < AI.length; y++){
             let x_length = AI[y].length;
             for(let x = 0 ; x < x_length.length; x++){
-                if (this.movablePieces(board[x-1][y],x-1,y)
-                    || this.movablePieces(board[x+1][y],x+1,y)
-                    || this.movablePieces(board[x][y-1],x,y-1)
-                    || this.movablePieces(board[x][y+1],x,y+1))
-                {
-                    movable_pieces = board[x][y];
-                }
-            }
 
+                let temp={origin: board[x][y]}
+                if(this.movablePieces(board[x-1][y],x-1,y)){
+                    temp.left=board[x-1][y];
+                }
+                if(this.movablePieces(board[x+1][y],x+1,y)){
+                    temp.right=board[x+1][y];
+                }
+                if(this.movablePieces(board[x][y-1],x,y-1)){
+                    temp.above=board[x][y-1];
+                }
+                if(this.movablePieces(board[x][y+1],x,y+1)){
+                    temp.below=board[x][y+1];
+                }
+                if(Object.keys(temp).length>1){
+                    movable_pieces.append(temp);
+                }
+
+            }
         }
         return movable_pieces;
     }
@@ -99,4 +119,6 @@ class AI{
         else
             return true;
     }
+
+
 }
