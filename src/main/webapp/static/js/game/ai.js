@@ -2,6 +2,7 @@ class AI{
     constructor(stratego){
         this.stratego = stratego;
     }
+
     fakeMove(){
         if (!this.stratego.player1.isTurn) return;
         let s = this.stratego
@@ -9,6 +10,7 @@ class AI{
             s.switchTurn();
         }, 1000);
     }
+
     aiMove(){
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,this.stratego.team1);
         this.makeGuesses(mov_arr,this.stratego.chessBoardData);
@@ -29,45 +31,33 @@ class AI{
         if (movableArr == undefined)
             return  null;
         for (let i  in movableArr){
-            minMax.appendChild()
-
-
-
-
-
-
-
-
+            minMax.appendChild();
 
 
         }
     }
 
 
-    // 保护国旗移动加分。
-    // 分数小要逃跑
-    // 冲锋： 对面棋子却大分数越高   对棋子分类{
-    // 分数/2.5
-    // 踩地雷   	  -1
-    //
-    // 优先级：
-    // 1.间谍：8
-    // 2.冲锋  1
-    // 3.工兵  4     最后一个和对手地雷不小于1变为     7
-    //
-    // 4    3
-    // 5    4
-    // 6    5
-    // 7    6
-    // 8    7
-    // 9    8
-    // 10司令   10
-    // B炸弹    7
-    // F国旗    999
-
-    markingThePoint( ){
 
 
+
+    randomPieceMove(movableArr,board,AI){
+        if (movableArr == undefined)
+            return;
+        let pieces = Array.from(movableArr);
+        let rand_pieces = pieces[Math.floor(Math.random() * pieces.length)];
+        if (movableArr[rand_pieces].below != null){
+            this.stratego.moveChessPiece(AI,rand_pieces.pos.x,rand_pieces.pos.y-1);
+        }
+        else if (movableArr[rand_pieces].left != null){
+            this.stratego.moveChessPiece(AI,rand_pieces.pos.x-1,rand_pieces.pos.y);
+        }
+        else if (movableArr[rand_pieces].right != null){
+            this.stratego.moveChessPiece(AI,rand_pieces.pos.x+1,rand_pieces.pos.y);
+        }
+        else{
+            this.stratego.moveChessPiece(AI,rand_pieces.pos.x,rand_pieces.pos.y+1);
+        }
     }
 
     getAllMove(start,board) {
@@ -119,6 +109,96 @@ class AI{
         else
             return true;
     }
+    // 保护国旗移动加分。
+    // 分数小要逃跑
+    // 冲锋： 对面棋子却大分数越高   对棋子分类{
+    // 分数/2.5
+    // 踩地雷   	  -1
+    //
+    // 优先级：
+    // 1.间谍：8
+    // 2.冲锋  1
+    // 3.工兵  4     最后一个和对手地雷不小于1变为     7
+    //
+    // 4    3
+    // 5    4
+    // 6    5
+    // 7    6
+    // 8    7
+    // 9    8
+    // 10司令   10
+    // B炸弹    7
+    // F国旗    999
+
+    calScore(target,board){
+        let top = new Array();
+        let bot = new Array();
+        let left = new Array();
+        let right= new Array();
+        let L_top;
+        let R_top;
+        let L_bot;
+        let R_bot;
+        if (target.above != undefined){
+            let temp = target.above.pos;
+            L_top = board[temp.x-1][temp.y];
+            R_top = board[temp.x+1][temp.y];
+            top[0] =  this.comparePieces(target,target.above);
+            if (this.movablePieces(board[temp.x][temp.y+1],temp.x,temp.y+1)){
+                top[1] = this.comparePieces(target,board[temp.x][temp.y+1]);
+            }
+            else if (this.movablePieces(L_top,L_top.x,L_top.y)){
+                top[2] = this.comparePieces(target,L_top);
+            }
+            else if (this.movablePieces(R_top,R_top.x,R_top.y)){
+                top[3] = this.comparePieces(target,R_top);
+            }
+        }
+        else if(target.below != undefined){
+            let temp = target.below.pos;
+            L_bot = board[temp.x-1][temp.y];
+            R_bot = board[temp.x+1][temp.y];
+            bot[0] = this.comparePieces(target,target.below);
+            if (this.movablePieces(board[temp.x][temp.y-1],temp.x,temp.y-1)){
+                bot[1] = this.comparePieces(target,board[temp.x][temp.y-1]);
+            }
+            else if (this.movablePieces(L_bot,L_bot.x,L_bot.y)){
+                bot[2] = this.comparePieces(target,L_bot);
+            }
+            else if (this.movablePieces(R_bot,R_bot.x,R_bot.y)){
+                bot[3] = this.comparePieces(target,R_bot);
+            }
+
+        }
+        else if (target.left != undefined){
+            let temp = target.left.pos;
+            if (this.movablePieces(board[temp.x-1][temp.y],temp.x-1,temp.y)){
+                left[1] = this.comparePieces(target,board[temp.x-1][temp.y]);
+            }
+            left[2] = bot[2];
+            left[3] = top[2];
+        }
+        else if (target.right != undefined){
+            let temp = target.right.pos;
+            if (this.movablePieces(board[temp.x+1][temp.y],temp.x+1,temp.y)){
+                right[1] = this.comparePieces(target,board[temp.x+1][temp.y]);
+            }
+            right[2] = bot[3];
+            right[3] = top[3];
+        }
+        
 
 
+    }
+
+
+    comparePieces(att,def) {
+        if (att.rank > def.rank)
+            return def.rank
+        if (att.rank < def.rank)
+            return -att.rank;
+        else{
+            return 0;
+        }
+    }
 }
