@@ -244,8 +244,58 @@ class AI{
             right[2] = bot[3];
             right[3] = top[3];
         }
-        
 
+        
+        if (this.count_sorce(top) > this.count_sorce(bot)){
+            if (this.count_sorce(top) > this.count_sorce(left)){
+                if (this.count_sorce(top) > this.count_sorce(right)){
+                    let dic = {socre:this.count_sorce(top),des:"top"};
+                    return dic;
+                }else {
+                    let dic = {socre:this.count_sorce(right),des:"right"};
+                    return dic;
+                }
+            }else {
+                if (this.count_sorce(left) > this.count_sorce(right)){
+                    let dic = {socre:this.count_sorce(left),des:"left"};
+                    return dic;
+                }else {
+                    let dic = {socre:this.count_sorce(right),des:"right"};
+                    return dic;
+                }
+            }
+        }else{
+            if (this.count_sorce(bot) > this.count_sorce(left)){
+                if (this.count_sorce(bot) > this.count_sorce(right)){
+                    let dic = {socre:this.count_sorce(bot),des:"bot"};
+                    return dic;
+                }else {
+                    let dic = {socre:this.count_sorce(right),des:"right"};
+                    return dic;
+                }
+            }else {
+                if (this.count_sorce(left) > this.count_sorce(right)){
+                    let dic = {socre:this.count_sorce(left),des:"left"};
+                    return dic;
+                }else {
+                    let dic = {socre:this.count_sorce(right),des:"right"};
+                    return dic;
+                }
+            }
+
+        }
+
+    }
+
+    count_sorce(arr){
+        let temp = arr[0];
+        for (let i in arr){
+            if (arr[i]< 0)
+                return arr[i];
+            if (temp < arr[i])
+                temp = arr[i];
+        }
+        return temp;
 
     }
 
