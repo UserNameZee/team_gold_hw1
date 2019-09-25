@@ -10,6 +10,8 @@ import org.gold.stratego.database.UserRepository;
 import org.gold.stratego.database.GameRepository;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
+
 
 import java.util.Arrays;
 

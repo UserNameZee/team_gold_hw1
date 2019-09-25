@@ -51,7 +51,7 @@ public class LoginController{
     @PostMapping("/login")
         public Map<String, String> login(@RequestParam("userName") String userName,
                                          @RequestParam("password") String password,
-                                         HttpServletRequest request) {
+                                         HttpSession session) {
             Map<String, String> hashMap = new HashMap<>();
             if(userDB.authenticateUser(userName,password)== UserDB.UserAuthenticationStatus.SUCCESSFUL){
                 hashMap.put("success", "true");
@@ -67,7 +67,9 @@ public class LoginController{
     @ResponseBody
     @GetMapping("/loadUserInfo")
     public String loadUserInfo(HttpSession session)throws Exception{
-        return session.getAttribute("name").toString();
+
+        //return session.getAttribute("name").toString();
+        return session.getId();
     }
 
 

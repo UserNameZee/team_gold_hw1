@@ -11,6 +11,12 @@ spring:
     url: jdbc:mysql://cs-goldteam-server.mysql.database.azure.com:3306/stratego
     username: goldroot@cs-goldteam-server
     password: Cse#)*Gold
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+      schema: classpath:org/springframework/session/jdbc/schema-mysql.sql
+      table-name: SPRING_SESSION
   #MongoDB for game data
   data:
     mongodb:

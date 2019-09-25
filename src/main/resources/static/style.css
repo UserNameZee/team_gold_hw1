@@ -18,18 +18,18 @@
 }
 
 .login{
-    z-index: 2;
+    /*z-index: 2;*/
     position:absolute;
     width: 350px;
     border-radius: 5px;
-    height: 500px;
-    background: white;
+    height: 100%;
+    background: gold;
     box-shadow: 0px 0px 5px #333333;
-    top: 50%;left: 50%;
-    margin-top: -250px;
-    margin-left: -175px;
-    transition: all 1s;
-    opacity: 0.8;
+    /*!*top: 0px;left: 9.5%;*!*/
+    /*margin-top: -250px;*/
+    /*margin-left: -175px;*/
+    /*transition: all 1s;*/
+    /*opacity: 0.8;*/
 }
 .login-top{
     font-size: 24px;
@@ -121,12 +121,13 @@
 
 .sidenav {
     height: 100%;
-    width: 400px;
+    width: 302px;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    opacity: 0.8;
+    background-color: #ffc81e;
     overflow-x: hidden;
 }
 
@@ -143,10 +144,18 @@
 }
 
 .content {
-    margin-left: 400px;
-    padding-left: 20px;
+    position: absolute;
+    margin:auto;
+    margin-left: 302px;
+    width: 1000px;
+    length: 900px;
+    background: white;
+    opacity: 0.8;
+    top: 8%;left: 5%;
+    box-shadow: 0px 0px 30px #ffe700;
+
 }
-.btn {
+.btn1 {
     border: none;
     background-color: inherit;
     padding: 14px 28px;
@@ -154,7 +163,30 @@
     cursor: pointer;
     display: inline-block;
 }
-.btn:hover {background: #eee;}
+.btn1:hover {background: #eee;}
+
+.btn2 {
+    margin: 0;
+    position: relative;
+    background-color: #ffd700;
+    border: none;
+    font-size: 28px;
+    color: #000000;
+    padding: 20px;
+    width: 302px;
+    text-align: left;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.btn2:hover {
+    background-color: #000000;
+    color: #ffffff;
+    opacity: 0.8
+}
 
 .prev{
     color: green;

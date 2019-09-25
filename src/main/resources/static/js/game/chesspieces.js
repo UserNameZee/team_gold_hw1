@@ -107,7 +107,7 @@ class ChessPieces {
         let tx = 0, ty = 3;
         let bx = 0, by = 6;
 
-        let sis1 = Tools.getSlotsIdSet(0);
+        let sis1 = Tools.getAiIdSet();
         let sis2 = Tools.getSlotsIdSet(60);
 
         for(let r = 0; r < 13; r++){
@@ -119,7 +119,7 @@ class ChessPieces {
 
                 this.team1[r][p] = new Piece(id, 1, r, MOVE_TYPE_WITH_DIFF_RANK[r], p1, true);
                 chessBoardData[p1.y][p1.x] = this.team1[r][p];
-                this.team1[r][p].isHide = true;
+                this.team1[r][p].isHide = false;
 
                 this.team2[r][p] = new Piece(id, 2, r, MOVE_TYPE_WITH_DIFF_RANK[r], p2, false);
                 chessBoardData[p2.y][p2.x] = this.team2[r][p];
