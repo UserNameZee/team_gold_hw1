@@ -71,7 +71,7 @@ class AI{
     findMovablePieces(board,AI){
         let movable_pieces = [];
         for (let y = 0 ; y < AI.length; y++){
-            let x_length = AI.length[y];
+            let x_length = AI[y].length;
             for(let x = 0 ; x < x_length.length; x++){
                 if (this.movablePieces(board[x-1][y],x-1,y)
                     || this.movablePieces(board[x+1][y],x+1,y)
