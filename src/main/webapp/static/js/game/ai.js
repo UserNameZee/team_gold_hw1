@@ -25,22 +25,37 @@ class AI{
     makeGuesses(movableArr,board){
         //  做一个 for loop for movable pieces
         // 每一个 可以移动的棋子检测 周围 的分数
-        let minMax= new Node();
-        if (movableArr == undefined)
+        let minMax= movableArr;
+        if (minMax == undefined)
             return  null;
-        for (let i  in movableArr){
-            minMax.appendChild()
-
-
-
-
-
-
-
-
-
-
+        //calculate all the score in the minmax array
+        for (let i  in minMax){
+            let temp=this.calScore(i,board)
+            i.socre=temp;
         }
+        var max=0;
+        var result;
+        //get max score in the minmax array
+        for(let j in minMax){
+            if(j.score>max){
+                max=j.score;
+                result=j;
+            }
+        }
+
+        return result
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -87,20 +102,31 @@ class AI{
                 let temp={origin: board[x][y]}
                 if(this.movablePieces(board[x-1][y],x-1,y)){
                     temp.left=board[x-1][y];
-                }
-                if(this.movablePieces(board[x+1][y],x+1,y)){
-                    temp.right=board[x+1][y];
-                }
-                if(this.movablePieces(board[x][y-1],x,y-1)){
-                    temp.above=board[x][y-1];
-                }
-                if(this.movablePieces(board[x][y+1],x,y+1)){
-                    temp.below=board[x][y+1];
-                }
-                if(Object.keys(temp).length>1){
-                    movable_pieces.append(temp);
+                }else{
+                    temp.left=null ;
                 }
 
+                if(this.movablePieces(board[x+1][y],x+1,y)){
+                    temp.right=board[x+1][y];
+                }else{
+                    temp.right=null;
+                }
+
+                if(this.movablePieces(board[x][y-1],x,y-1)){
+                    temp.above=board[x][y-1];
+                }else{
+                    temp.above=null;
+                }
+
+                if(this.movablePieces(board[x][y+1],x,y+1)){
+                    temp.below=board[x][y+1];
+                }else{
+                    temp.below=null;
+                }
+
+                if(temp.above!=null||temp.below!=null||temp.left!=null||temp.right!=null){
+                    movable_pieces.append(temp);
+                }
             }
         }
         return movable_pieces;
@@ -119,6 +145,12 @@ class AI{
         else
             return true;
     }
+
+    calScore(obj,board){
+        return 1;
+    }
+
+
 
 
 }
