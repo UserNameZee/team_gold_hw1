@@ -152,7 +152,7 @@
     background: white;
     opacity: 0.8;
     top: 8%;left: 5%;
-    box-shadow: 0px 0px 30px #ffe600;
+    box-shadow: 0px 0px 30px #ffe700;
 
 }
 .btn1 {
@@ -168,7 +168,7 @@
 .btn2 {
     margin: 0;
     position: relative;
-    background-color: #ffd600;
+    background-color: #ffd700;
     border: none;
     font-size: 28px;
     color: #000000;
