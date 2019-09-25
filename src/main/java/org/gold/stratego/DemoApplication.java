@@ -14,7 +14,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.util.Arrays;
 
 @SpringBootApplication
-@ComponentScan({"org.gold.stratego"})
 @EnableJpaRepositories(basePackageClasses={UserRepository.class})
 @EnableMongoRepositories(basePackageClasses ={GameRepository.class})
 

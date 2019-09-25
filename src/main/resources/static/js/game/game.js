@@ -7,8 +7,8 @@
  */
 
 IMAGE_PATH = [
-    "static/img/cards_w.png",
-    "static/img/cards_b.png"
+    "/img/cards_w.png",
+    "/img/cards_b.png"
 ]
 
 /*

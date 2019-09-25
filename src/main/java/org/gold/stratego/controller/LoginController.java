@@ -57,7 +57,6 @@ public class LoginController{
                 hashMap.put("success", "true");
                 HttpSession sessoin=request.getSession();
                 sessoin.setAttribute("name",userName);
-
             }else{
                 hashMap.put("success", "false");
             }
