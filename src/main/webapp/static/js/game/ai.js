@@ -31,8 +31,8 @@ class AI{
         for (let i  in movableArr){
 
         }
-
     }
+
 
     // 保护国旗移动加分。
     // 分数小要逃跑
