@@ -12,18 +12,52 @@ class AI{
     }
 
     aiMove(){
+        console.log("AI turn starts")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,this.stratego.team1);
-        this.makeGuesses(mov_arr,this.stratego.chessBoardData);
+        console.log("movable array"+mov_arr);
+        let des = this.makeGuesses(mov_arr,this.stratego.chessBoardData).origin;
+        console.log("des"+des);
+        let ox=des.pos.x;
+        let oy=des.pos.y;
+        let go=des.des;
+        let dx=ox;
+        let dy=oy;
+        if(go=="top"){
+             dx=ox;
+             dy=oy-1;
+        }else if(go=="bot"){
+             dx=ox;
+             dy=oy=1;
+        }else if(go=="left"){
+             dx=ox-1;
+             dy=oy;
+        }else{
+             dx=ox+1;
+             dy=oy;
+        }
+
+
+
+        this.select(ox,oy);
+        this.stratego.moveChessPiece(this.stratego.player1, dx, dy);
+        this.stratego.switchTurn();
+
+
     }
 
-    /*
-    *  GetBoard, get player move
-    * */
-    GetAIMove(playermove,board){
-
-
-
+    select (x, y) {
+        let stratego= this.stratego;
+        if (stratego.chessBoardData[y][x] != null && stratego.chessBoardData[y][x].team == 1){
+            stratego.player1.isSelect = true;
+            stratego.player1.lastSelectPos.assign(stratego.player1.selectPos);
+            stratego.player1.lastSelectPiece = stratego.player1.selectPiece;
+            stratego.player1.selectPos.setXY(x, y);
+            stratego.player1.selectPiece =stratego.chessBoardData[y][x];
+        }
     }
+
+
+
     makeGuesses(movableArr,board){
         //  做一个 for loop for movable pieces
         // 每一个 可以移动的棋子检测 周围 的分数
@@ -33,7 +67,8 @@ class AI{
         //calculate all the score in the minmax array
         for (let i  in minMax){
             let temp=this.calScore(i,board)
-            i.socre=temp;
+            i.socre=temp.score;
+            i.des=temp.des;
         }
         var max=0;
         var result;
@@ -46,17 +81,6 @@ class AI{
         }
 
         return result
-
-
-
-
-
-
-
-
-
-
-
 
     }
 
