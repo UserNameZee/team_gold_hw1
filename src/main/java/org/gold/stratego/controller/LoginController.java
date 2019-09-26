@@ -55,10 +55,8 @@ public class LoginController{
             Map<String, String> hashMap = new HashMap<>();
             if(userDB.authenticateUser(userName,password)== UserDB.UserAuthenticationStatus.SUCCESSFUL){
                 hashMap.put("success", "true");
-                //HttpSession sessoin=request.getSession();
-                session.setAttribute("name",userName);
-                hashMap.put("id", session.getId());
-
+                HttpSession sessoin=request.getSession();
+                sessoin.setAttribute("name",userName);
             }else{
                 hashMap.put("success", "false");
             }

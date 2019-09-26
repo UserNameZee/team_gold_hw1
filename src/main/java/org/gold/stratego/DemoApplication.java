@@ -16,7 +16,6 @@ import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHtt
 import java.util.Arrays;
 
 @SpringBootApplication
-@ComponentScan({"org.gold.stratego"})
 @EnableJpaRepositories(basePackageClasses={UserRepository.class})
 @EnableMongoRepositories(basePackageClasses ={GameRepository.class})
 
