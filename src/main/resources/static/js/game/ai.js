@@ -65,21 +65,21 @@ class AI{
         //  做一个 for loop for movable pieces
         // 每一个 可以移动的棋子检测 周围 的分数
         console.log("enter make guesses")
-        let minMax= movableArr;
-        if (minMax == undefined)
-            return  null;
+
         //calculate all the score in the minmax array
-        for (let i  in minMax){
-            let temp=this.calScore(i,board)
+        for (let i =0; i<movableArr.length;i++){
+            console.log("the element is "+ movableArr[i]);
+            let temp=this.calScore(movableArr[i],board)
             console.log("cal Score: "+temp);
+            console.log("temp score"+ parseInt(temp.score));
             i.socre=temp.score;
             i.des=temp.des;
         }
         var max=0;
         var result;
         //get max score in the minmax array
-        for(let j in minMax){
-            if(j.score>max){
+        for(let j in movableArr){
+            if(j.score>=max){
                 max=j.score;
                 result=j;
             }
@@ -231,8 +231,19 @@ class AI{
         let R_bot;
         if (target.above != undefined){
             let temp = target.above.pos;
-            L_top = board[temp.x-1][temp.y];
-            R_top = board[temp.x+1][temp.y];
+            if(temp.x>1){
+                L_top = board[temp.x-1][temp.y];
+            }else{
+                L_top="null";
+            }
+            if(temp.x<9){
+                R_top = board[temp.x+1][temp.y];
+            }else{
+                R_top="null";
+            }
+
+
+
             top[0] =  this.comparePieces(target,target.above);
             if (this.movablePieces(board[temp.x][temp.y+1],temp.x,temp.y+1)){
                 top[1] = this.comparePieces(target,board[temp.x][temp.y+1]);
@@ -277,44 +288,38 @@ class AI{
             right[3] = top[3];
         }
 
-        
+        let dic={score: -999, des: "null"}
         if (this.count_sorce(top) > this.count_sorce(bot)){
             if (this.count_sorce(top) > this.count_sorce(left)){
                 if (this.count_sorce(top) > this.count_sorce(right)){
-                    let dic = {socre:this.count_sorce(top),des:"top"};
-                    return dic;
+                    dic = {socre:this.count_sorce(top),des:"top"};
                 }else {
-                    let dic = {socre:this.count_sorce(right),des:"right"};
-                    return dic;
+                    dic = {socre:this.count_sorce(right),des:"right"};
                 }
             }else {
                 if (this.count_sorce(left) > this.count_sorce(right)){
-                    let dic = {socre:this.count_sorce(left),des:"left"};
-                    return dic;
+                    dic = {socre:this.count_sorce(left),des:"left"};
                 }else {
-                    let dic = {socre:this.count_sorce(right),des:"right"};
-                    return dic;
+                    dic = {socre:this.count_sorce(right),des:"right"};
                 }
             }
+            return dic;
         }else{
             if (this.count_sorce(bot) > this.count_sorce(left)){
                 if (this.count_sorce(bot) > this.count_sorce(right)){
-                    let dic = {socre:this.count_sorce(bot),des:"bot"};
-                    return dic;
+                    dic = {socre:this.count_sorce(bot),des:"bot"};
                 }else {
-                    let dic = {socre:this.count_sorce(right),des:"right"};
-                    return dic;
+                    dic = {socre:this.count_sorce(right),des:"right"};
                 }
             }else {
                 if (this.count_sorce(left) > this.count_sorce(right)){
-                    let dic = {socre:this.count_sorce(left),des:"left"};
-                    return dic;
+                    dic = {socre:this.count_sorce(left),des:"left"};
                 }else {
-                    let dic = {socre:this.count_sorce(right),des:"right"};
-                    return dic;
+                    dic = {socre:this.count_sorce(right),des:"right"};
+
                 }
             }
-
+            return dic;
         }
 
     }
