@@ -54,9 +54,9 @@ public class LoginController{
     }
 
     @GetMapping("/login")
-    public String loginGet(Model model){
-        model.addAttribute("loginInfo", new LoginInfo());
-        return "loginTEST2.html";
+    public String loginGet(){
+        //model.addAttribute("loginInfo", new LoginInfo());
+        return "login.html";
     }
 
     /**

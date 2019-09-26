@@ -8,7 +8,14 @@
 <script>
     $(document).ready(function () {
         $("#loginbtn").click(function(){
-            $.post("/login", {username: $("#username").val(), password: $("#password").val()}, function (result){
+                var un = $("#username").val();
+                console.log(un);
+                var pw = $("#password").val();
+                console.log(pw);
+                var base = "username="
+                var auth_string = base.concat(un, "&password=", pw);
+                console.log(auth_string);
+            $.post("/login", auth_string, function (result){
                 if(result.success=="true"){
                  //  window.location.href= "info.html";
                 }else{
