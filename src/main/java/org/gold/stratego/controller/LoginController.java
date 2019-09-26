@@ -48,6 +48,7 @@ public class LoginController{
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("id", session.getId());
         hashMap.put("name", auth.getName());
+        session.setAttribute("name", auth.getName());
         //System.out.println("ID: " + session.getId());
         return hashMap;
     }
@@ -62,7 +63,7 @@ public class LoginController{
      * Handles POST request after user has submitted data.
      * @param loginInfo - instance of LoginInfo class with fields filled according to POST data.
      * @return
-     */
+     *
     @ResponseBody
     @PostMapping("/login")
         public Map<String, String> login(@RequestParam("userName") String userName,
@@ -80,14 +81,15 @@ public class LoginController{
             }
         return hashMap;
     }
+     */
 
 
     @ResponseBody
     @GetMapping("/loadUserInfo")
     public String loadUserInfo(HttpSession session)throws Exception{
 
-        //return session.getAttribute("name").toString();
-        return session.getId();
+        return session.getAttribute("name").toString();
+        //return session.getId();
     }
 
 

@@ -18,6 +18,7 @@ public class UserDBAuthenticator implements AuthenticationProvider{
         String password = authentication.getCredentials().toString();
 
         //testing
+        //TODO: modify this
         System.out.println("Got to custom auth service.");
         System.out.println(name);
         System.out.println(password);
