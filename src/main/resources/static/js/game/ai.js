@@ -326,16 +326,9 @@ class AI{
         let left_socre= this.count_sorce(left);
         let top_socre= this.count_sorce(top);
         let bot_socre= this.count_sorce(bot);
-        console.log("right be" + right_socre);
-        console.log("left be "+ left_socre);
-        console.log("top be" + top_socre);
-        console.log("bot be "+ bot_socre);
 
-
-        //console.log("right " + right);
 
         let dic={score: -999, des: "null"}
-        console.log("dic test" + dic);
         if (top_socre > bot_socre){
             if (top_socre > left_socre){
                 if (top_socre  > right_socre){
@@ -354,9 +347,7 @@ class AI{
         }else{
             if (bot_socre > left_socre){
                 if (bot_socre > right_socre){
-                    console.log("bot socre "+ bot_socre)
                     dic = {score:bot_socre,des:"bot"};
-                    console.log("bot dic is " + dic);
                 }else {
                     dic = {score:right_socre,des:"right"};
                 }
