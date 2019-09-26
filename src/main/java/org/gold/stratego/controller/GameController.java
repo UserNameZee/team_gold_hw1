@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-public class gameController {
+public class GameController {
 
     @GetMapping("/game")
     public String game(){
