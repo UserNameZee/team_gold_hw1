@@ -13,6 +13,8 @@ class AI{
 
     aiMove(){
         console.log("AI turn starts")
+        let aaa={score:0,des:999}
+        console.log(aaa)
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,this.stratego.chessPieces.team1);
          console.log("find movable array")
          console.log(mov_arr);
@@ -21,11 +23,11 @@ class AI{
         // let des= result.origin;
         // console.log("des"+des);
         // let ox=des.pos.x;
-        //         // let oy=des.pos.y;
-        //         // let go=des.des;
-        //         // let dx=ox;
-        //         // let dy=oy;
-
+        // let oy=des.pos.y;
+        // let go=des.des;
+        // let dx=ox;
+        // let dy=oy;
+        //
         // if(go=="top"){
         //     dx=ox;
         //     dy=oy-1;
@@ -43,7 +45,7 @@ class AI{
 
 
 
-
+        //random test
         let ran=Math.floor(Math.random()*mov_arr.length)
         let result=mov_arr[ran]
         console.log(result);
@@ -99,9 +101,9 @@ class AI{
             let temp=this.calScore(movableArr[i],board);
             console.log("cal Score: "+temp);
             console.log("cal Score temp score: "+temp.score);
-            console.log("temp score"+ parseInt(temp.score));
-            i.socre=temp.score;
-            i.des=temp.des;
+            console.log("cal Score temp des: "+temp.des);
+            movableArr[i].socre=temp.score;
+            movableArr[i].des=temp.des;
         }
         let max=-999;
         let result=movableArr[0];
@@ -121,24 +123,24 @@ class AI{
 
 
 
-    randomPieceMove(movableArr,board,AI){
-        if (movableArr == undefined)
-            return;
-        let pieces = Array.from(movableArr);
-        let rand_pieces = pieces[Math.floor(Math.random() * pieces.length)];
-        if (movableArr[rand_pieces].below != null){
-            this.stratego.moveChessPiece(AI,rand_pieces.pos.x,rand_pieces.pos.y-1);
-        }
-        else if (movableArr[rand_pieces].left != null){
-            this.stratego.moveChessPiece(AI,rand_pieces.pos.x-1,rand_pieces.pos.y);
-        }
-        else if (movableArr[rand_pieces].right != null){
-            this.stratego.moveChessPiece(AI,rand_pieces.pos.x+1,rand_pieces.pos.y);
-        }
-        else{
-            this.stratego.moveChessPiece(AI,rand_pieces.pos.x,rand_pieces.pos.y+1);
-        }
-    }
+    // randomPieceMove(movableArr,board,AI){
+    //     if (movableArr == undefined)
+    //         return;
+    //     let pieces = Array.from(movableArr);
+    //     let rand_pieces = pieces[Math.floor(Math.random() * pieces.length)];
+    //     if (movableArr[rand_pieces].below != null){
+    //         this.stratego.moveChessPiece(AI,rand_pieces.pos.x,rand_pieces.pos.y-1);
+    //     }
+    //     else if (movableArr[rand_pieces].left != null){
+    //         this.stratego.moveChessPiece(AI,rand_pieces.pos.x-1,rand_pieces.pos.y);
+    //     }
+    //     else if (movableArr[rand_pieces].right != null){
+    //         this.stratego.moveChessPiece(AI,rand_pieces.pos.x+1,rand_pieces.pos.y);
+    //     }
+    //     else{
+    //         this.stratego.moveChessPiece(AI,rand_pieces.pos.x,rand_pieces.pos.y+1);
+    //     }
+    // }
 
     /*寻找所有棋子，可移动棋子加入array */
     findMovablePieces(board,AI){
@@ -250,8 +252,8 @@ class AI{
         let left = new Array();
         let right= new Array();
         let L_top,L_bot,R_top,R_bot;
-        let temp_x = target.pos.x;
-        let temp_y = target.pos.y;
+        let temp_x = target.origin.pos.x;
+        let temp_y = target.origin.pos.y;
 
         if (target.above != "null"){
             let above_x = temp_x;
@@ -306,7 +308,7 @@ class AI{
         else if (target.left != "null"){
             let left_x = temp_x -1;
             let left_y = temp_y;
-            if (left_y <1 && this.movablePieces(board[left_x -1][left_y],left_x-1,left_y){
+            if (left_y <1 && this.movablePieces(board[left_x -1][left_y],left_x-1,left_y)){
                 left[1] = this.comparePieces(target,board[left_x-1][left_y]);
             }
             left[2] = bot[2];
