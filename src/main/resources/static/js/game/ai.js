@@ -72,8 +72,8 @@ class AI{
             let temp=this.calScore(movableArr[i],board)
             console.log("cal Score: "+temp);
             console.log("temp score"+ parseInt(temp.score));
-            i.socre=temp.score;
-            i.des=temp.des;
+            movableArr[i].score=temp.score;
+            movableArr[i].des=temp.des;
         }
         var max=0;
         var result;
@@ -226,8 +226,8 @@ class AI{
         let left = new Array();
         let right= new Array();
         let L_top,L_bot,R_top,R_bot;
-        let temp_x = target.pos.x;
-        let temp_y = target.pos.y;
+        let temp_x = target.origin.pos.x;
+        let temp_y = target.origin.pos.y;
 
         if (target.above != "null"){
             let above_x = temp_x;
@@ -277,12 +277,11 @@ class AI{
                     R_bot = undefined;
                 top[3] = this.comparePieces(target,R_bot);
             }
-
         }
         else if (target.left != "null"){
             let left_x = temp_x -1;
             let left_y = temp_y;
-            if (left_y <1 && this.movablePieces(board[left_x -1][left_y],left_x-1,left_y){
+            if (left_y <1 && this.movablePieces(board[left_x -1][left_y],left_x-1,left_y)){
                 left[1] = this.comparePieces(target,board[left_x-1][left_y]);
             }
             left[2] = bot[2];
@@ -298,34 +297,50 @@ class AI{
             right[3] = top[3];
         }
 
+
+        let right_socre = this.count_sorce(right);
+        let left_socre= this.count_sorce(left);
+        let top_socre= this.count_sorce(top);
+        let bot_socre= this.count_sorce(bot);
+        console.log("right be" + right_socre);
+        console.log("left be "+ left_socre);
+        console.log("top be" + top_socre);
+        console.log("bot be "+ bot_socre);
+
+
+        //console.log("right " + right);
+
         let dic={score: -999, des: "null"}
-        if (this.count_sorce(top) > this.count_sorce(bot)){
-            if (this.count_sorce(top) > this.count_sorce(left)){
-                if (this.count_sorce(top) > this.count_sorce(right)){
-                    dic = {socre:this.count_sorce(top),des:"top"};
+        console.log("dic test" + dic);
+        if (top_socre > bot_socre){
+            if (top_socre > left_socre){
+                if (top_socre  > right_socre){
+                    dic = {score:top_socre,des:"top"};
                 }else {
-                    dic = {socre:this.count_sorce(right),des:"right"};
+                    dic = {score:right_socre,des:"right"};
                 }
             }else {
-                if (this.count_sorce(left) > this.count_sorce(right)){
-                    dic = {socre:this.count_sorce(left),des:"left"};
+                if (left_socre > right_socre){
+                    dic = {score:left_socre,des:"left"};
                 }else {
-                    dic = {socre:this.count_sorce(right),des:"right"};
+                    dic = {score:right_socre,des:"right"};
                 }
             }
             return dic;
         }else{
-            if (this.count_sorce(bot) > this.count_sorce(left)){
-                if (this.count_sorce(bot) > this.count_sorce(right)){
-                    dic = {socre:this.count_sorce(bot),des:"bot"};
+            if (bot_socre > left_socre){
+                if (bot_socre > right_socre){
+                    console.log("bot socre "+ bot_socre)
+                    dic = {score:bot_socre,des:"bot"};
+                    console.log("bot dic is " + dic);
                 }else {
-                    dic = {socre:this.count_sorce(right),des:"right"};
+                    dic = {score:right_socre,des:"right"};
                 }
             }else {
-                if (this.count_sorce(left) > this.count_sorce(right)){
-                    dic = {socre:this.count_sorce(left),des:"left"};
+                if (left_socre > right_socre){
+                    dic = {score:left_socre,des:"left"};
                 }else {
-                    dic = {socre:this.count_sorce(right),des:"right"};
+                    dic = {score:right_socre,des:"right"};
 
                 }
             }
@@ -335,9 +350,9 @@ class AI{
     }
 
     count_sorce(arr){
-        let temp = arr[0];
+        let temp = -999;
         for (let i in arr){
-            if (arr[i]< 0)
+            if (arr[i]< 0 && arr[i]!=undefined)
                 return arr[i];
             if (temp < arr[i])
                 temp = arr[i];
