@@ -62,7 +62,9 @@ public class UserDB{
      * @param username
      * @param password
      * @return - true if insertion was successful
-     *           false if insertion failed. Insertion can fail if: username already exists or username is a reserved word.
+     *           false if insertion failed. Insertion can fail if: username already exists
+     *                                                             or
+     *                                                             username is a reserved word.
      */
     public Boolean insertUser(String username, String password){
 
