@@ -25,11 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception{
-        web.ignoring().antMatchers("/webapp/style.css").anyRequest();
-
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,7 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and().httpBasic()
                     .and()
                 .formLogin()
-                .loginPage("/login")
                     .permitAll();
     }
 
