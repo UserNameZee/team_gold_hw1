@@ -43,7 +43,7 @@ public class LoginController{
      */
     @ResponseBody
     @PostMapping("/login")
-    public Map<String, String> login(@RequestParam("username") String userName,
+    public Map<String, String> login(@RequestParam("userName") String userName,
                                      @RequestParam("password") String password,
                                      HttpSession session) {
         Map<String, String> hashMap = new HashMap<>();
