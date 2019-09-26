@@ -6,9 +6,9 @@
 </head>
 <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
+ $(document).ready(function () {
         $("#loginbtn").click(function(){
-            $.post("/login", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
+            $.post("/login", {username: $("#username").val(), password: $("#password").val()}, function (result){
                 if(result.success=="true"){
                    window.location.href= "info.html";
                 }else{
@@ -20,9 +20,9 @@
             $("#signupbtn").click(function(){
                 window.location.href= "signup.html";
             })
-
         })
     })
+
 </script>
 </head>
 <body>
@@ -37,7 +37,7 @@
         <div class="login-center clearfix">
             <div class="login-center-img"><img src="img/name.png"></div>
             <div class="login-center-input">
-                <input id="userName" type="text" name="" value="" placeholder="please enter your username"
+                <input id="username" type="text" name="" value="" placeholder="please enter your username"
                     onfocus="this.placeholder=''" onblur="this.placeholder='please enter your username'">
 
             </div>
