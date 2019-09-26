@@ -10,7 +10,7 @@
         $("#loginbtn").click(function(){
             $.post("/login", {username: $("#username").val(), password: $("#password").val()}, function (result){
                 if(result.success=="true"){
-                   window.location.href= "info.html";
+                 //  window.location.href= "info.html";
                 }else{
                     alert("Please check your password!")
                 }
