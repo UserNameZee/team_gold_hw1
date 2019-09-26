@@ -71,6 +71,7 @@ class AI{
         //calculate all the score in the minmax array
         for (let i  in minMax){
             let temp=this.calScore(i,board)
+            console.log("cal Score: "+temp);
             i.socre=temp.score;
             i.des=temp.des;
         }
@@ -114,50 +115,63 @@ class AI{
     /*寻找所有棋子，可移动棋子加入array */
     findMovablePieces(board,AI){
         let movable_pieces = new Array();
-        for (let x = 0 ; x < 10; x++){
-            for(let y = 0 ; y < 10; y++){
+        for (let y = 0 ; y < 10; y++){
+            for(let x = 0 ; x < 10; x++){
+                //console.log(y+"--"+x);
                 if(board[y][x]!=undefined&&board[y][x]!="water"&&board[y][x].team!=2){
-                    let temp={origin: board[x][y]}
-                    if(x>0){
-                        if(this.movablePieces(board[x-1][y],x-1,y)){
-                            temp.left=board[x-1][y];
-                        }else{
-                            temp.left=null ;
-                        }
-                    }
-
-                    if(x<9){
-                        if(this.movablePieces(board[x+1][y],x+1,y)){
-                            temp.right=board[x+1][y];
-                        }else{
-                            temp.right=null;
-                        }
-                    }
-
-
+                    //console.log("enter if")
+                    let temp={origin: board[y][x]}
                     if(y>0){
-                        if(this.movablePieces(board[x][y-1],x,y-1)){
-                            temp.above=board[x][y-1];
+                        if(this.movablePieces(board[y-1][x],y-1,x)){
+                            temp.above=board[y-1][x];
                         }else{
-                            temp.above=null;
+                            temp.above="null" ;
                         }
+                    }else{
+                        temp.above="null";
                     }
 
                     if(y<9){
-                        if(this.movablePieces(board[x][y+1],x,y+1)){
-                            temp.below=board[x][y+1];
+                        //console.log(this.movablePieces(board[y][x+1]));
+                        if(this.movablePieces(board[y+1][x],y+1,x)){
+                            temp.below=board[y+1][x];
                         }else{
-                            temp.below=null;
+                            temp.below="null";
                         }
+                    }else{
+                        temp.below="null";
                     }
 
 
+                    if(x>0){
+                        if(this.movablePieces(board[y][x-1],y,x-1)){
+                            temp.left=board[y][x-1];
+                        }else{
+                            temp.left="null";
+                        }
+                    }else{
+                        temp.left="null";
+                    }
 
-                    if(temp.above!=null||temp.below!=null||temp.left!=null||temp.right!=null){
+                    if(x<9){
+                        if(this.movablePieces(board[y][x+1],y,x+1)){
+                            //console.log("add pieces to the temp now")
+                            temp.right=board[y][x+1];
+                        }else{
+                            temp.right="null";
+                        }
+                    }else{
+                        temp.right="null";
+                    }
+
+
+                    //console.log(temp);
+                    //console.log(temp.below);
+                    if( temp.above!="null"||temp.below!="null"||temp.left!="null"||temp.right!="null" ){
+                        //console.log(" push pieces into movable pieces")
                         movable_pieces.push(temp);
                     }
                 }
-
             }
         }
         return movable_pieces;
@@ -165,16 +179,25 @@ class AI{
 
 
     movablePieces(target,x,y) {
-        if (x < 0 && y <0 && x > 9 && y > 9)
+        if (x < 0 || y <0 || x > 9 || y > 9){
+            //console.log("111")
             return false;
-        if (target == undefined)
+        }
+
+        if (target == undefined){
+            //console.log("222")
             return true;
-        else if (target == "water")
+        }else if (target == "water"){
+            //console.log("333")
             return false;
-        else if (target.team == 1)
+        }else if (target.team == 1){
+            //console.log("444")
             return false
-        else
+        }else{
             return true;
+        }
+
+
     }
     // 保护国旗移动加分。
     // 分数小要逃跑
