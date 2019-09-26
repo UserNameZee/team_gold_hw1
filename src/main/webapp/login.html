@@ -8,7 +8,7 @@
 <script>
  $(document).ready(function () {
         $("#loginbtn").click(function(){
-            $.post("/login", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
+            $.post("/login", {username: $("#username").val(), password: $("#password").val()}, function (result){
                 if(result.success=="true"){
                    window.location.href= "info.html";
                 }else{

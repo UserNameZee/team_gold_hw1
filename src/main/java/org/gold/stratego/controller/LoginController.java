@@ -59,6 +59,27 @@ public class LoginController{
         return "login_ss.html";
     }
 
+    @ResponseBody
+    @PostMapping("/login")
+    public Map<String, String> login(@RequestParam("username") String userName,
+                                     @RequestParam("password") String password,
+                                     HttpSession session) {
+        System.out.println("Im in the handler.");
+        Map<String, String> hashMap = new HashMap<>();
+        UserDB.UserAuthenticationStatus status = userDB.authenticateUser(userName, password);
+        if (status == UserDB.UserAuthenticationStatus.SUCCESSFUL) {
+            hashMap.put("success", "true");
+            session.setAttribute("auth", "true");
+            session.setAttribute("name", userName);
+        }
+        else {
+            hashMap.put("success", "false");
+            session.setAttribute("auth", "false");
+        }
+        return hashMap;
+    }
+
+
     /**
      * Handles POST request after user has submitted data.
      * @param loginInfo - instance of LoginInfo class with fields filled according to POST data.
@@ -88,8 +109,9 @@ public class LoginController{
     @GetMapping("/loadUserInfo")
     public String loadUserInfo(HttpSession session)throws Exception{
 
+        if (session.getAttribute("auth") == null)
+            return "Anonymous";
         return session.getAttribute("name").toString();
-        //return session.getId();
     }
 
 

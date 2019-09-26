@@ -8,16 +8,9 @@
 <script>
     $(document).ready(function () {
         $("#loginbtn").click(function(){
-                var un = $("#username").val();
-                console.log(un);
-                var pw = $("#password").val();
-                console.log(pw);
-                var base = "username="
-                var auth_string = base.concat(un, "&password=", pw);
-                console.log(auth_string);
-            $.post("/login", auth_string, function (result){
+            $.post("/login", {username: $("#username").val(), password: $("#password").val()}, function (result){
                 if(result.success=="true"){
-                 //  window.location.href= "info.html";
+                   window.location.href= "info.html";
                 }else{
                     alert("Please check your password!")
                 }
@@ -27,7 +20,6 @@
             $("#signupbtn").click(function(){
                 window.location.href= "signup.html";
             })
-
         })
     })
 </script>

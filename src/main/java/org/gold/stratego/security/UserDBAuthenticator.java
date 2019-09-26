@@ -22,8 +22,10 @@ public class UserDBAuthenticator implements AuthenticationProvider{
         System.out.println("Got to custom auth service.");
         System.out.println(name);
         System.out.println(password);
-
-        return new UsernamePasswordAuthenticationToken(name, password, new ArrayList<>());
+        if (name.equals("123"))
+            return new UsernamePasswordAuthenticationToken(name, password, new ArrayList<>());
+        else
+            return null;
 
     }
 

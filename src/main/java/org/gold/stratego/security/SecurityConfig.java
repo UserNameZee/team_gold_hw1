@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.gold.stratego.security.UserDBAuthenticator;
+import org.gold.stratego.security.LoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -19,12 +20,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDBAuthenticator userDBA;
 
+    @Autowired
+    LoginSuccessHandler successHandler;
+
     @Override
     protected void configure(AuthenticationManagerBuilder amb) throws Exception{
         amb.authenticationProvider(userDBA);
 
     }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -33,12 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .anyRequest().permitAll()
-                    .and().httpBasic()
-                    .and()
-                .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/sessiontest", true)
-                    .permitAll();
+                    .and().httpBasic();
+                //    .and()
+                //.formLogin()
+                //    .successHandler(successHandler)
+                //    .loginPage("/login")
+                //    .defaultSuccessUrl("/game",true)
+                //    .permitAll();
     }
 
 }
