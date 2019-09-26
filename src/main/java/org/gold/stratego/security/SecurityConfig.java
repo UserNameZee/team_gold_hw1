@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and().httpBasic()
                     .and()
                 .formLogin()
+                    .defaultSuccessUrl("/sessiontest", true)
                     .permitAll();
     }
 

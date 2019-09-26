@@ -36,6 +36,19 @@ public class LoginController{
      *              password(String) - unencrypted password entered by user
      *
      */
+
+    /**
+     *Test for session persistence.
+     */
+    //TODO: delete this
+    @GetMapping("/sessiontest")
+    public String sestest(HttpSession session){
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("id", session.getId());
+        System.out.println("ID: " + session.getId());
+        return "info.html";
+    }
+
     @GetMapping("/login")
     public String loginGet(Model model){
         model.addAttribute("loginInfo", new LoginInfo());
