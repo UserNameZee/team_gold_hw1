@@ -56,7 +56,7 @@ public class LoginController{
     @GetMapping("/login")
     public String loginGet(){
         //model.addAttribute("loginInfo", new LoginInfo());
-        return "login.html";
+        return "login_ss.html";
     }
 
     /**
