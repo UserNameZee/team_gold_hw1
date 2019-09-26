@@ -109,7 +109,7 @@ public class LoginController{
     @GetMapping("/loadUserInfo")
     public String loadUserInfo(HttpSession session)throws Exception{
 
-        if (session.getAttribute("auth") == null)
+        if (session.getAttribute("name") == null)
             return "Anonymous";
         return session.getAttribute("name").toString();
     }
