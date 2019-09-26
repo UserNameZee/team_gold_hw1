@@ -19,11 +19,11 @@ import org.gold.stratego.database.entities.User;
 public class GameRESTController{
 
     @Autowired
-    UserDB userDB;
+    org.gold.stratego.database.GameRepository userDB;
 
     @GetMapping(path="/users")
-    public @ResponseBody Iterable<User> getAllUsers(){
-        return userDB.DEBUG_getUserRepository().findAll();
+    public @ResponseBody Iterable<org.gold.stratego.database.entities.MongoTest> getAllUsers(){
+        return userDB.findAll();
 
     }
 
