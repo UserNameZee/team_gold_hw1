@@ -38,4 +38,5 @@ public class SessionController {
             return "Anonymous";
         return session.getAttribute("name").toString();
     }
+
 }
