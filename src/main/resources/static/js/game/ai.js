@@ -16,54 +16,57 @@ class AI{
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,this.stratego.chessPieces.team1);
          console.log("find movable array")
          console.log(mov_arr);
-        let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
-        console.log(result);
-        let des= result.origin;
-        console.log("des"+des);
-        let ox=des.pos.x;
-        let oy=des.pos.y;
-        let go=des.des;
-        let dx=ox;
-        let dy=oy;
-
-        if(go=="top"){
-            dx=ox;
-            dy=oy-1;
-        }else if(go=="bot"){
-            dx=ox;
-            dy=oy=1;
-        }else if(go=="left"){
-            dx=ox-1;
-            dy=oy;
-        }else{
-            dx=ox+1;
-            dy=oy;
-        }
 
 
 
-        //
-        // //random test
-        // let ran=Math.floor(Math.random()*mov_arr.length)
-        // let result=mov_arr[ran]
+
+        //  //make ai move
+        // let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
         // console.log(result);
-        // let ox=result.origin.pos.x;
-        // let oy=result.origin.pos.y;
+        // let des= result.origin;
+        // console.log("des"+des);
+        // let ox=des.pos.x;
+        // let oy=des.pos.y;
+        // let go=result.des;
         // let dx=ox;
         // let dy=oy;
-        // if(result.below!="null"){
-        //     dx=ox;
-        //     dy=oy+1;
-        // }else if(result.top!="null"){
+        //
+        // if(go=="top"){
         //     dx=ox;
         //     dy=oy-1;
-        // }else if(result.left!="null"){
+        // }else if(go=="bot"){
+        //     dx=ox;
+        //     dy=oy+1;
+        // }else if(go=="left"){
         //     dx=ox-1;
         //     dy=oy;
-        // }else if(result.right!="null"){
+        // }else{
         //     dx=ox+1;
         //     dy=oy;
         // }
+
+
+        //move a test random move
+        let ran=Math.floor(Math.random()*mov_arr.length)
+        let result=mov_arr[ran]
+        console.log(result);
+        let ox=result.origin.pos.x;
+        let oy=result.origin.pos.y;
+        let dx=ox;
+        let dy=oy;
+        if(result.below!="null"){
+            dx=ox;
+            dy=oy+1;
+        }else if(result.top!="null"){
+            dx=ox;
+            dy=oy-1;
+        }else if(result.left!="null"){
+            dx=ox-1;
+            dy=oy;
+        }else if(result.right!="null"){
+            dx=ox+1;
+            dy=oy;
+        }
 
 
 
