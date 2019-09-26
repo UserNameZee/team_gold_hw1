@@ -25,12 +25,48 @@ public class UserDB{
     }
 
 
+    /**
+     * Cannot be used as a username for registered users.
+     */
+    private static String[] reserved = {
+            "Anonymous"
+    };
+
+
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Attempts to authenticate the given username and password
+     * @param username
+     * @param password
+     * @return - One of three statuses (defined above as enum):
+     *          USERNAME_NOT_FOUND - The username is not present in the database.
+     *          INVALID_PASSWORD - Username was found, but password does not match.
+     *          SUCCESSFUL - Username and password exist in the DB.
+     */
+    public UserAuthenticationStatus authenticateUser(String username, String password){
+        User found = findUser(username);
+        if (found == null)
+            return UserAuthenticationStatus.USERNAME_NOT_FOUND;
+        byte[] db_hash = found.getPass_hash();
+        byte[] user_hash = getHash(password);
+        if (!Arrays.equals(db_hash, user_hash))
+            return UserAuthenticationStatus.INVALID_PASSWORD;
+        return UserAuthenticationStatus.SUCCESSFUL;
+
+    }
+
+    /**
+     * Attempts to insert a new user into the UserDB
+     * @param username
+     * @param password
+     * @return - true if insertion was successful
+     *           false if insertion failed. Insertion can fail if: username already exists or username is a reserved word.
+     */
     public Boolean insertUser(String username, String password){
 
-        if (findUser(username) != null){
+        if (findUser(username) != null || isReserved(username)){
             return false;
         }
 
@@ -57,26 +93,6 @@ public class UserDB{
         userRepository.deleteByUsername(username);
     }
 
-    /**
-     * Attempts to authenticate the given username and password
-     * @param username
-     * @param password
-     * @return - One of three statuses (defined above as enum):
-     *          USERNAME_NOT_FOUND - The username is not present in the database.
-     *          INVALID_PASSWORD - Username was found, but password does not match.
-     *          SUCCESSFUL - Username and password exist in the DB.
-     */
-    public UserAuthenticationStatus authenticateUser(String username, String password){
-        User found = findUser(username);
-        if (found == null)
-            return UserAuthenticationStatus.USERNAME_NOT_FOUND;
-        byte[] db_hash = found.getPass_hash();
-        byte[] user_hash = getHash(password);
-        if (!Arrays.equals(db_hash, user_hash))
-            return UserAuthenticationStatus.INVALID_PASSWORD;
-        return UserAuthenticationStatus.SUCCESSFUL;
-
-    }
 
     /**
      * Hashes the given string.
@@ -90,6 +106,14 @@ public class UserDB{
             System.out.println("Exception occurred while hashing password.");
             return null;
         }
+    }
+
+    /**
+     * Checks if the username is in the list of reserved names.
+     */
+    private boolean isReserved(String username){
+        List<String> reslist = Arrays.asList(reserved);
+        return reslist.contains(username);
     }
 
     /**

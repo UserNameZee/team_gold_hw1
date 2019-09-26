@@ -9,26 +9,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.gold.stratego.security.UserDBAuthenticator;
-import org.gold.stratego.security.LoginSuccessHandler;
-
 @Configuration
 @EnableWebSecurity
 @ComponentScan({"org.gold.stratego.security"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    //TODO: Enable CSRF, consider page protection.
 
-    @Autowired
-    UserDBAuthenticator userDBA;
-
-    @Autowired
-    LoginSuccessHandler successHandler;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder amb) throws Exception{
-        amb.authenticationProvider(userDBA);
-
-    }
-
+    /**
+     * This ensures cookies are created for users.
+     *
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -37,12 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .anyRequest().permitAll()
                     .and().httpBasic();
-                //    .and()
-                //.formLogin()
-                //    .successHandler(successHandler)
-                //    .loginPage("/login")
-                //    .defaultSuccessUrl("/game",true)
-                //    .permitAll();
     }
 
 }

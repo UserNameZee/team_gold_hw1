@@ -27,44 +27,25 @@ public class LoginController{
     @Autowired
     UserDB userDB;
 
-    /**
-     * Handles GET requests to /login
-     * Refer to the GreetingController.java file in the below tutorial to handle the model and attributes:
-     * https://spring.io/guides/gs/handling-form-submission/
-     *
-     * @param model - model with attributes:
-     *              username(String) - username entered by user
-     *              password(String) - unencrypted password entered by user
-     *
-     */
-
-    /**
-     *Test for session persistence.
-     */
-    //TODO: delete this
-    @GetMapping("/sessiontest")
-    @ResponseBody
-    public Map<String, String> sestest(HttpSession session, Authentication auth){
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("id", session.getId());
-        hashMap.put("name", auth.getName());
-        session.setAttribute("name", auth.getName());
-        //System.out.println("ID: " + session.getId());
-        return hashMap;
-    }
-
     @GetMapping("/login")
     public String loginGet(){
-        //model.addAttribute("loginInfo", new LoginInfo());
-        return "login_ss.html";
+        return "login.html";
     }
 
+    /**
+     * Processes user data submission in /login and adds
+     * user data to current session.
+     *
+     * @param userName -username from form submission in login.html
+     * @param password -password from form submission in login.html
+     * @param session -current user session
+     * @return JSON hashmap for success/failure verification in login.html javascript
+     */
     @ResponseBody
     @PostMapping("/login")
     public Map<String, String> login(@RequestParam("username") String userName,
                                      @RequestParam("password") String password,
                                      HttpSession session) {
-        System.out.println("Im in the handler.");
         Map<String, String> hashMap = new HashMap<>();
         UserDB.UserAuthenticationStatus status = userDB.authenticateUser(userName, password);
         if (status == UserDB.UserAuthenticationStatus.SUCCESSFUL) {
@@ -77,48 +58,6 @@ public class LoginController{
             session.setAttribute("auth", "false");
         }
         return hashMap;
-    }
-
-
-    /**
-     * Handles POST request after user has submitted data.
-     * @param loginInfo - instance of LoginInfo class with fields filled according to POST data.
-     * @return
-     *
-    @ResponseBody
-    @PostMapping("/login")
-        public Map<String, String> login(@RequestParam("userName") String userName,
-                                         @RequestParam("password") String password,
-                                         HttpSession session) {
-            Map<String, String> hashMap = new HashMap<>();
-            if(userDB.authenticateUser(userName,password)== UserDB.UserAuthenticationStatus.SUCCESSFUL){
-                hashMap.put("success", "true");
-                //HttpSession sessoin=request.getSession();
-                session.setAttribute("name",userName);
-                hashMap.put("id", session.getId());
-
-            }else{
-                hashMap.put("success", "false");
-            }
-        return hashMap;
-    }
-     */
-
-
-    @ResponseBody
-    @GetMapping("/loadUserInfo")
-    public String loadUserInfo(HttpSession session)throws Exception{
-
-        if (session.getAttribute("name") == null)
-            return "Anonymous";
-        return session.getAttribute("name").toString();
-    }
-
-
-    @ResponseBody
-    @PostMapping("/loadMenuInfo")
-    public String loadMenuInfo(HttpSession session)throws Exception{
-        return session.getAttribute("name").toString();
     }
 
 
