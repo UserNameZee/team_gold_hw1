@@ -54,6 +54,16 @@ public class DemoApplicationTests {
 	    assertNotNull(gr);
 	}
 
+	/**
+	 * Ensures reserved names are not entered into DB.
+	 */
+	@Test
+	public void DB_ReservedTest(){
+		String username = "Anonymous";
+		String password = "123";
+		assertFalse(userDB.insertUser(username, password));
+	}
+
     /**
      * Test Create, Retrieve, Update, Delete functions for User DB.
      */
