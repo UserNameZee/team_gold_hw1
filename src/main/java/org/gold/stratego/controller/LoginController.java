@@ -7,6 +7,7 @@ import org.gold.stratego.model.LoginInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 
 
@@ -42,11 +43,13 @@ public class LoginController{
      */
     //TODO: delete this
     @GetMapping("/sessiontest")
-    public String sestest(HttpSession session){
+    @ResponseBody
+    public Map<String, String> sestest(HttpSession session, Authentication auth){
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("id", session.getId());
-        System.out.println("ID: " + session.getId());
-        return "info.html";
+        hashMap.put("name", auth.getName());
+        //System.out.println("ID: " + session.getId());
+        return hashMap;
     }
 
     @GetMapping("/login")
