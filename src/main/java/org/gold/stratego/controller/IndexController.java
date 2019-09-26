@@ -19,7 +19,7 @@ public class IndexController {
      */
     @RequestMapping("/")
     public String root() {
-    	return "redirect:/login";
+    	return "redirect:/loginPage";
     }
     
 

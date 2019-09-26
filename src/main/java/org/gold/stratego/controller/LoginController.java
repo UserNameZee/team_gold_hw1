@@ -36,7 +36,7 @@ public class LoginController{
      *              password(String) - unencrypted password entered by user
      *
      */
-    @GetMapping("/login")
+    @GetMapping("/loginPage")
     public String loginGet(Model model){
         model.addAttribute("loginInfo", new LoginInfo());
         return "login.html";
@@ -44,39 +44,38 @@ public class LoginController{
 
     /**
      * Handles POST request after user has submitted data.
-     * @param loginInfo - instance of LoginInfo class with fields filled according to POST data.
+     * @param userName, password, session - instance of LoginInfo class with fields filled according to POST data.
      * @return
      */
     @ResponseBody
     @PostMapping("/login")
-        public Map<String, String> login(@RequestParam("userName") String userName,
-                                         @RequestParam("password") String password,
-                                         HttpSession session) {
-            Map<String, String> hashMap = new HashMap<>();
-            if(userDB.authenticateUser(userName,password)== UserDB.UserAuthenticationStatus.SUCCESSFUL){
-                hashMap.put("success", "true");
-                HttpSession sessoin=request.getSession();
-                sessoin.setAttribute("name",userName);
-            }else{
-                hashMap.put("success", "false");
-            }
-        return hashMap;
+    public Map<String, String> login(@RequestParam("userName") String userName,
+                                     @RequestParam("password") String password,
+                                     HttpSession session) {
+        Map<String, String> result = new HashMap<>();
+        if(userDB.authenticateUser(userName,password)== UserDB.UserAuthenticationStatus.SUCCESSFUL){
+            result.put("success", "true");
+            session.setAttribute("user_name",userName);
+        }else{
+            result.put("success", "false");
+        }
+        return result;
     }
 
 
     @ResponseBody
-    @GetMapping("/loadUserInfo")
+    @GetMapping("/getSessionID")
     public String loadUserInfo(HttpSession session)throws Exception{
 
-        //return session.getAttribute("name").toString();
+        System.out.println(session.getId());
         return session.getId();
     }
 
 
     @ResponseBody
-    @PostMapping("/loadMenuInfo")
+    @PostMapping("/getUserName")
     public String loadMenuInfo(HttpSession session)throws Exception{
-        return session.getAttribute("name").toString();
+        return session.getAttribute("user_name").toString();
     }
 
 
@@ -85,18 +84,18 @@ public class LoginController{
         model.addAttribute("loginInfo", new LoginInfo());
         return "signup.html";
     }
+    //
 
 
     @ResponseBody
-        @PostMapping("/signup")
-        public Map<String, String> signup(@RequestParam("userName") String userName, @RequestParam("password") String password){
-            Map<String, String> hashMap = new HashMap<>();
-            if( userDB.insertUser(userName, password)){
-                hashMap.put("success", "true");
-            }else{
-                hashMap.put("success", "false");
-            }
-            return hashMap;
+    @PostMapping("/signup")
+    public Map<String, String> signup(@RequestParam("userName") String userName, @RequestParam("password") String password){
+        Map<String, String> hashMap = new HashMap<>();
+        if( userDB.insertUser(userName, password)){
+            hashMap.put("success", "true");
+        }else{
+            hashMap.put("success", "false");
+        }
+        return hashMap;
     }
-
 }

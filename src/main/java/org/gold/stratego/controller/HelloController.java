@@ -11,7 +11,6 @@ import java.util.Map;
 public class HelloController{
     @GetMapping("/hello")
     public String index(Model model) {
-
         model.addAttribute("message", "Hello!");
         return "hello";
     }
