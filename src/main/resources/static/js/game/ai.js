@@ -39,9 +39,11 @@ class AI{
         }else if(go=="left"){
             dx=ox-1;
             dy=oy;
-        }else{
+        }else if(go=="right"){
             dx=ox+1;
             dy=oy;
+        }else{
+            console.log("wrong des pass through: "+go)
         }
 
 
