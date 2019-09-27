@@ -30,7 +30,7 @@ class Player {
     deSelect(){
         this.isSelect = false;
         this.selectPos = new Point(-1, -1);
-        this.selectPiece = null;
+        this.selectPiece = undefined;
     }
 }
 

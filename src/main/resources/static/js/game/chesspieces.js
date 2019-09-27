@@ -130,12 +130,16 @@ class ChessPieces {
             }
         }
     }
-    removePiece(chessBoardData, piece){
+    removePiece(chessBoardData, player, piece){
         let team = this["team" + piece.team];
+        if (player.selectPiece == piece){
+            player.deSelect();
+        }
         let index = team[piece.rank].findIndex(function(elem) {
             return elem.id == piece.id;
         })
         chessBoardData[piece.pos.y][piece.pos.x] = undefined;
         team[piece.rank].splice(index, 1);
+
     }
 }

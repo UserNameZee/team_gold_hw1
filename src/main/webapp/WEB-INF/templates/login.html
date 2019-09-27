@@ -1,18 +1,15 @@
-<html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" th:href="@{css/style.css}">
 <head>
 <meta charset="utf-8">
 <title>strateGo</title>
-<link rel="stylesheet" type="text/css" href="style.css">
-
-
 <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
-
 <script>
     $(document).ready(function () {
         $("#loginbtn").click(function(){
-            $.post("/login", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
+            $.post("/login", {userName: $("#userName").val (), password: $("#password").val()}, function (result){
                 if(result.success=="true"){
-                   window.location.href= "info.html";
+                   window.location.href= "/infoPage";
                 }else{
                     alert("Please check your password!")
                 }
