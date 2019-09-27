@@ -12,9 +12,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import javax.servlet.http.HttpSession;
 
-import main.java.org.gold.stratego.database.GameDB;
+import org.gold.stratego.database.GameDB;
+import org.gold.stratego.database.entities.MongoTest;
 import org.gold.stratego.database.entities.Turn;
 import org.gold.stratego.database.entities.Game;
+import org.gold.stratego.controller.SessionController;
 
 import java.util.*;
 
@@ -28,6 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping(path="/rest")
 public class GameRESTController{
+
+    @Autowired
+    SessionController sc;
 
     @Autowired
     GameDB gameDB;
@@ -68,9 +73,6 @@ public class GameRESTController{
      * @return Array of Games in JSON format that are associated with current user
      *         Nothing if user is Anonymous.
      */
-    @Autowired
-    SessionController sc;
-
     @GetMapping(path="/games")
     public Iterable<Game> getUserGames(HttpSession session)throws Exception{
         Map<String, Object> hashMap = new HashMap<>();
