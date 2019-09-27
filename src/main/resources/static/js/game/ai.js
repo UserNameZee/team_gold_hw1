@@ -21,13 +21,15 @@ class AI{
 
          //make ai move
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
-        console.log(result);
+        console.log("ai move"+result.origin.pos.x);
+        console.log("ai move"+result.origin.pos.y);
+        console.log("ai move"+result.score);
         let des= result.origin;
         //console.log("des"+des);
         let ox=des.pos.x;
         let oy=des.pos.y;
         let go=result.des;
-        console.log("des "+ go);
+        //console.log("des "+ go);
         let dx=ox;
         let dy=oy;
 
@@ -130,8 +132,6 @@ class AI{
             }
         temp++;
         }
-
-        console.log("result array is here: "+result)
         let randomNum=Math.floor(Math.random()*result.length)
         return result[randomNum];
 
