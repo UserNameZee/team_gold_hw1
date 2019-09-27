@@ -14,16 +14,16 @@ class AI{
     aiMove(){
         console.log("AI turn starts")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,this.stratego.chessPieces.team1);
-         console.log(mov_arr);
+         //console.log(mov_arr);
 
 
 
 
          //make ai move
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
-        console.log("ai move"+result.origin.pos.x);
-        console.log("ai move"+result.origin.pos.y);
-        console.log("ai move"+result.score);
+        // console.log("ai move"+result.origin.pos.x);
+        // console.log("ai move"+result.origin.pos.y);
+        // console.log("ai move"+result.score);
         let des= result.origin;
         //console.log("des"+des);
         let ox=des.pos.x;
@@ -100,10 +100,6 @@ class AI{
 
 
     makeGuesses(movableArr,board){
-        //  做一个 for loop for movable pieces
-        // 每一个 可以移动的棋子检测 周围 的分数
-        //console.log("enter make guesses")
-
         //calculate all the score in the minmax array
         for (let i =0; i<movableArr.length;i++){
             let temp=this.calScore(movableArr[i],board);
@@ -124,7 +120,7 @@ class AI{
                 result.push(movableArr[j]);
             }
         }
-        console.log("result array is here: "+result);
+        //console.log("result array is here: "+result);
         let temp=0;
         while(temp<result.length){
             if(result[temp].des=="bot"){
@@ -137,28 +133,6 @@ class AI{
 
     }
 
-
-
-
-
-    // randomPieceMove(movableArr,board,AI){
-    //     if (movableArr == undefined)
-    //         return;
-    //     let pieces = Array.from(movableArr);
-    //     let rand_pieces = pieces[Math.floor(Math.random() * pieces.length)];
-    //     if (movableArr[rand_pieces].below != null){
-    //         this.stratego.moveChessPiece(AI,rand_pieces.pos.x,rand_pieces.pos.y-1);
-    //     }
-    //     else if (movableArr[rand_pieces].left != null){
-    //         this.stratego.moveChessPiece(AI,rand_pieces.pos.x-1,rand_pieces.pos.y);
-    //     }
-    //     else if (movableArr[rand_pieces].right != null){
-    //         this.stratego.moveChessPiece(AI,rand_pieces.pos.x+1,rand_pieces.pos.y);
-    //     }
-    //     else{
-    //         this.stratego.moveChessPiece(AI,rand_pieces.pos.x,rand_pieces.pos.y+1);
-    //     }
-    // }
 
     /*寻找所有棋子，可移动棋子加入array */
     findMovablePieces(board,AI){
