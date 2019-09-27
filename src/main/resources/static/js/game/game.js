@@ -63,13 +63,13 @@ function preLoad(stratego, btnSetup) {
             // console.log("Offset" + e.offsetX + " " + e.offsetY);
             let x = Math.ceil(e.offsetX/cell_w) - 1, y = Math.ceil(e.offsetY/cell_h) - 1;
             //Highlight chess piece When player2 click on his/her chess piece.
-            if (chessBoardData[y][x] != null && chessBoardData[y][x].team == 2){
+            if (chessBoardData[y][x] !== undefined && chessBoardData[y][x].team == 2){
                 stratego.player2.isSelect = true;
                 stratego.player2.selectPos.setXY(x, y)
                 stratego.player2.selectPiece = chessBoardData[y][x];
             }
             //Move chess piece
-            if(stratego.player2.isTurn && (chessBoardData[y][x] == null || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true){
+            if(stratego.player2.isTurn && (chessBoardData[y][x] == undefined || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true){
                 let result = stratego.moveChessPiece(stratego.player2, x, y);
                 // stratego.ai.fakeMove();
                 stratego.switchTurn();
@@ -87,7 +87,7 @@ function preLoad(stratego, btnSetup) {
         $("#setup").prop("disabled", false);
         //select function
         let select = function (x, y) {
-            if (chessBoardData[y][x] != null && chessBoardData[y][x].team == 2){
+            if (chessBoardData[y][x] !== undefined && chessBoardData[y][x].team == 2){
                 stratego.player2.isSelect = true;
                 stratego.player2.lastSelectPos.assign(stratego.player2.selectPos);
                 stratego.player2.lastSelectPiece = stratego.player2.selectPiece;
@@ -106,7 +106,7 @@ function preLoad(stratego, btnSetup) {
             $("#canvas_cb").on('click', function (e){
                 let x = Math.ceil(e.offsetX/cell_w) - 1, y = Math.ceil(e.offsetY/cell_h) - 1;
                 select(x, y);
-                if (stratego.player2.lastSelectPiece != null){
+                if (stratego.player2.lastSelectPiece !== undefined){
                     stratego.switchPiece(stratego.player2.lastSelectPiece, stratego.player2.selectPiece);
                     stratego.player2.deSelect();
                 }
@@ -119,10 +119,10 @@ function preLoad(stratego, btnSetup) {
             $("#canvas_cb").off("click");
             $("#canvas_cb").on("click", function (e) {
                 let x = Math.ceil(e.offsetX / cell_w) - 1, y = Math.ceil(e.offsetY / cell_h) - 1;
-                if (chessBoardData[y][x] != null && chessBoardData[y][x].team == 2) {
+                if (chessBoardData[y][x] !== undefined && chessBoardData[y][x].team == 2) {
                     select(x, y);
                 }
-                if (stratego.player2.isTurn && (chessBoardData[y][x] === null || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
+                if (stratego.player2.isTurn && (chessBoardData[y][x] === undefined || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
                     let result = stratego.moveChessPiece(stratego.player2, x, y);
                     if (result == "TURN_END"){
                         stratego.switchTurn();
@@ -181,13 +181,13 @@ function preLoad(stratego, btnSetup) {
                     let index = sPiece.pos.x > x ? sPiece.pos.x : x;
                     let d = sPiece.pos.x > x ? -1 : 1;
                     for ( let i = sPiece.pos.x + d; i != x; i = i + d){
-                        if(this.chessBoardData[y][i] != null) return "Invalid Move";
+                        if(this.chessBoardData[y][i] !== undefined) return "Invalid Move";
                     }
                 }else if (sPiece.pos.y != y){
                     let index = sPiece.pos.y > y ? sPiece.pos.y : y;
                     let d = sPiece.pos.y > y ? -1 : 1;
                     for ( let i = sPiece.pos.y + d; i != y; i = i + d){
-                        if(this.chessBoardData[i][x] != null) return "Invalid Move";
+                        if(this.chessBoardData[i][x] !== undefined) return "Invalid Move";
                     }
                 }
                 break;
@@ -203,7 +203,7 @@ function preLoad(stratego, btnSetup) {
 
         player.lastMove.set(sPiece.pos, new Point(x, y));
 
-        if (this.chessBoardData[y][x] != null){
+        if (this.chessBoardData[y][x] !== undefined){
             let result = sPiece.attack(this.chessBoardData[y][x]);
             switch (result) {
                 case "KILL":
