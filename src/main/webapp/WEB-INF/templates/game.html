@@ -16,11 +16,12 @@
     <title>Welcom Come Back</title>
 </head>
 
+
 <div class = "c_left_div" id = "left_div">
     <table style = "witdh: 252px; border-collapse: separate; border-spacing: 0px 0px; padding: 0px;">
         <tr>
             <td>
-                <p style="font-size: xx-large">User Name</p>
+                <p style="font-size: xx-large; text-align: center" class="userName">User Name</p>
             </td>
         </tr>
         <tr></tr>
@@ -70,6 +71,12 @@
 
 <script >
     Game.start();
+</script>
+<script>
+    $(document).ready(function () {
+        console.log($("userName").load("/loadUserInfo"));
+        $(".userName").load("/loadUserInfo"); // 加载用户信息
+    });
 </script>
 
 </html>

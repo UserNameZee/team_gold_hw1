@@ -18,56 +18,58 @@ class AI{
 
 
 
-        //
-        //  //make ai move
-        // let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
+
+         //make ai move
+        let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
+        console.log(result);
+        let des= result.origin;
+        console.log("des"+des);
+        let ox=des.pos.x;
+        let oy=des.pos.y;
+        let go=result.des;
+        let dx=ox;
+        let dy=oy;
+
+        if(go=="above"){
+            dx=ox;
+            dy=oy-1;
+        }else if(go=="below"){
+            dx=ox;
+            dy=oy+1;
+        }else if(go=="left"){
+            dx=ox-1;
+            dy=oy;
+        }else if(go=="right"){
+            dx=ox+1;
+            dy=oy;
+        }else{
+            console.log("wrong des pass through: "+go)
+        }
+
+
+        // //move a test random move
+        // let ran=Math.floor(Math.random()*mov_arr.length)
+        // let result=mov_arr[ran]
         // console.log(result);
         // let des= result.origin;
         // console.log("des"+des);
         // let ox=des.pos.x;
         // let oy=des.pos.y;
-        // let go=result.des;
         // let dx=ox;
         // let dy=oy;
-        //
-        // if(go=="top"){
-        //     dx=ox;
-        //     dy=oy-1;
-        // }else if(go=="bot"){
+        // if(result.below!==null){
         //     dx=ox;
         //     dy=oy+1;
-        // }else if(go=="left"){
+        // }else if(result.above!==null){
+        //     dx=ox;
+        //     dy=oy-1;
+        // }else if(result.left!==null){
         //     dx=ox-1;
         //     dy=oy;
         // }else{
         //     dx=ox+1;
         //     dy=oy;
         // }
-
-
-        //move a test random move
-        let ran=Math.floor(Math.random()*mov_arr.length)
-        let result=mov_arr[ran]
-        console.log(result);
-        let des= result.origin;
-        console.log("des"+des);
-        let ox=des.pos.x;
-        let oy=des.pos.y;
-        let dx=ox;
-        let dy=oy;
-        if(result.below!==null){
-            dx=ox;
-            dy=oy+1;
-        }else if(result.above!==null){
-            dx=ox;
-            dy=oy-1;
-        }else if(result.left!==null){
-            dx=ox-1;
-            dy=oy;
-        }else{
-            dx=ox+1;
-            dy=oy;
-        }
 
 
 
@@ -101,15 +103,12 @@ class AI{
 
         //calculate all the score in the minmax array
         for (let i =0; i<movableArr.length;i++){
-            //console.log("the element is "+ movableArr[i]);
             let temp=this.calScore(movableArr[i],board);
-            //console.log("cal Score: "+temp);
-            console.log("cal Score temp score: "+temp.score);
-            console.log("cal Score temp des: "+temp.des);
             movableArr[i].socre=temp.score;
             movableArr[i].des=temp.des;
         }
-        let max=-999;
+        console.log(movableArr)
+        let max=-8888;
         let result=new Array();
         result[0]=movableArr[0];
         //get max score in the minmax array
@@ -122,7 +121,6 @@ class AI{
                 result.push(movableArr[j]);
             }
         }
-        console.log("result is:"+result)
         let randomNum=Math.floor(Math.random()*result.length)
         return result[randomNum];
 
@@ -153,7 +151,6 @@ class AI{
 
     /*寻找所有棋子，可移动棋子加入array */
     findMovablePieces(board,AI){
-        console.log(board);
         let movable_pieces = new Array();
         for (let y = 0 ; y < 10; y++){
             for(let x = 0 ; x < 10; x++){
@@ -194,7 +191,7 @@ class AI{
 
                     if(x<9){
                         if(this.movablePieces(board[y][x+1],y,x+1)){
-                            console.log("right side add pieces")
+                            //console.log("right side add pieces")
                             temp.right=board[y][x+1];
                         }else{
                             temp.right=null;
@@ -262,7 +259,7 @@ class AI{
         let temp_x = target.origin.pos.x;
         let temp_y = target.origin.pos.y;
 
-        if (target.above != null){
+        if (target.above !== null){
             let above_x = temp_x;
             let above_y = temp_y -1;
 
@@ -271,7 +268,7 @@ class AI{
                 top[1] = this.comparePieces(target,board[above_x][above_y-1]);
             }
             if ( above_x > 0 && this.movablePieces(board[above_x - 1][above_y],above_x -1,above_y)){
-                if (board[above_x - 1][above_y] != undefined)
+                if (board[above_x - 1][above_y] !== undefined)
                     L_top = board[above_x - 1][above_y];
                 else
                     L_top = undefined;
@@ -280,14 +277,14 @@ class AI{
             }
 
             if ( above_x < 8 && this.movablePieces(board[above_x + 1][above_y],above_x+ 1,above_y)){
-                if (board[above_x + 1][above_y] != undefined)
+                if (board[above_x + 1][above_y] !== undefined)
                     R_top = board[above_x + 1][above_y];
                 else
                     R_top = undefined;
                 top[3] = this.comparePieces(target,R_top);
             }
         }
-        else if(target.below != null){
+        else if(target.below !== null){
             let below_x = temp_x;
             let below_y = temp_y + 1;
             bot[0] =  this.comparePieces(target,target.below);
@@ -295,7 +292,7 @@ class AI{
                 bot[1] = this.comparePieces(target,board[below_x][below_y+1]);
             }
             if (below_x > 1 && this.movablePieces(board[below_x - 1][below_y],below_x-1,below_y)){
-                if (board[below_x - 1][below_y] != undefined)
+                if (board[below_x - 1][below_y] !== undefined)
                     L_bot = board[below_x - 1][below_y];
                 else
                     L_bot = undefined;
@@ -308,10 +305,10 @@ class AI{
                     R_bot = board[below_x + 1][below_y];
                 else
                     R_bot = undefined;
-                top[3] = this.comparePieces(target,R_bot);
+                bot[3] = this.comparePieces(target,R_bot);
             }
         }
-        else if (target.left != null){
+        else if (target.left !== null){
             let left_x = temp_x -1;
             let left_y = temp_y;
             if (left_x > 0 && this.movablePieces(board[left_x -1][left_y],left_x-1,left_y)){
@@ -320,7 +317,7 @@ class AI{
             left[2] = bot[2];
             left[3] = top[2];
         }
-        else if (target.right != null){
+        else if (target.right !== null){
             let left_x = temp_x +1;
             let left_y = temp_y;
             if (left_x < 8  && this.movablePieces(board[left_x+1][left_y],left_x+1,left_y)){
@@ -335,6 +332,7 @@ class AI{
         let left_socre= this.count_sorce(left);
         let top_socre= this.count_sorce(top);
         let bot_socre= this.count_sorce(bot);
+
 
 
         let dic={score: -999, des: null}
