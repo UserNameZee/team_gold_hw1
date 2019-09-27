@@ -20,53 +20,53 @@ class AI{
 
 
 
-        //  //make ai move
-        // let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
-        // console.log(result);
-        // let des= result.origin;
-        // console.log("des"+des);
-        // let ox=des.pos.x;
-        // let oy=des.pos.y;
-        // let go=result.des;
-        // let dx=ox;
-        // let dy=oy;
-        //
-        // if(go=="top"){
-        //     dx=ox;
-        //     dy=oy-1;
-        // }else if(go=="bot"){
-        //     dx=ox;
-        //     dy=oy+1;
-        // }else if(go=="left"){
-        //     dx=ox-1;
-        //     dy=oy;
-        // }else{
-        //     dx=ox+1;
-        //     dy=oy;
-        // }
-
-
-        //move a test random move
-        let ran=Math.floor(Math.random()*mov_arr.length)
-        let result=mov_arr[ran]
+         //make ai move
+        let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
         console.log(result);
-        let ox=result.origin.pos.x;
-        let oy=result.origin.pos.y;
+        let des= result.origin;
+        console.log("des"+des);
+        let ox=des.pos.x;
+        let oy=des.pos.y;
+        let go=result.des;
         let dx=ox;
         let dy=oy;
-        if(result.below!="null"){
-            dx=ox;
-            dy=oy+1;
-        }else if(result.top!="null"){
+
+        if(go=="top"){
             dx=ox;
             dy=oy-1;
-        }else if(result.left!="null"){
+        }else if(go=="bot"){
+            dx=ox;
+            dy=oy+1;
+        }else if(go=="left"){
             dx=ox-1;
             dy=oy;
-        }else if(result.right!="null"){
+        }else{
             dx=ox+1;
             dy=oy;
         }
+
+
+        // //move a test random move
+        // let ran=Math.floor(Math.random()*mov_arr.length)
+        // let result=mov_arr[ran]
+        // console.log(result);
+        // let ox=result.origin.pos.x;
+        // let oy=result.origin.pos.y;
+        // let dx=ox;
+        // let dy=oy;
+        // if(result.below!="null"){
+        //     dx=ox;
+        //     dy=oy+1;
+        // }else if(result.top!="null"){
+        //     dx=ox;
+        //     dy=oy-1;
+        // }else if(result.left!="null"){
+        //     dx=ox-1;
+        //     dy=oy;
+        // }else if(result.right!="null"){
+        //     dx=ox+1;
+        //     dy=oy;
+        // }
 
 
 
@@ -261,21 +261,21 @@ class AI{
             let above_y = temp_y -1;
 
             top[0] =  this.comparePieces(target,target.above);
-            if ( above_y < 1 && this.movablePieces(board[above_x][above_y-1],above_x,above_y -1)) {
+            if ( above_y > 0 && this.movablePieces(board[above_x][above_y-1],above_x,above_y -1)) {
                 top[1] = this.comparePieces(target,board[above_x][above_y-1]);
             }
-            if (above_x < 1 && this.movablePieces(board[above_x - 1][above_y-1],above_x,above_y-1)){
-                if (board[above_x - 1][above_y-1] != undefined)
-                    L_top = board[above_x - 1][above_y-1];
+            if ( above_x > 0 && this.movablePieces(board[above_x - 1][above_y],above_x -1,above_y)){
+                if (board[above_x - 1][above_y] != undefined)
+                    L_top = board[above_x - 1][above_y];
                 else
                     L_top = undefined;
 
                 top[2] = this.comparePieces(target,L_top);
             }
 
-            if (above_x >= 9 && this.movablePieces(board[above_x +1][above_y-1],above_x+1,above_y-1)){
-                if (board[above_x + 1][above_y-1] != undefined)
-                    R_top = board[above_x - 1][above_y-1];
+            if ( above_x < 8 && this.movablePieces(board[above_x + 1][above_y],above_x+ 1,above_y)){
+                if (board[above_x + 1][above_y] != undefined)
+                    R_top = board[above_x + 1][above_y];
                 else
                     R_top = undefined;
                 top[3] = this.comparePieces(target,R_top);
@@ -285,21 +285,21 @@ class AI{
             let below_x = temp_x;
             let below_y = temp_y + 1;
             bot[0] =  this.comparePieces(target,target.below);
-            if ( below_y >= 9 && this.movablePieces(board[below_x][below_y+1],below_x,below_y +1)) {
+            if ( below_y < 8  && (this.movablePieces(board[below_x][below_y+1],below_x,below_y +1)) ) {
                 bot[1] = this.comparePieces(target,board[below_x][below_y+1]);
             }
-            if (below_y < 1 && this.movablePieces(board[below_x - 1][below_y+1],below_x-1,below_y+1)){
-                if (board[below_x - 1][below_y+1] != undefined)
-                    L_bot = board[below_x - 1][below_y+1];
+            if (below_x > 1 && this.movablePieces(board[below_x - 1][below_y],below_x-1,below_y)){
+                if (board[below_x - 1][below_y] != undefined)
+                    L_bot = board[below_x - 1][below_y];
                 else
                     L_bot = undefined;
 
                 bot[2] = this.comparePieces(target,L_bot);
             }
 
-            if (below_x >= 9 && this.movablePieces(board[below_x +1][below_y+1],below_x+1,below_y+1)){
-                if (board[below_x + 1][below_y+1] != undefined)
-                    R_bot = board[below_x + 1][below_y+1];
+            if (below_x < 8 && this.movablePieces(board[below_x +1][below_y],below_x+1,below_y)){
+                if (board[below_x + 1][below_y] != undefined)
+                    R_bot = board[below_x + 1][below_y];
                 else
                     R_bot = undefined;
                 top[3] = this.comparePieces(target,R_bot);
@@ -308,16 +308,16 @@ class AI{
         else if (target.left != "null"){
             let left_x = temp_x -1;
             let left_y = temp_y;
-            if (left_y <1 && this.movablePieces(board[left_x -1][left_y],left_x-1,left_y)){
+            if (left_x > 0 && this.movablePieces(board[left_x -1][left_y],left_x-1,left_y)){
                 left[1] = this.comparePieces(target,board[left_x-1][left_y]);
             }
             left[2] = bot[2];
             left[3] = top[2];
         }
         else if (target.right != "null"){
-            let left_x = temp_x +1;
+            let left_x = temp_x + 1;
             let left_y = temp_y;
-            if (left_x >= 9 && this.movablePieces(board[left_x+1][left_y],left_x+1,left_y)){
+            if (left_x < 8  && this.movablePieces(board[left_x+1][left_y],left_x+1,left_y)){
                 right[1] = this.comparePieces(target,board[left_x+1][left_y]);
             }
             right[2] = bot[3];
