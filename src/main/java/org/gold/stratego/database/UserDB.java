@@ -21,7 +21,7 @@ public class UserDB{
     public enum UserAuthenticationStatus {
         USERNAME_NOT_FOUND,
         INVALID_PASSWORD,
-        SUCCESSFUL;
+        SUCCESSFUL
     }
 
 
