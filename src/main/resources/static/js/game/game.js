@@ -215,19 +215,18 @@ function preLoad(stratego, btnSetup) {
                     this["player" + sPiece.team].deSelect();
                     break;
                 case "WIN":
-                    this.chessPieces.removePiece(this.chessBoardData, this.chessBoardData[y][x])
+                    this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
                     if (sPiece.team == 2 ){
                         console.log("You Win");
                         return "WIN";
                     }else{
-                        console.log("You loss");
+                        console.log("You loss"); this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
                         return "LOSS";
                     }
                     break;
                 default:
-                    this.chessPieces.removePiece(this.chessBoardData, this.chessBoardData[y][x]);
-                    this.chessPieces.removePiece(this.chessBoardData, sPiece);
-                    this["player" + sPiece.team].deSelect();
+                    this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
+                    this.chessPieces.removePiece(this.chessBoardData, this["player" + sPiece.team], sPiece)
                     break;
             }
         }
