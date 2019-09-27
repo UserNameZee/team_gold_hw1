@@ -261,7 +261,7 @@ class AI{
         let temp_x = target.origin.pos.x;
         let temp_y = target.origin.pos.y;
 
-        if (target.above != null){
+        if (target.above !== null){
             let above_x = temp_x;
             let above_y = temp_y -1;
 
@@ -270,7 +270,7 @@ class AI{
                 top[1] = this.comparePieces(target,board[above_x][above_y-1]);
             }
             if ( above_x > 0 && this.movablePieces(board[above_x - 1][above_y],above_x -1,above_y)){
-                if (board[above_x - 1][above_y] != undefined)
+                if (board[above_x - 1][above_y] !== undefined)
                     L_top = board[above_x - 1][above_y];
                 else
                     L_top = undefined;
@@ -279,14 +279,14 @@ class AI{
             }
 
             if ( above_x < 8 && this.movablePieces(board[above_x + 1][above_y],above_x+ 1,above_y)){
-                if (board[above_x + 1][above_y] != undefined)
+                if (board[above_x + 1][above_y] !== undefined)
                     R_top = board[above_x + 1][above_y];
                 else
                     R_top = undefined;
                 top[3] = this.comparePieces(target,R_top);
             }
         }
-        else if(target.below != null){
+        else if(target.below !== null){
             let below_x = temp_x;
             let below_y = temp_y + 1;
             bot[0] =  this.comparePieces(target,target.below);
@@ -294,7 +294,7 @@ class AI{
                 bot[1] = this.comparePieces(target,board[below_x][below_y+1]);
             }
             if (below_x > 1 && this.movablePieces(board[below_x - 1][below_y],below_x-1,below_y)){
-                if (board[below_x - 1][below_y] != undefined)
+                if (board[below_x - 1][below_y] !== undefined)
                     L_bot = board[below_x - 1][below_y];
                 else
                     L_bot = undefined;
@@ -307,10 +307,10 @@ class AI{
                     R_bot = board[below_x + 1][below_y];
                 else
                     R_bot = undefined;
-                top[3] = this.comparePieces(target,R_bot);
+                bot[3] = this.comparePieces(target,R_bot);
             }
         }
-        else if (target.left != null){
+        else if (target.left !== null){
             let left_x = temp_x -1;
             let left_y = temp_y;
             if (left_x > 0 && this.movablePieces(board[left_x -1][left_y],left_x-1,left_y)){
@@ -319,7 +319,7 @@ class AI{
             left[2] = bot[2];
             left[3] = top[2];
         }
-        else if (target.right != null){
+        else if (target.right !== null){
             let left_x = temp_x +1;
             let left_y = temp_y;
             if (left_x < 8  && this.movablePieces(board[left_x+1][left_y],left_x+1,left_y)){
@@ -334,6 +334,7 @@ class AI{
         let left_socre= this.count_sorce(left);
         let top_socre= this.count_sorce(top);
         let bot_socre= this.count_sorce(bot);
+
 
 
         let dic={score: -999, des: null}
