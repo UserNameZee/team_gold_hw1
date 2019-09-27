@@ -53,7 +53,6 @@ class AI{
         console.log("des"+des);
         let ox=des.pos.x;
         let oy=des.pos.y;
-        let go=result.des;
         let dx=ox;
         let dy=oy;
         if(result.below!=null){

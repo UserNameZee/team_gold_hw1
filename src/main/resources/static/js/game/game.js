@@ -38,7 +38,7 @@ function preLoad(stratego, btnSetup) {
         this.player1.isTurn = false;
         this.player2 = new Player(2);
         this.player2.isTurn = true;
-        // this.ai = new AI(this);
+        this.ai = new AI(this);
 
         this.imageObjs = ImageObjs;
         this.canvas = $("#canvas_cb")[0];
@@ -126,6 +126,7 @@ function preLoad(stratego, btnSetup) {
                     let result = stratego.moveChessPiece(stratego.player2, x, y);
                     if (result == "TURN_END"){
                         stratego.switchTurn();
+                        stratego.ai.aiMove();
                     }
                 }
                 stratego.painter.draw();
