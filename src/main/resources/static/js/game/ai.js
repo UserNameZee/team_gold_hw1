@@ -23,17 +23,18 @@ class AI{
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
         console.log(result);
         let des= result.origin;
-        console.log("des"+des);
+        //console.log("des"+des);
         let ox=des.pos.x;
         let oy=des.pos.y;
         let go=result.des;
+        console.log("des "+ go);
         let dx=ox;
         let dy=oy;
 
-        if(go=="above"){
+        if(go=="top"){
             dx=ox;
             dy=oy-1;
-        }else if(go=="below"){
+        }else if(go=="bot"){
             dx=ox;
             dy=oy+1;
         }else if(go=="left"){
@@ -104,23 +105,33 @@ class AI{
         //calculate all the score in the minmax array
         for (let i =0; i<movableArr.length;i++){
             let temp=this.calScore(movableArr[i],board);
-            movableArr[i].socre=temp.score;
+            movableArr[i].score=temp.score;
             movableArr[i].des=temp.des;
         }
+        console.log("score array is here")
         console.log(movableArr)
         let max=-8888;
         let result=new Array();
-        result[0]=movableArr[0];
         //get max score in the minmax array
-        for(let j=0;j<movableArr.length;j++){
+        for(let j=1;j<movableArr.length;j++){
             if(movableArr[j].score>max){
                 max=movableArr[j].score;
-                result=new Array();
-                result.push(movableArr[j]);
+                result=[];
+                result[0]= movableArr[j];
             }else if(movableArr[j].score==max){
                 result.push(movableArr[j]);
             }
         }
+        console.log("result array is here: "+result);
+        let temp=0;
+        while(temp<result.length){
+            if(result[temp].des=="bot"){
+                return result[temp];
+            }
+        temp++;
+        }
+
+        console.log("result array is here: "+result)
         let randomNum=Math.floor(Math.random()*result.length)
         return result[randomNum];
 
@@ -328,41 +339,41 @@ class AI{
         }
 
 
-        let right_socre = this.count_sorce(right);
-        let left_socre= this.count_sorce(left);
-        let top_socre= this.count_sorce(top);
-        let bot_socre= this.count_sorce(bot);
+        let right_score = this.count_sorce(right);
+        let left_score= this.count_sorce(left);
+        let top_score= this.count_sorce(top);
+        let bot_score= this.count_sorce(bot);
 
 
 
         let dic={score: -999, des: null}
-        if (top_socre > bot_socre){
-            if (top_socre > left_socre){
-                if (top_socre  > right_socre){
-                    dic = {score:top_socre,des:"top"};
+        if (top_score > bot_score){
+            if (top_score > left_score){
+                if (top_score  > right_score){
+                    dic = {score:top_score,des:"top"};
                 }else {
-                    dic = {score:right_socre,des:"right"};
+                    dic = {score:right_score,des:"right"};
                 }
             }else {
-                if (left_socre > right_socre){
-                    dic = {score:left_socre,des:"left"};
+                if (left_score > right_score){
+                    dic = {score:left_score,des:"left"};
                 }else {
-                    dic = {score:right_socre,des:"right"};
+                    dic = {score:right_score,des:"right"};
                 }
             }
             return dic;
         }else{
-            if (bot_socre > left_socre){
-                if (bot_socre > right_socre){
-                    dic = {score:bot_socre,des:"bot"};
+            if (bot_score > left_score){
+                if (bot_score > right_score){
+                    dic = {score:bot_score,des:"bot"};
                 }else {
-                    dic = {score:right_socre,des:"right"};
+                    dic = {score:right_score,des:"right"};
                 }
             }else {
-                if (left_socre > right_socre){
-                    dic = {score:left_socre,des:"left"};
+                if (left_score > right_score){
+                    dic = {score:left_score,des:"left"};
                 }else {
-                    dic = {score:right_socre,des:"right"};
+                    dic = {score:right_score,des:"right"};
 
                 }
             }
