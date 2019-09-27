@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 import org.gold.stratego.database.GameRepository;
 import org.gold.stratego.database.entities.MongoTest;
+import org.gold.stratego.database.entities.User;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,9 +38,13 @@ public class GameRESTController{
 
     }
 
-    @PostMapping(path="/save_game")
-    public Map<String, String> save_game(@RequestParam Map<String, String> params){
-        System.out.println(params.entrySet().toString());
+    /**
+     * Endpoint which saves JSON into an object for insertion into GameDB.
+     * @param request - HTTP body in JSON format
+     */
+    @PostMapping(path="/save_game", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> save_game(@RequestBody User request){
+        System.out.println(request.getUsername());
         return success(true);
     }
 
