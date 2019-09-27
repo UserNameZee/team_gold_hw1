@@ -1,9 +1,11 @@
 package org.gold.stratego.database.entities;
 
+import org.gold.stratego.database.entities.Turn;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 import java.util.Arrays;
+import org.gold.stratego.database.entities.Turn;
 
 /**
  * POJO implementation of MongoDB game data.
@@ -18,6 +20,16 @@ public class Game {
     private String username;
     private String result;
     private int[][] board_start;
+
+    public Turn[] getTurns() {
+        return turns;
+    }
+
+    public void setTurns(Turn[] turns) {
+        this.turns = turns;
+    }
+
+    private Turn[] turns;
 
     public String getId() {
         return id;
@@ -58,6 +70,7 @@ public class Game {
                 ", username='" + username + '\'' +
                 ", result='" + result + '\'' +
                 ", board_start=" + Arrays.toString(board_start) +
+                ", turns=" + Arrays.toString(turns) +
                 '}';
     }
 }

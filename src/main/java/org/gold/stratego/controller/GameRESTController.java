@@ -12,7 +12,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.gold.stratego.database.GameRepository;
 import org.gold.stratego.database.entities.MongoTest;
-import org.gold.stratego.database.entities.User;
+
+import org.gold.stratego.database.entities.Turn;
 import org.gold.stratego.database.entities.Game;
 
 import java.util.*;
@@ -46,6 +47,9 @@ public class GameRESTController{
     @PostMapping(path="/save_game", consumes=MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> save_game(@RequestBody Game game){
         System.out.println(game.toString());
+        //print turn data
+        for (Turn t: game.getTurns())
+            System.out.println(t.toString());
         return success(true);
     }
 
