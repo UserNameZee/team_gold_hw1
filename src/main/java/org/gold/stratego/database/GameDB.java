@@ -1,4 +1,4 @@
-package org.gold.stratego.database;
+package main.java.org.gold.stratego.database;
 import org.gold.stratego.database.GameRepository;
 import org.gold.stratego.database.entities.Game;
 import org.gold.stratego.database.entities.Turn;
