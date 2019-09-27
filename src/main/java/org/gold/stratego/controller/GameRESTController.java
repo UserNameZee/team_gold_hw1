@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.gold.stratego.database.GameRepository;
 import org.gold.stratego.database.entities.MongoTest;
 import org.gold.stratego.database.entities.User;
+import org.gold.stratego.database.entities.Game;
 
 import java.util.*;
 
@@ -40,11 +41,11 @@ public class GameRESTController{
 
     /**
      * Endpoint which saves JSON into an object for insertion into GameDB.
-     * @param request - HTTP body in JSON format
+     * @param game - Object which will be set with JSON data in HTTP body.
      */
     @PostMapping(path="/save_game", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> save_game(@RequestBody User request){
-        System.out.println(request.getUsername());
+    public Map<String, String> save_game(@RequestBody Game game){
+        System.out.println(game.toString());
         return success(true);
     }
 
