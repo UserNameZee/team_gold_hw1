@@ -55,13 +55,13 @@ class AI{
         let oy=des.pos.y;
         let dx=ox;
         let dy=oy;
-        if(result.below!=null){
+        if(result.below!==null){
             dx=ox;
             dy=oy+1;
-        }else if(result.above!=null){
+        }else if(result.above!==null){
             dx=ox;
             dy=oy-1;
-        }else if(result.left!=null){
+        }else if(result.left!==null){
             dx=ox-1;
             dy=oy;
         }else{
@@ -70,27 +70,6 @@ class AI{
         }
 
 
-        // //move a test random move
-        // let ran=Math.floor(Math.random()*mov_arr.length)
-        // let result=mov_arr[ran]
-        // console.log(result);
-        // let ox=result.origin.pos.x;
-        // let oy=result.origin.pos.y;
-        // let dx=ox;
-        // let dy=oy;
-        // if(result.below!="null"){
-        //     dx=ox;
-        //     dy=oy+1;
-        // }else if(result.top!="null"){
-        //     dx=ox;
-        //     dy=oy-1;
-        // }else if(result.left!="null"){
-        //     dx=ox-1;
-        //     dy=oy;
-        // }else if(result.right!="null"){
-        //     dx=ox+1;
-        //     dy=oy;
-        // }
 
 
 
@@ -179,7 +158,7 @@ class AI{
         for (let y = 0 ; y < 10; y++){
             for(let x = 0 ; x < 10; x++){
                 //console.log(y+"--"+x);
-                if(board[y][x]!=undefined && board[y][x]!=null && board[y][x]!="water" && board[y][x].team!=2 && board[y][x].movetype!=0){
+                if(board[y][x]!=undefined  && board[y][x]!="water" && board[y][x].team!=2 && board[y][x].movetype!=0){
                     //console.log("enter if")
                     let temp={origin: board[y][x]};
                     if(y>0){
@@ -225,7 +204,7 @@ class AI{
                     }
 
 
-                    if( temp.above != null||temp.below != null||temp.left != null||temp.right != null ){
+                    if( temp.above !== null||temp.below !== null||temp.left !== null||temp.right !== null ){
                         //console.log(" push pieces into movable pieces")
                         movable_pieces.push(temp);
                     }
@@ -242,8 +221,6 @@ class AI{
         }
 
         if (target == undefined){
-            return true;
-        }else if(target==null){
             return true;
         }else if (target == "water"){
             return false;
