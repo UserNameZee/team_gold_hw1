@@ -6,8 +6,8 @@
 <script src="webjars/jquery/3.3.1/jquery.min.js"></script>
 <script>
   $(document).ready(function () {
-    console.log($("#userName").load("/getUserName"));
-    $("#userName").load("/getUserName"); // 加载用户信息
+    console.log($("userName").load("/loadUserInfo"));
+    $(".userName").load("/loadUserInfo"); // 加载用户信息
   })
   ;
   $(document).ready(function (){
@@ -18,12 +18,12 @@
 </script>
 <head>
   <meta charset="UTF-8">
-  <title id= "userName">username</title>
+  <title class= "userName">username</title>
 </head>
 <div class="sidenav">
   <tr>
     <td>
-      <p style="font-size: xx-large; text-align: center;" id = "userName1">User Name</p>
+      <p style="font-size: xx-large; text-align: center;" class = "userName">User Name</p>
     </td>
   </tr>
   <tr></tr>

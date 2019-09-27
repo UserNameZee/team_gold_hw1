@@ -27,9 +27,9 @@ public class LoginController{
     @Autowired
     UserDB userDB;
 
-    @GetMapping("/login")
-    public String loginGet(){
-        return "login.html";
+    @GetMapping("/loginPage")
+        public String loginGet(){
+            return "login";
     }
 
     /**
