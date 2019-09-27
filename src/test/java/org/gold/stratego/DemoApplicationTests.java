@@ -173,8 +173,4 @@ public class DemoApplicationTests {
 		base = base + (new Integer(rand.nextInt(Integer.MAX_VALUE)).toString());
 		return base;
 	}
-
-
-
-
 }

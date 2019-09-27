@@ -48,37 +48,10 @@ function preLoad(stratego, btnSetup) {
 
 
         this.initChessBoardData();
-        // this.chessPieces.init(this.chessBoardData);
         this.painter.draw();
-        // this.initMouseEvent();
         this.initButton();
     };
 
-    initMouseEvent(){
-        let cell_w = this.painter.cell_w;
-        let cell_h = this.painter.cell_h;
-        let chessBoardData = this.chessBoardData;
-        let stratego = this;
-        this.canvas.onclick = function (e){
-            // console.log("Offset" + e.offsetX + " " + e.offsetY);
-            let x = Math.ceil(e.offsetX/cell_w) - 1, y = Math.ceil(e.offsetY/cell_h) - 1;
-            //Highlight chess piece When player2 click on his/her chess piece.
-            if (chessBoardData[y][x] !== undefined && chessBoardData[y][x].team == 2){
-                stratego.player2.isSelect = true;
-                stratego.player2.selectPos.setXY(x, y)
-                stratego.player2.selectPiece = chessBoardData[y][x];
-            }
-            //Move chess piece
-            if(stratego.player2.isTurn && (chessBoardData[y][x] == undefined || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true){
-                let result = stratego.moveChessPiece(stratego.player2, x, y);
-                // stratego.ai.fakeMove();
-                stratego.switchTurn();
-            }
-
-            stratego.painter.draw();
-            console.log(chessBoardData[y][x]);
-        }
-    }
 
     initButton(){
         let stratego = this;
@@ -249,9 +222,22 @@ function preLoad(stratego, btnSetup) {
          this.chessBoardData[piece2.pos.y][piece2.pos.x] = piece2;
          return;
     }
+
+    postTurn(){
+        let board = new Array(100);
+        let slots_id = 0;
+        for(let y = 0; y <= 10; y++){
+            for (let x = 0; x <=10; x++){
+                if (this.chessBoardData[y][x] !== undefined, this.chessBoardData[y][x] !== "water"){
+                    board[slots_id] = this.chessBoardData[y][x] + (this.chessBoardData[y][x].team * 100);
+                }
+            }
+        }
+        console.log(board);
+    }
+
 }
  var Game ={
-
     start : function (){
         var stratego = new Stratego();
         preLoad(stratego);
