@@ -38,7 +38,7 @@ function preLoad(stratego, btnSetup) {
         this.player1.isTurn = false;
         this.player2 = new Player(2);
         this.player2.isTurn = true;
-        // this.ai = new AI(this);
+        this.ai = new AI(this);
 
         this.imageObjs = ImageObjs;
         this.canvas = $("#canvas_cb")[0];
@@ -99,6 +99,7 @@ function preLoad(stratego, btnSetup) {
                     let result = stratego.moveChessPiece(stratego.player2, x, y);
                     if (result == "TURN_END"){
                         stratego.switchTurn();
+                        stratego.ai.aiMove();
                     }
                 }
                 stratego.painter.draw();
@@ -187,19 +188,18 @@ function preLoad(stratego, btnSetup) {
                     this["player" + sPiece.team].deSelect();
                     break;
                 case "WIN":
-                    this.chessPieces.removePiece(this.chessBoardData, this.chessBoardData[y][x])
+                    this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
                     if (sPiece.team == 2 ){
                         console.log("You Win");
                         return "WIN";
                     }else{
-                        console.log("You loss");
+                        console.log("You loss"); this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
                         return "LOSS";
                     }
                     break;
                 default:
-                    this.chessPieces.removePiece(this.chessBoardData, this.chessBoardData[y][x]);
-                    this.chessPieces.removePiece(this.chessBoardData, sPiece);
-                    this["player" + sPiece.team].deSelect();
+                    this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
+                    this.chessPieces.removePiece(this.chessBoardData, this["player" + sPiece.team], sPiece)
                     break;
             }
         }

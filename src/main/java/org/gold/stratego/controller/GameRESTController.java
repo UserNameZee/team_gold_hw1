@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
-import org.gold.stratego.database.GameRepository;
+import org.gold.stratego.database.GameDB;
 import org.gold.stratego.database.entities.MongoTest;
-import org.gold.stratego.database.entities.User;
+
+import org.gold.stratego.database.entities.Turn;
+import org.gold.stratego.database.entities.Game;
 
 import java.util.*;
 
@@ -27,25 +29,45 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(path="/rest")
 public class GameRESTController{
 
-
-
     @Autowired
-    GameRepository gameRepository;
+    GameDB gameDB;
 
-    @GetMapping(path="/users")
-    public Iterable<MongoTest> getAllUsers(){
-        return gameRepository.findAll();
-
-    }
 
     /**
      * Endpoint which saves JSON into an object for insertion into GameDB.
-     * @param request - HTTP body in JSON format
+     * @param game - Object which will be set with JSON data in HTTP body.
      */
     @PostMapping(path="/save_game", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> save_game(@RequestBody User request){
-        System.out.println(request.getUsername());
+    public Map<String, String> save_game(@RequestBody Game game){
+        System.out.println(game.toString());
+        gameDB.repo.save(game);
+        //print turn data
+        //for (Turn t: game.getTurns())
+        //    System.out.println(t.toString());
         return success(true);
+    }
+
+    /**
+     * Endpoint which adds
+     * @param turn
+     * @return
+     */
+    @PostMapping(path="/add_turn", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> add_turn(@RequestBody Turn turn){
+
+        return success(true);
+
+    }
+
+
+    /**
+     * DEBUG
+     * method to get all games
+     * @return
+     */
+    @GetMapping(path="/games")
+    public Iterable<Game> getAllGamess() {
+        return gameDB.repo.findAll();
     }
 
     /**
