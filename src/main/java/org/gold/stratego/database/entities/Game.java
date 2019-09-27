@@ -4,6 +4,7 @@ import org.gold.stratego.database.entities.Turn;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.Arrays;
 import org.gold.stratego.database.entities.Turn;
 
@@ -18,18 +19,18 @@ public class Game {
     @Id
     private String id;
     private String username;
+    private String finished;
     private String result;
-    private int[][] board_start;
+    private int[] board_start;
+    private ArrayList<Turn> turns;
 
-    public Turn[] getTurns() {
+    public ArrayList<Turn> getTurns() {
         return turns;
     }
 
-    public void setTurns(Turn[] turns) {
+    public void setTurns(ArrayList<Turn> turns) {
         this.turns = turns;
     }
-
-    private Turn[] turns;
 
     public String getId() {
         return id;
@@ -55,12 +56,19 @@ public class Game {
         this.result = result;
     }
 
-    public int[][] getBoard_start() {
+    public int[] getBoard_start() {
         return board_start;
     }
 
-    public void setBoard_start(int[][] board_start) {
+    public void setBoard_start(int[] board_start) {
         this.board_start = board_start;
+    }
+    public String getFinished() {
+        return finished;
+    }
+
+    public void setFinished(String finished) {
+        this.finished = finished;
     }
 
     @Override
@@ -68,9 +76,9 @@ public class Game {
         return "Game{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
+                ", finished='" + finished + '\'' +
                 ", result='" + result + '\'' +
                 ", board_start=" + Arrays.toString(board_start) +
-                ", turns=" + Arrays.toString(turns) +
                 '}';
     }
 }

@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class Turn {
 
     private String player;
-    private int[][] board;
+    private int[] board;
     private String piece_number;
     private String piece_action;
     private int[] move_location;
@@ -27,11 +27,11 @@ public class Turn {
         this.player = player;
     }
 
-    public int[][] getBoard() {
+    public int[] getBoard() {
         return board;
     }
 
-    public void setBoard(int[][] board) {
+    public void setBoard(int[] board) {
         this.board = board;
     }
 

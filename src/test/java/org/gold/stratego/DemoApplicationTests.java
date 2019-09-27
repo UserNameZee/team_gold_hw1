@@ -142,20 +142,6 @@ public class DemoApplicationTests {
             assertFalse(userDB.insertUser(username, password));
     }
 
-	/**
-	 * Demo MongoDB test
-	 */
-	@Test
-	public void MongoDB_test(){
-		MongoTest mt = new MongoTest();
-		ObjectTest ot = new ObjectTest();
-		ot.setNumber(123);
-		ot.setValue("This is the object.");
-		mt.setName(generateRandomString());
-		mt.setOt(ot);
-		gr.save(mt);
-	}
-
 
 
 	/**
