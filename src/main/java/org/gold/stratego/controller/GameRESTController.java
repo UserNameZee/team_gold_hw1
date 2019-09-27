@@ -32,6 +32,9 @@ public class GameRESTController{
     @Autowired
     GameDB gameDB;
 
+    @Autowired
+    org.gold.stratego.database.GameRepository repo;
+
 
     /**
      * Endpoint which saves JSON into an object for insertion into GameDB.
@@ -40,7 +43,7 @@ public class GameRESTController{
     @PostMapping(path="/save_game", consumes=MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> save_game(@RequestBody Game game){
         System.out.println(game.toString());
-        gameDB.repo.save(game);
+        repo.save(game);
         //print turn data
         //for (Turn t: game.getTurns())
         //    System.out.println(t.toString());
@@ -54,7 +57,11 @@ public class GameRESTController{
      */
     @PostMapping(path="/add_turn", consumes=MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> add_turn(@RequestBody Turn turn){
+        Game active = gameDB.getActiveGame("jathoma98");
 
+        //TODO: finish this
+        if (active == null)
+            return success(false, "No active games for current user: ");
         return success(true);
 
     }
@@ -66,8 +73,8 @@ public class GameRESTController{
      * @return
      */
     @GetMapping(path="/games")
-    public Iterable<Game> getAllGamess() {
-        return gameDB.repo.findAll();
+    public Iterable<Game> getAllGames() {
+        return repo.findAll();
     }
 
     /**
@@ -79,6 +86,12 @@ public class GameRESTController{
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("success", b.toString().toLowerCase());
         return hashMap;
+    }
+
+    private static Map<String, String> success(Boolean b, String details){
+        Map<String, String> map = success(b);
+        map.put("details", details);
+        return map;
     }
 
 }

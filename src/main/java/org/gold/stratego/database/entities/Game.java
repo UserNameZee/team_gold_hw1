@@ -8,13 +8,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.gold.stratego.database.entities.Turn;
 
+import static org.gold.stratego.database.entities.Game.COLLECTION_NAME;
+
 /**
  * POJO implementation of MongoDB game data.
  * Refer to database/GameDB_format.json for data format
  * @author Jacob Thomas
  */
-@Document(collection="games")
+
+@Document(collection=COLLECTION_NAME)
 public class Game {
+
+    public static final String COLLECTION_NAME = "games";
 
     @Id
     private String id;

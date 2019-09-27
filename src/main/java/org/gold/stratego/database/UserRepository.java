@@ -13,6 +13,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     List<User> findUserByUsername(String username);
 
+
+
     void deleteByUsername(String username);
 
 }
