@@ -27,9 +27,9 @@ public class LoginController{
     @Autowired
     UserDB userDB;
 
-    @GetMapping("/login")
-    public String loginGet(){
-        return "login.html";
+    @GetMapping("/loginPage")
+        public String loginGet(){
+            return "login";
     }
 
     /**
@@ -66,18 +66,18 @@ public class LoginController{
         model.addAttribute("loginInfo", new LoginInfo());
         return "signup.html";
     }
+    //
 
 
     @ResponseBody
-        @PostMapping("/signup")
-        public Map<String, String> signup(@RequestParam("userName") String userName, @RequestParam("password") String password){
-            Map<String, String> hashMap = new HashMap<>();
-            if( userDB.insertUser(userName, password)){
-                hashMap.put("success", "true");
-            }else{
-                hashMap.put("success", "false");
-            }
-            return hashMap;
+    @PostMapping("/signup")
+    public Map<String, String> signup(@RequestParam("userName") String userName, @RequestParam("password") String password){
+        Map<String, String> hashMap = new HashMap<>();
+        if( userDB.insertUser(userName, password)){
+            hashMap.put("success", "true");
+        }else{
+            hashMap.put("success", "false");
+        }
+        return hashMap;
     }
-
 }

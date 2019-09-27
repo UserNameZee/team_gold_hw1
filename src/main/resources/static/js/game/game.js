@@ -17,7 +17,6 @@ IMAGE_PATH = [
 var ImageObjs = new Map();
 var locker = 0;
 function preLoad(stratego, btnSetup) {
-
     for (let i = 0; i < IMAGE_PATH.length; i++){
         locker ++;
         var imageObj = new Image();
@@ -27,8 +26,6 @@ function preLoad(stratego, btnSetup) {
             locker--;
             if (locker == 0) {
                 stratego.init(ImageObjs);
-
-
             }
         }
     }
@@ -41,7 +38,7 @@ function preLoad(stratego, btnSetup) {
         this.player1.isTurn = false;
         this.player2 = new Player(2);
         this.player2.isTurn = true;
-        this.ai = new AI(this);
+        // this.ai = new AI(this);
 
         this.imageObjs = ImageObjs;
         this.canvas = $("#canvas_cb")[0];
@@ -125,10 +122,11 @@ function preLoad(stratego, btnSetup) {
                 if (chessBoardData[y][x] != null && chessBoardData[y][x].team == 2) {
                     select(x, y);
                 }
-                if (stratego.player2.isTurn && (chessBoardData[y][x] == null || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
+                if (stratego.player2.isTurn && (chessBoardData[y][x] === null || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
                     let result = stratego.moveChessPiece(stratego.player2, x, y);
-                    stratego.switchTurn();
-                    stratego.ai.aiMove();
+                    if (result == "TURN_END"){
+                        stratego.switchTurn();
+                    }
                 }
                 stratego.painter.draw();
                 console.log(chessBoardData[y][x]);
@@ -209,10 +207,10 @@ function preLoad(stratego, btnSetup) {
             let result = sPiece.attack(this.chessBoardData[y][x]);
             switch (result) {
                 case "KILL":
-                    this.chessPieces.removePiece(this.chessBoardData, this.chessBoardData[y][x])
+                    this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
                     break;
                 case "KILLED":
-                    this.chessPieces.removePiece(this.chessBoardData, sPiece)
+                    this.chessPieces.removePiece(this.chessBoardData, this["player" + sPiece.team], sPiece)
                     this["player" + sPiece.team].deSelect();
                     break;
                 case "WIN":
@@ -232,8 +230,8 @@ function preLoad(stratego, btnSetup) {
                     break;
             }
         }
-        if(this.chessBoardData[sPiece.pos.y][sPiece.pos.x] != null){
-            this.chessBoardData[sPiece.pos.y][sPiece.pos.x] = null;
+        if(this.chessBoardData[sPiece.pos.y][sPiece.pos.x] !== undefined){
+            this.chessBoardData[sPiece.pos.y][sPiece.pos.x] = undefined;
             this.chessBoardData[y][x] = sPiece;
             player.selectPiece.pos.setXY(x, y);
             player.selectPos.setXY(x, y);

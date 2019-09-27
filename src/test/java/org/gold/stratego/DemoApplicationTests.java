@@ -3,6 +3,7 @@ package org.gold.stratego;
 import org.gold.stratego.database.UserRepository;
 import org.gold.stratego.database.entities.User;
 import org.gold.stratego.database.entities.MongoTest;
+import org.gold.stratego.database.entities.MongoTest.ObjectTest;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.runner.RunWith;
@@ -147,7 +148,11 @@ public class DemoApplicationTests {
 	@Test
 	public void MongoDB_test(){
 		MongoTest mt = new MongoTest();
+		ObjectTest ot = new ObjectTest();
+		ot.setNumber(123);
+		ot.setValue("This is the object.");
 		mt.setName(generateRandomString());
+		mt.setOt(ot);
 		gr.save(mt);
 	}
 
