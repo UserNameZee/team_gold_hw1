@@ -12,10 +12,9 @@
         "piece_number": "piece#",       //piece # of piece that took action this turn
         "piece_action":"move:attack",   //the action that a piece took this turn, move or attack
         "move_location":["x","y"],      //x,y coords of where the piece moved -- can be null if piece didnt move
-        "piece_attack_data":{           //data if the piece attacked -- can be null if piece didnt attack
-              "piece_attacked":"piece#",      //piece # of the piece that was attacked
-              "attack_location":["y","x"],    //y,x coords of piece that was attacked
-        },
+                                        //data if the piece attacked -- can be null if piece didnt attack
+        "piece_attacked":"piece#",      //piece # of the piece that was attacked
+        "attack_location":["y","x"],    //y,x coords of piece that was attacked
         "pieces_lost":[]                //all pieces that died this turn -- can be null
         }]
 }

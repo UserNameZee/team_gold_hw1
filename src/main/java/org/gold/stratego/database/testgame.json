@@ -22,10 +22,8 @@
         [4,8,9]],
       "piece_number":"1",
       "piece_action":"attack",
-      "piece_attack_data":{
-        "piece_attacked":"7",
-        "attack_location":["1","0"]
-      },
+      "piece_attacked":"7",
+      "attack_location":["1","0"],
       "pieces_lost":["1"]
     }
   ]
