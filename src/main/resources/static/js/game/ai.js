@@ -101,16 +101,12 @@ class AI{
 
         //calculate all the score in the minmax array
         for (let i =0; i<movableArr.length;i++){
-            //console.log("the element is "+ movableArr[i]);
             let temp=this.calScore(movableArr[i],board);
-            //console.log("cal Score: "+temp);
-            // console.log("cal Score temp score: "+temp.score);
-            // console.log("cal Score temp des: "+temp.des);
             movableArr[i].socre=temp.score;
             movableArr[i].des=temp.des;
         }
         console.log(movableArr)
-        let max=-999;
+        let max=-8888;
         let result=new Array();
         result[0]=movableArr[0];
         //get max score in the minmax array
