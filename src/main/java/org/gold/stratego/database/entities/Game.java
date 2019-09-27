@@ -30,6 +30,8 @@ public class Game {
     private ArrayList<Turn> turns;
 
     public ArrayList<Turn> getTurns() {
+        if (turns == null)
+            turns = new ArrayList<Turn>();
         return turns;
     }
 

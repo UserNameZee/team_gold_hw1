@@ -31,10 +31,34 @@ public class GameDB{
         List<Game> games = repo.findActive(username);
         if (games.size() == 0)
             return null;
-        //TODO: remove this after testing
-        System.out.println(games.toString());
         return games.get(0);
     }
+
+    /**
+     * Finds all games associated with the current user's game history.
+     * @param username
+     * @return List of Game objects
+     */
+    public List<Game> findAllGames(String username){
+        if (username.equals("Anonymous"))
+            return null;
+        List<Game> games = repo.findByUsername(username);
+        return games;
+    }
+
+    /**
+     * Updates the game in the Game DB
+     * @param game
+     */
+    public void updateGame(Game game){
+        repo.save(game);
+    }
+
+    public void addGame(Game game){
+        repo.save(game);
+    }
+
+
 
 
 

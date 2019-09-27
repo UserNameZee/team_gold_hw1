@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
+import javax.servlet.http.HttpSession;
+
 import org.gold.stratego.database.GameDB;
 import org.gold.stratego.database.entities.MongoTest;
-
 import org.gold.stratego.database.entities.Turn;
 import org.gold.stratego.database.entities.Game;
+import org.gold.stratego.controller.SessionController;
 
 import java.util.*;
 
@@ -30,6 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 public class GameRESTController{
 
     @Autowired
+    SessionController sc;
+
+    @Autowired
     GameDB gameDB;
 
     @Autowired
@@ -42,11 +47,7 @@ public class GameRESTController{
      */
     @PostMapping(path="/save_game", consumes=MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> save_game(@RequestBody Game game){
-        System.out.println(game.toString());
-        repo.save(game);
-        //print turn data
-        //for (Turn t: game.getTurns())
-        //    System.out.println(t.toString());
+        gameDB.addGame(game);
         return success(true);
     }
 
@@ -58,12 +59,27 @@ public class GameRESTController{
     @PostMapping(path="/add_turn", consumes=MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> add_turn(@RequestBody Turn turn){
         Game active = gameDB.getActiveGame("jathoma98");
-
-        //TODO: finish this
         if (active == null)
             return success(false, "No active games for current user: ");
+        active.getTurns().add(turn);
+        gameDB.updateGame(active);
         return success(true);
 
+    }
+
+    /**
+     * Returns all games in the history of current logged in user.
+     * @param session current session
+     * @return Array of Games in JSON format that are associated with current user
+     *         Nothing if user is Anonymous.
+     */
+    @GetMapping(path="/games")
+    public Iterable<Game> getUserGames(HttpSession session)throws Exception{
+        Map<String, Object> hashMap = new HashMap<>();
+        String username = sc.loadUserInfo(session);
+        if (username.equals("Anonymous"))
+            return null;
+        return gameDB.findAllGames(username);
     }
 
 
@@ -72,7 +88,7 @@ public class GameRESTController{
      * method to get all games
      * @return
      */
-    @GetMapping(path="/games")
+    @GetMapping(path="/allgames")
     public Iterable<Game> getAllGames() {
         return repo.findAll();
     }
