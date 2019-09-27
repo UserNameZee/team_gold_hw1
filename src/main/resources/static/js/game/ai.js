@@ -18,56 +18,56 @@ class AI{
 
 
 
-        //
-        //  //make ai move
-        // let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
-        // console.log(result);
-        // let des= result.origin;
-        // console.log("des"+des);
-        // let ox=des.pos.x;
-        // let oy=des.pos.y;
-        // let go=result.des;
-        // let dx=ox;
-        // let dy=oy;
-        //
-        // if(go=="top"){
-        //     dx=ox;
-        //     dy=oy-1;
-        // }else if(go=="bot"){
-        //     dx=ox;
-        //     dy=oy+1;
-        // }else if(go=="left"){
-        //     dx=ox-1;
-        //     dy=oy;
-        // }else{
-        //     dx=ox+1;
-        //     dy=oy;
-        // }
 
-
-        //move a test random move
-        let ran=Math.floor(Math.random()*mov_arr.length)
-        let result=mov_arr[ran]
+         //make ai move
+        let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData);
         console.log(result);
         let des= result.origin;
         console.log("des"+des);
         let ox=des.pos.x;
         let oy=des.pos.y;
+        let go=result.des;
         let dx=ox;
         let dy=oy;
-        if(result.below!==null){
-            dx=ox;
-            dy=oy+1;
-        }else if(result.above!==null){
+
+        if(go=="above"){
             dx=ox;
             dy=oy-1;
-        }else if(result.left!==null){
+        }else if(go=="below"){
+            dx=ox;
+            dy=oy+1;
+        }else if(go=="left"){
             dx=ox-1;
             dy=oy;
         }else{
             dx=ox+1;
             dy=oy;
         }
+
+
+        // //move a test random move
+        // let ran=Math.floor(Math.random()*mov_arr.length)
+        // let result=mov_arr[ran]
+        // console.log(result);
+        // let des= result.origin;
+        // console.log("des"+des);
+        // let ox=des.pos.x;
+        // let oy=des.pos.y;
+        // let dx=ox;
+        // let dy=oy;
+        // if(result.below!==null){
+        //     dx=ox;
+        //     dy=oy+1;
+        // }else if(result.above!==null){
+        //     dx=ox;
+        //     dy=oy-1;
+        // }else if(result.left!==null){
+        //     dx=ox-1;
+        //     dy=oy;
+        // }else{
+        //     dx=ox+1;
+        //     dy=oy;
+        // }
 
 
 
@@ -104,11 +104,12 @@ class AI{
             //console.log("the element is "+ movableArr[i]);
             let temp=this.calScore(movableArr[i],board);
             //console.log("cal Score: "+temp);
-            console.log("cal Score temp score: "+temp.score);
-            console.log("cal Score temp des: "+temp.des);
+            // console.log("cal Score temp score: "+temp.score);
+            // console.log("cal Score temp des: "+temp.des);
             movableArr[i].socre=temp.score;
             movableArr[i].des=temp.des;
         }
+        console.log(movableArr)
         let max=-999;
         let result=new Array();
         result[0]=movableArr[0];
@@ -122,7 +123,6 @@ class AI{
                 result.push(movableArr[j]);
             }
         }
-        console.log("result is:"+result)
         let randomNum=Math.floor(Math.random()*result.length)
         return result[randomNum];
 
@@ -153,7 +153,6 @@ class AI{
 
     /*寻找所有棋子，可移动棋子加入array */
     findMovablePieces(board,AI){
-        console.log(board);
         let movable_pieces = new Array();
         for (let y = 0 ; y < 10; y++){
             for(let x = 0 ; x < 10; x++){
@@ -194,7 +193,7 @@ class AI{
 
                     if(x<9){
                         if(this.movablePieces(board[y][x+1],y,x+1)){
-                            console.log("right side add pieces")
+                            //console.log("right side add pieces")
                             temp.right=board[y][x+1];
                         }else{
                             temp.right=null;
