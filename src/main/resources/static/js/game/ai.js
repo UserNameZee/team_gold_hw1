@@ -121,6 +121,7 @@ class AI{
             }
         }
         //console.log("result array is here: "+result);
+        result.sort(function(){return Math.random()>0.5?-1:1;});
         let temp=0;
         while(temp<result.length){
             if(result[temp].des=="bot"){
