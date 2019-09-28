@@ -12,7 +12,7 @@
             console.log("sign up pressed")
             $.post("/signup", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
                 if(result.success=="true"){
-                   window.location.href= "login.html";
+                   window.location.href= "/loginPage";
                 }else{
                     alert("The username has been used,please use another username");
                 }
