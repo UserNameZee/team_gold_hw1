@@ -109,6 +109,14 @@ function preLoad(stratego, btnSetup) {
             $("#surrender").prop("disabled", false);
         });
 
+        $("#quickmove").on("click", function (){
+            if (stratego.player2.isTurn){
+                //autoplay 放在这下面
+                stratego.switchTurn();
+            }
+        })
+
+
         $("#surrender").on("click", function (){
             $("#setup").prop("disabled", false);
             $("#surrender").prop("disabled", true);
@@ -230,10 +238,11 @@ function preLoad(stratego, btnSetup) {
                 if (this.chessBoardData[y][x] !== undefined && this.chessBoardData[y][x] !== "water"){
                     let rank = this.chessBoardData[y][x].rank;
                     let teamid = this.chessBoardData[y][x].team;
+                    let hide = this.chessBoardData[y][x].isHide ? 1000 : 0;
                     console.log("piece: " + (teamid * 100 + rank) + " at x: " +  x + ", y: " + y);
-                    board[slots_id] = teamid * 100 + rank;
+                    board[slots_id] = teamid * 100 + rank + 1000;
                     slots_id++;
-                    console.log(board);
+                    // console.log(board);
                 }
             }
         }
