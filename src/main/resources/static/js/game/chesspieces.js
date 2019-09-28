@@ -77,7 +77,7 @@ class Piece {
             return "KILLED"
         }
         if(this.rank == 1 & piece.rank == 10){
-            consol.log("Kill")
+            console.log("Kill")
             return "KILL";
         }
         if (this.rank > piece.rank){
