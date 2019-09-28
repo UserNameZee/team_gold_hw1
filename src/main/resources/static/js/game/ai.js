@@ -219,7 +219,6 @@ class AI{
         if (x < 0 || y <0 || x > 9 || y > 9){
             return false;
         }
-
         if (target == undefined){
             return true;
         }else if (target == "water"){
@@ -324,7 +323,7 @@ class AI{
         if (target.right !== null){
             let right_x = temp_x +1;
             let right_y = temp_y;
-            left[0] = this.comparePieces(target,board[right_y][right_x]);
+            right[0] = this.comparePieces(target,board[right_y][right_x]);
             if (right_x < 8  && this.movablePieces(board[right_y][right_x+1],right_y,right_x+1,teamNum)){
                 right[1] = this.comparePieces(target,board[right_y][right_x+1]);
             }
@@ -333,46 +332,51 @@ class AI{
         }
 
 
-        let right_score = this.count_sorce(right);
-        let left_score= this.count_sorce(left);
-        let top_score= this.count_sorce(top);
-        let bot_score= this.count_sorce(bot);
+
+        let right_score = {score:this.count_sorce(right),des:"right"};
+        let left_score= {score:this.count_sorce(left),des:"left"};
+        let top_score= {score:this.count_sorce(top),des:"top"};
+        let bot_score= {score:this.count_sorce(bot),des:"bot"};
+
+        let list_score = [right_score,left_score,top_score,bot_score];
+        list_score.sort((b, a) => (a.score > b.score) ? 1 : -1);
+
+        return list_score[0];
 
 
-
-        let dic={score: -999, des: null}
-        if (top_score > bot_score){
-            if (top_score > left_score){
-                if (top_score  > right_score){
-                    dic = {score:top_score,des:"top"};
-                }else {
-                    dic = {score:right_score,des:"right"};
-                }
-            }else {
-                if (left_score > right_score){
-                    dic = {score:left_score,des:"left"};
-                }else {
-                    dic = {score:right_score,des:"right"};
-                }
-            }
-            return dic;
-        }else{
-            if (bot_score > left_score){
-                if (bot_score > right_score){
-                    dic = {score:bot_score,des:"bot"};
-                }else {
-                    dic = {score:right_score,des:"right"};
-                }
-            }else {
-                if (left_score > right_score){
-                    dic = {score:left_score,des:"left"};
-                }else {
-                    dic = {score:right_score,des:"right"};
-
-                }
-            }
-            return dic;
-        }
+        // let dic={score: -999, des: null}
+        // if (top_score > bot_score){
+        //     if (top_score > left_score){
+        //         if (top_score  > right_score){
+        //             dic = {score:top_score,des:"top"};
+        //         }else {
+        //             dic = {score:right_score,des:"right"};
+        //         }
+        //     }else {
+        //         if (left_score > right_score){
+        //             dic = {score:left_score,des:"left"};
+        //         }else {
+        //             dic = {score:right_score,des:"right"};
+        //         }
+        //     }
+        //     return dic;
+        // }else{
+        //     if (bot_score > left_score){
+        //         if (bot_score > right_score){
+        //             dic = {score:bot_score,des:"bot"};
+        //         }else {
+        //             dic = {score:right_score,des:"right"};
+        //         }
+        //     }else {
+        //         if (left_score > right_score){
+        //             dic = {score:left_score,des:"left"};
+        //         }else {
+        //             dic = {score:right_score,des:"right"};
+        //
+        //         }
+        //     }
+        //     return dic;
+        // }
 
     }
 
@@ -400,4 +404,5 @@ class AI{
             return 0;
         }
     }
+
 }
