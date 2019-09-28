@@ -4,8 +4,11 @@ class AI{
     }
 
     aiHelp(){
+        console.log("enter auto move")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,2);
+        console.log("auto move"+mov_arr)
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData,2);
+        console.log("score array result"+result);
         let des= result.origin;
         let ox=des.pos.x;
         let oy=des.pos.y;
@@ -87,6 +90,7 @@ class AI{
         //     dx=ox+1;
         //     dy=oy;
         // }
+
         this.select(ox,oy);
         this.stratego.moveChessPiece(this.stratego.player1, dx, dy);
         this.stratego.switchTurn();
@@ -324,7 +328,7 @@ class AI{
         if (target.right !== null){
             let right_x = temp_x +1;
             let right_y = temp_y;
-            left[0] = this.comparePieces(target,board[right_y][right_x]);
+            right[0] = this.comparePieces(target,board[right_y][right_x]);
             if (right_x < 8  && this.movablePieces(board[right_y][right_x+1],right_y,right_x+1,teamNum)){
                 right[1] = this.comparePieces(target,board[right_y][right_x+1]);
             }

@@ -107,11 +107,14 @@ function preLoad(stratego, btnSetup) {
             });
             $("#start").prop("disabled", true);
             $("#surrender").prop("disabled", false);
+            $("#quickmove").prop("disabled", false);
         });
 
         $("#quickmove").on("click", function (){
             if (stratego.player2.isTurn){
                 //autoplay 放在这下面
+                console.log("quick move pressed")
+                stratego.ai.aiHelp();
                 stratego.switchTurn();
             }
         })
@@ -239,7 +242,7 @@ function preLoad(stratego, btnSetup) {
                     let rank = this.chessBoardData[y][x].rank;
                     let teamid = this.chessBoardData[y][x].team;
                     let hide = this.chessBoardData[y][x].isHide ? 1000 : 0;
-                    console.log("piece: " + (teamid * 100 + rank) + " at x: " +  x + ", y: " + y);
+                    //console.log("piece: " + (teamid * 100 + rank) + " at x: " +  x + ", y: " + y);
                     board[slots_id] = teamid * 100 + rank + 1000;
                     slots_id++;
                     // console.log(board);
