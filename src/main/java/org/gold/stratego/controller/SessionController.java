@@ -18,6 +18,8 @@ import java.util.Map;
 
 /**
  * Contains paths related to obtaining user session data.
+ * and
+ * methods related to manipulating user session attributes
  * @author Jacob Thomas
  */
 @Controller
@@ -63,6 +65,17 @@ public class SessionController {
      */
     public boolean userIsAnonymous(HttpSession session) throws Exception{
         return loadUserInfo(session).equals("Anonymous");
+    }
+
+    /**
+     * Sets an attribute current_game in the user session to indicate
+     * that the user is currently playing an unfinished game.
+     * @param id MongoDB id of current game
+     *           or
+     *           null to indicate the user has no games in progress (they just finished a game)
+     */
+    public void setCurrentGame(HttpSession session, String id) throws Exception{
+        session.setAttribute("current_game", id);
     }
 
 }

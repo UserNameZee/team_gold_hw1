@@ -17,8 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Controller for /login based on below tutorial for form submission:
- * https://spring.io/guides/gs/handling-form-submission/
+ * Controllers for login and signup pages
  */
 
 @Controller
