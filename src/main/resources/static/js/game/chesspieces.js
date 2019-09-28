@@ -130,6 +130,15 @@ class ChessPieces {
             }
         }
     }
+
+    continueGameInit(){
+        for(let r = 0; r < 12; r++){
+            this.team1[r] = new Array();
+            this.team2[r] = new Array();
+        }
+    }
+
+
     removePiece(chessBoardData, player, piece){
         let team = this["team" + piece.team];
         if (player.selectPiece == piece){

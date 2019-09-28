@@ -15,6 +15,26 @@ Tools = {
         return slotsIdSet;
     },
 
+    convert2DServer12local(Board, chesspieces, chessBoard){
+        let id = 0;
+        chesspieces.cleanTeams();
+        for(let slot_id = 0; slot_id < board.length; slot_id++) {
+            let pos = this.slotId2Pos(slot_id);
+            if (board[slot_id] == 0){
+                chessBoard[pos.y][pos.x] = undefined;
+            }else if (board[slot_id] == -1){
+                chessBoard[pos.y][pos.x] = "water";
+            }else{
+                let isHide = Math.floor(board[slot_id] / 1000) == 1 ? false : true;
+                let team = Math.floor((board[slot_id] % 1000) / 100);
+                let rank = board[slot_id] % 1000 % 100;
+                let piece = new Piece(id, team, rank, MOVE_TYPE_WITH_DIFF_RANK[rank], pos, isHide);
+                chesspieces["team" + team][rank].push(piece);
+                chessBoard[pos.y][pos.x] = piece;
+            }
+        }
+    },
+
     createGameJson:function(stratego){
         let game = {
             username: "",
