@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Component
@@ -50,10 +51,10 @@ public class GameDB{
      * Returns game associated with id
      */
     public Game getGameById(String id){
-        List<Game> game = repo.findById(id);
-        if (game.size() == 0)
-            return null;
-        return game.get(0);
+        Optional<Game> game = repo.findById(id);
+        if (game.isPresent())
+            return game.get();
+        return null;
     }
 
     /**
