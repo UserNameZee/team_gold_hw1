@@ -103,7 +103,7 @@ function preLoad(stratego, btnSetup) {
                     }
                 }
                 stratego.painter.draw();
-                console.log(chessBoardData[y][x]);
+                //console.log(chessBoardData[y][x]);
             });
             $("#start").prop("disabled", true);
             $("#surrender").prop("disabled", false);

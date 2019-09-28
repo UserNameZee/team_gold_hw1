@@ -5,28 +5,45 @@ class AI{
 
     aiHelp(){
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,2);
+        let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData,2);
+        let des= result.origin;
+        let ox=des.pos.x;
+        let oy=des.pos.y;
+        let go=result.des;
+        let dx=ox;
+        let dy=oy;
+
+        if(go=="top"){
+            dx=ox;
+            dy=oy-1;
+        }else if(go=="bot"){
+            dx=ox;
+            dy=oy+1;
+        }else if(go=="left"){
+            dx=ox-1;
+            dy=oy;
+        }else if(go=="right"){
+            dx=ox+1;
+            dy=oy;
+        }else{
+            console.log("wrong des pass through: "+go)
+        }
+        this.select(ox,oy);
+        this.stratego.moveChessPiece(this.stratego.player2, dx, dy);
+        this.stratego.switchTurn();
     }
 
 
     aiMove(){
         console.log("AI turn starts")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,1);
-         //console.log(mov_arr);
 
-
-
-
-         //make ai move
+        //ai make a move
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData,1);
-        // console.log("ai move"+result.origin.pos.x);
-        // console.log("ai move"+result.origin.pos.y);
-        // console.log("ai move"+result.score);
         let des= result.origin;
-        //console.log("des"+des);
         let ox=des.pos.x;
         let oy=des.pos.y;
         let go=result.des;
-        //console.log("des "+ go);
         let dx=ox;
         let dy=oy;
 
@@ -70,16 +87,9 @@ class AI{
         //     dx=ox+1;
         //     dy=oy;
         // }
-
-
-
-
-
-
         this.select(ox,oy);
         this.stratego.moveChessPiece(this.stratego.player1, dx, dy);
         this.stratego.switchTurn();
-
 
     }
 
@@ -120,12 +130,22 @@ class AI{
         //console.log("result array is here: "+result);
         result.sort(function(){return Math.random()>0.5?-1:1;});
         let temp=0;
-        while(temp<result.length){
-            if(result[temp].des=="bot"){
-                return result[temp];
+        if(teamNum==1){
+            while(temp<result.length){
+                if(result[temp].des=="bot"){
+                    return result[temp];
+                }
+                temp++;
             }
-        temp++;
+        }else{
+            while(temp<result.length){
+                if(result[temp].des=="top"){
+                    return result[temp];
+                }
+                temp++;
+            }
         }
+
         let randomNum=Math.floor(Math.random()*result.length)
         return result[randomNum];
 
