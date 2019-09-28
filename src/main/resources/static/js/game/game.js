@@ -39,6 +39,7 @@ function preLoad(stratego, btnSetup) {
         this.player2 = new Player(2);
         this.player2.isTurn = true;
         this.ai = new AI(this);
+        this.isWin = false;
 
         this.imageObjs = ImageObjs;
         this.canvas = $("#canvas_cb")[0];
@@ -117,6 +118,7 @@ function preLoad(stratego, btnSetup) {
                         $("#quickmove").prop("disabled", true);
                         stratego.painter.draw();
                         stratego.postGameEnd(result);
+                        stratego.isWin = result == "WIN" ? true : false;
                         alert(result);
                     }
                 }
@@ -142,6 +144,7 @@ function preLoad(stratego, btnSetup) {
                     $("#quickmove").prop("disabled", true);
                     stratego.painter.draw();
                     stratego.postGameEnd(result);
+                    stratego.isWin = result == "WIN" ? true : false;
                     alert(result);
                 }
             }
@@ -152,10 +155,9 @@ function preLoad(stratego, btnSetup) {
             $("#newgame").prop("disabled", true);
             $("#quickmove").prop("disabled", true);
             $("#canvas_cb").off("click");
-            stratego.postGameEnd("LOSS");
+            stratego.postGameEnd(stratego.isWin ? "WIN" : "LOSS");
             stratego.reset();
         });
-
     }
 
     initChessBoardData(){
