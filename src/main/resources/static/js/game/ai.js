@@ -30,7 +30,7 @@ class AI{
         }else{
             console.log("wrong des pass through: "+go)
         }
-        this.select(ox,oy);
+        this.select(ox,oy,this.stratego.player2);
         this.stratego.moveChessPiece(this.stratego.player2, dx, dy);
         this.stratego.switchTurn();
     }
@@ -90,22 +90,24 @@ class AI{
         //     dy=oy;
         // }
 
-        this.select(ox,oy);
+        this.select(ox,oy,this.stratego.player1);
         this.stratego.moveChessPiece(this.stratego.player1, dx, dy);
         this.stratego.switchTurn();
 
     }
 
-    select (x, y) {
+    select (x, y,player) {
         let stratego= this.stratego;
-        if (stratego.chessBoardData[y][x] != null && stratego.chessBoardData[y][x].team == 1){
-            stratego.player1.isSelect = true;
-            stratego.player1.lastSelectPos.assign(stratego.player1.selectPos);
-            stratego.player1.lastSelectPiece = stratego.player1.selectPiece;
-            stratego.player1.selectPos.setXY(x, y);
-            stratego.player1.selectPiece =stratego.chessBoardData[y][x];
+        if (stratego.chessBoardData[y][x] != null && stratego.chessBoardData[y][x].team ==player.id){
+            player.isSelect = true;
+            player.lastSelectPos.assign(player.selectPos);
+            player.lastSelectPiece = player.selectPiece;
+            player.selectPos.setXY(x, y);
+            player.selectPiece =stratego.chessBoardData[y][x];
         }
     }
+
+
 
 
 
