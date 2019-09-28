@@ -80,4 +80,9 @@ public class LoginController{
         }
         return hashMap;
     }
+
+//    @GetMapping("/loginPage")
+//    public String loginPage(HttpSession session) {
+//        return "/login";
+//    }
 }
