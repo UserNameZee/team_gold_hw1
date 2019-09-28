@@ -3,9 +3,9 @@ class Player {
     isTurn = true;
     isSelect = false;
     selectPos = new Point(-1, -1);
-    selectPiece = null;
+    selectPiece = undefined;
     lastSelectPos = new Point(-1, -1);
-    lastSelectPiece = null;
+    lastSelectPiece = undefined;
 
     moves = {
         rounds : new Array(),

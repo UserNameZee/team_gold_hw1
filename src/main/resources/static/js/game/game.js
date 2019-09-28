@@ -79,7 +79,7 @@ function preLoad(stratego, btnSetup) {
             $("#canvas_cb").on('click', function (e){
                 let x = Math.ceil(e.offsetX/cell_w) - 1, y = Math.ceil(e.offsetY/cell_h) - 1;
                 select(x, y);
-                if (stratego.player2.lastSelectPiece !== undefined){
+                if (stratego.player2.lastSelectPiece != undefined){
                     stratego.switchPiece(stratego.player2.lastSelectPiece, stratego.player2.selectPiece);
                     stratego.player2.deSelect();
                 }
@@ -185,7 +185,6 @@ function preLoad(stratego, btnSetup) {
                     break;
                 case "KILLED":
                     this.chessPieces.removePiece(this.chessBoardData, this["player" + sPiece.team], sPiece)
-                    this["player" + sPiece.team].deSelect();
                     break;
                 case "WIN":
                     this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
@@ -210,32 +209,35 @@ function preLoad(stratego, btnSetup) {
             player.selectPos.setXY(x, y);
         }
         this.switchTurn();
+        this.postTurn();
         return "TURN_END";
     }
 
     switchPiece(piece1, piece2){
-         let pos1 = piece1.pos;
-         let pos2 = piece2.pos;
-         piece1.pos = pos2;
-         piece2.pos = pos1;
-         this.chessBoardData[piece1.pos.y][piece1.pos.x] = piece1;
-         this.chessBoardData[piece2.pos.y][piece2.pos.x] = piece2;
-         return;
+        let pos1 = piece1.pos;
+        let pos2 = piece2.pos;
+        piece1.pos = pos2;
+        piece2.pos = pos1;this.chessBoardData[piece1.pos.y][piece1.pos.x] = piece1;
+        this.chessBoardData[piece2.pos.y][piece2.pos.x] = piece2;
+        return;
     }
 
-    postTurn(){
+    postTurn(playerTurn){
         let board = new Array(100);
         let slots_id = 0;
-        for(let y = 0; y <= 10; y++){
-            for (let x = 0; x <=10; x++){
-                if (this.chessBoardData[y][x] !== undefined, this.chessBoardData[y][x] !== "water"){
-                    board[slots_id] = this.chessBoardData[y][x] + (this.chessBoardData[y][x].team * 100);
+        for(let y = 0; y < 10; y++){
+            for (let x = 0; x < 10; x++){
+                if (this.chessBoardData[y][x] !== undefined && this.chessBoardData[y][x] !== "water"){
+                    let rank = this.chessBoardData[y][x].rank;
+                    let teamid = this.chessBoardData[y][x].team;
+                    console.log("piece: " + (teamid * 100 + rank) + " at x: " +  x + ", y: " + y);
+                    board[slots_id] = teamid * 100 + rank;
+                    slots_id++;
+                    console.log(board);
                 }
             }
         }
-        console.log(board);
     }
-
 }
  var Game ={
     start : function (){
