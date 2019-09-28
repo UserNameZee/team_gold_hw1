@@ -116,6 +116,11 @@ function preLoad(stratego, btnSetup) {
                 console.log("quick move pressed")
                 stratego.ai.aiHelp();
                 stratego.switchTurn();
+                stratego.painter.draw();
+                stratego.ai.aiMove();
+                stratego.switchTurn();
+                stratego.painter.draw();
+
             }
         })
 
