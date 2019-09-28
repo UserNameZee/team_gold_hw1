@@ -109,9 +109,14 @@ function preLoad(stratego, btnSetup) {
                 if (stratego.player2.isTurn && (chessBoardData[y][x] === undefined || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
                     let result = stratego.moveChessPiece(stratego.player2, x, y);
                     if (result == "TURN_END"){
-                        stratego.ai.aiMove();
+                        result = stratego.ai.aiMove();
                         stratego.painter.draw();
-                    }else{
+                    }
+                    if(result == "WIN" || result == "LOSS"){
+                        $("#canvas_cb").off("click");
+                        $("#quickmove").prop("disabled", true);
+                        stratego.painter.draw();
+                        stratego.postGameEnd(result);
                         alert(result);
                     }
                 }
@@ -120,16 +125,23 @@ function preLoad(stratego, btnSetup) {
             $("#start").prop("disabled", true);
             $("#newgame").prop("disabled", false);
             $("#quickmove").prop("disabled", false);
+            stratego.postStart();
+            stratego.postTurn();
         });
 
         $("#quickmove").on("click", function (){
             if (stratego.player2.isTurn){
                 let result = stratego.ai.aiHelp();
                 if ( result == "TURN_END"){
-                    stratego.ai.aiMove();
+                    result =  stratego.ai.aiMove();
                     stratego.painter.draw();
-                }else{
+                }
+
+                if(result == "WIN" || result == "LOSS"){
                     $("#canvas_cb").off("click");
+                    $("#quickmove").prop("disabled", true);
+                    stratego.painter.draw();
+                    stratego.postGameEnd(result);
                     alert(result);
                 }
             }
@@ -138,7 +150,9 @@ function preLoad(stratego, btnSetup) {
         $("#newgame").on("click", function (){
             $("#setup").prop("disabled", false);
             $("#newgame").prop("disabled", true);
+            $("#quickmove").prop("disabled", true);
             $("#canvas_cb").off("click");
+            stratego.postGameEnd("LOSS");
             stratego.reset();
         });
 
@@ -203,6 +217,8 @@ function preLoad(stratego, btnSetup) {
                 break;
         }
 
+
+
         player.lastMove.set(sPiece.pos, new Point(x, y));
 
         let result = "";
@@ -236,12 +252,10 @@ function preLoad(stratego, btnSetup) {
             player.selectPos.setXY(x, y);
         }
         this.switchTurn();
-
-        // this.postTurn();
+        this.postTurn();
         if (result == "WIN" || result == "LOSS"){
-            $("#canvas_cb").off("click");
             return result;
-    }
+        }
         return "TURN_END";
     }
 
@@ -254,7 +268,7 @@ function preLoad(stratego, btnSetup) {
         return;
     }
 
-    postStart(){
+     postStart(){
         let game = Tools.createGameJson(this); //return json type game
         $.ajax({
             url: '/rest/save_game',
@@ -265,6 +279,8 @@ function preLoad(stratego, btnSetup) {
         });
     }
 
+
+ // /set_game_result
     postTurn(playerTurn){
         let turn = Tools.createTurnJson(this)
         $.ajax({
@@ -275,8 +291,8 @@ function preLoad(stratego, btnSetup) {
             data: turn
         });
     }
-    postGameEnd(){
-
+    postGameEnd(result){
+        $.post("/rest/set_game_result", {result: result}, function (result){})
     }
 
 }
