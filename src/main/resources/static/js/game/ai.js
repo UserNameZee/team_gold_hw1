@@ -266,6 +266,21 @@ class AI{
         let temp_x = target.origin.pos.x;
         let temp_y = target.origin.pos.y;
 
+        if(target.origin.rank === 2 && target.below != null){
+            for (let i= temp_y; i < 9, i++;){
+                if(board[i+1][temp_x] !== undefined){
+                    if(board[i+1][temp_x] === "water"){
+                        break;
+                    }
+                    else if(board[i+1][temp_x].team === 2){
+                        let dic = {score:this.chargerScore(target),des:"bot"};
+                        return dic;
+                    }
+                }
+            }
+        }
+
+
         if (target.above !== null){
             let above_x = temp_x;
             let above_y = temp_y -1;
@@ -388,7 +403,7 @@ class AI{
     count_sorce(arr){
         let temp = -999;
         for (let i in arr){
-            if (arr[i]< 0 && arr[i]!=undefined)
+            if (arr[i]< 0 && arr[i]!==undefined)
                 return arr[i];
             if (temp < arr[i])
                 temp = arr[i];
@@ -416,17 +431,27 @@ class AI{
         if (att.origin.rank > def.rank)
             return def.rank;
         if (att.origin.rank < def.rank)
-            return -att.rank;
+            return -att.rank-1;
         else{
             return 0;
         }
 
     }
 
-
-    chargerMove(target,board){
-        
-
+    chargerScore(target){
+        if (target.rank === 0){
+            return -1;
+        }
+        else if (target.rank === 11){
+            return 999;
+        }
+        else if (target.rank === 1){
+            return  11;
+        }
+        else
+            return target.rank/2.5;
     }
+
+
 
 }
