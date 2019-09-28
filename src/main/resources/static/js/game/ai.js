@@ -249,21 +249,21 @@ class AI{
             let above_y = temp_y -1;
 
             top[0] =  this.comparePieces(target,target.above);
-            if ( above_y > 0 && this.movablePieces(board[above_x][above_y-1],above_x,above_y -1)) {
-                top[1] = this.comparePieces(target,board[above_x][above_y-1]);
+            if ( above_y > 0 && this.movablePieces(board[above_y-1][above_x],above_y -1,above_x)) {
+                top[1] = this.comparePieces(target,board[above_y-1][above_x]);
             }
-            if ( above_x > 0 && this.movablePieces(board[above_x - 1][above_y],above_x -1,above_y)){
-                if (board[above_x - 1][above_y] !== undefined)
-                    L_top = board[above_x - 1][above_y];
+            if ( above_x > 0 && this.movablePieces(board[above_y][above_x - 1],above_y,above_x -1)){
+                if (board[above_y][above_x - 1] !== undefined)
+                    L_top = board[above_y][above_x - 1];
                 else
                     L_top = undefined;
 
                 top[2] = this.comparePieces(target,L_top);
             }
 
-            if ( above_x < 8 && this.movablePieces(board[above_x + 1][above_y],above_x+ 1,above_y)){
-                if (board[above_x + 1][above_y] !== undefined)
-                    R_top = board[above_x + 1][above_y];
+            if ( above_x < 8 && this.movablePieces(board[above_y][above_x + 1],above_y,above_x+ 1)){
+                if (board[above_y][above_x + 1] !== undefined)
+                    R_top = board[above_y][above_x + 1];
                 else
                     R_top = undefined;
                 top[3] = this.comparePieces(target,R_top);
@@ -273,21 +273,21 @@ class AI{
             let below_x = temp_x;
             let below_y = temp_y + 1;
             bot[0] =  this.comparePieces(target,target.below);
-            if ( below_y < 8  && (this.movablePieces(board[below_x][below_y+1],below_x,below_y +1)) ) {
+            if ( below_y < 8  && (this.movablePieces(board[below_y+1][below_x],below_y +1,below_x)) ) {
                 bot[1] = this.comparePieces(target,board[below_x][below_y+1]);
             }
-            if (below_x > 1 && this.movablePieces(board[below_x - 1][below_y],below_x-1,below_y)){
-                if (board[below_x - 1][below_y] !== undefined)
-                    L_bot = board[below_x - 1][below_y];
+            if (below_x > 1 && this.movablePieces(board[below_y][below_x - 1],below_y,below_x-1)){
+                if (board[below_y][below_x - 1] !== undefined)
+                    L_bot = board[below_y][below_x - 1];
                 else
                     L_bot = undefined;
 
                 bot[2] = this.comparePieces(target,L_bot);
             }
 
-            if (below_x < 8 && this.movablePieces(board[below_x +1][below_y],below_x+1,below_y)){
-                if (board[below_x + 1][below_y] != undefined)
-                    R_bot = board[below_x + 1][below_y];
+            if (below_x < 8 && this.movablePieces(board[below_y][below_x +1],below_y,below_x+1)){
+                if (board[below_y][below_x + 1] != undefined)
+                    R_bot = board[below_y][below_x + 1];
                 else
                     R_bot = undefined;
                 bot[3] = this.comparePieces(target,R_bot);
@@ -296,17 +296,19 @@ class AI{
         if (target.left !== null){
             let left_x = temp_x -1;
             let left_y = temp_y;
-            if (left_x > 0 && this.movablePieces(board[left_x -1][left_y],left_x-1,left_y)){
-                left[1] = this.comparePieces(target,board[left_x-1][left_y]);
+            left[0] = this.comparePieces(target,board[left_y][left_x]);
+            if (left_x > 0 && this.movablePieces(board[left_y][left_x -1],left_y,left_x-1)){
+                left[1] = this.comparePieces(target,board[left_y][left_x-1]);
             }
             left[2] = bot[2];
             left[3] = top[2];
         }
         if (target.right !== null){
-            let left_x = temp_x +1;
-            let left_y = temp_y;
-            if (left_x < 8  && this.movablePieces(board[left_x+1][left_y],left_x+1,left_y)){
-                right[1] = this.comparePieces(target,board[left_x+1][left_y]);
+            let right_x = temp_x +1;
+            let right_y = temp_y;
+            left[0] = this.comparePieces(target,board[right_y][right_x]);
+            if (right_x < 8  && this.movablePieces(board[right_y][right_x+1],right_y,right_x+1)){
+                right[1] = this.comparePieces(target,board[right_y][right_x+1]);
             }
             right[2] = bot[3];
             right[3] = top[3];
