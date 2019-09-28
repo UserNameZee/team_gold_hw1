@@ -40,25 +40,43 @@ public class GameRESTController{
     @Autowired
     org.gold.stratego.database.GameRepository repo;
 
+    @GetMapping(path="/anontest")
+    public Map<String, String> anontest(HttpSession session) throws Exception{
+        Map<String,String> map = success(true);
+        map.put("anon", new Boolean(sc.userIsAnonymous(session)).toString());
+        return map;
+    }
+
 
     /**
-     * Endpoint which saves JSON into an object for insertion into GameDB.
+     * Saves a Game into the GameDB
+     * Only saves games if the user is logged in.
      * @param game - Object which will be set with JSON data in HTTP body.
      */
     @PostMapping(path="/save_game", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> save_game(@RequestBody Game game){
+    public Map<String, String> save_game(@RequestBody Game game, HttpSession session) throws Exception{
+        if (sc.userIsAnonymous(session))
+            return success(false, "User is anonymous");
         gameDB.addGame(game);
         return success(true);
     }
 
     /**
-     * Endpoint which adds
+     * Adds the turn data to the current active Game document. The ID of the current game is acquired from the
+     * current session.
      * @param turn
-     * @return
+     * @param session
+     * @return Success if turn is successfully added to DB.
+     *         Failure if user is anonymous
+     *         or
+     *         User has no active games
      */
     @PostMapping(path="/add_turn", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> add_turn(@RequestBody Turn turn){
-        Game active = gameDB.getActiveGame("jathoma98");
+    public Map<String, String> add_turn(@RequestBody Turn turn, HttpSession session) throws Exception{
+        if (sc.userIsAnonymous(session))
+            return success(false, "User is anonymous.");
+        String currentUser = sc.loadUserInfo(session);
+        Game active = gameDB.getActiveGame(currentUser);
         if (active == null)
             return success(false, "No active games for current user: ");
         active.getTurns().add(turn);
@@ -92,6 +110,8 @@ public class GameRESTController{
     public Iterable<Game> getAllGames() {
         return repo.findAll();
     }
+
+    //Below methods are not endpoints.
 
     /**
      * Creates the return object for REST methods to indicate success or failure

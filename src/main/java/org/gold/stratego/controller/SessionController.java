@@ -22,6 +22,8 @@ import java.util.Map;
  */
 @Controller
 public class SessionController {
+
+
     /**
      * Use this to check if user is currently logged in
      *
@@ -37,6 +39,30 @@ public class SessionController {
         if (session.getAttribute("name") == null)
             return "Anonymous";
         return session.getAttribute("name").toString();
+    }
+
+    /**
+     * Returns MongoDB id of the unfinished Stratego game that the user is currently playing.
+     * @param session - user session
+     * @return id of current game if an unfinished game exists
+     *         "null" if no game exists
+     */
+    @ResponseBody
+    @GetMapping("/loadCurrentGame")
+    public String loadCurrentGame(HttpSession session)throws Exception{
+        Object currentGame = session.getAttribute("current_game");
+        if (currentGame == null)
+            return null;
+        return currentGame.toString();
+    }
+
+    /**
+     * Indicates if the user is logged in or not.
+     * @return true if user is anonymous
+     *         false is user is logged in
+     */
+    public boolean userIsAnonymous(HttpSession session) throws Exception{
+        return loadUserInfo(session).equals("Anonymous");
     }
 
 }

@@ -1,5 +1,6 @@
 
 //example of format of one Game document in MongoDB
+//Zihao's current plan is to only use "board" attribute for each turn.
 
 {
   "username":"id",        //Username of the player, used to pull games from DB
