@@ -179,6 +179,15 @@ Tools = {
             }
         }
 
+
+
+       // set 3 -- 5
+       temp=0;
+       while(temp<5){
+           let chess3=this.getFirstFreePos(board);
+           board[15+temp]=chess3;
+           temp++;
+       }
         //console.log(board);
         // set 4 -- 4
 
@@ -198,13 +207,7 @@ Tools = {
                 temp++;
         }
 
-        // set 3 -- 5
-       temp=0;
-        while(temp<5){
-            let chess3=this.getFirstFreePos(board);
-                board[15+temp]=chess3;
-                temp++;
-        }
+
         for(let i=0;i<40;i++){
             board[i]=39-board[i];
         }

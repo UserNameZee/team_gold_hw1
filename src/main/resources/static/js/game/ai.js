@@ -4,9 +4,10 @@ class AI{
     }
 
     aiHelp(){
-        console.log("enter auto move")
+        let board=this.stratego.chessBoardData;
+        //console.log("enter auto move")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,2);
-        console.log("auto move"+mov_arr)
+        //console.log("auto move"+mov_arr)
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData,2);
         let des= result.origin;
         let ox=des.pos.x;
@@ -15,21 +16,40 @@ class AI{
         let dx=ox;
         let dy=oy;
 
-        if(go=="top"){
-            dx=ox;
-            dy=oy-1;
-        }else if(go=="bot"){
-            dx=ox;
-            dy=oy+1;
-        }else if(go=="left"){
-            dx=ox-1;
-            dy=oy;
-        }else if(go=="right"){
-            dx=ox+1;
-            dy=oy;
+
+        if(go=="top"&&des.rank==2){
+            let gg=1;
+            while(board[oy-gg][ox]!="water"&&board[oy-gg][ox]==undefined&&(oy-gg)>=0){
+                if(gg==0){
+                    dy=9;
+                    dx=ox;
+                }
+                gg++;
+            }
+            if(board[oy-gg][ox].team=1){
+                dy=oy-gg;
+            }else{
+                dy=oy-1;
+            }
+
         }else{
-            console.log("wrong des pass through: "+go)
+            if(go=="top"){
+                dx=ox;
+                dy=oy-1;
+            }else if(go=="bot"){
+                dx=ox;
+                dy=oy+1;
+            }else if(go=="left"){
+                dx=ox-1;
+                dy=oy;
+            }else if(go=="right"){
+                dx=ox+1;
+                dy=oy;
+            }else{
+                console.log("wrong des pass through: "+go)
+            }
         }
+
         this.select(ox,oy,this.stratego.player2);
         return this.stratego.moveChessPiece(this.stratego.player2, dx, dy);
         //this.stratego.switchTurn();
@@ -40,7 +60,7 @@ class AI{
     aiMove(){
         console.log("AI turn starts")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,1);
-
+        let board=this.stratego.chessBoardData;
         //ai make a move
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData,1);
         let des= result.origin;
@@ -50,21 +70,40 @@ class AI{
         let dx=ox;
         let dy=oy;
 
-        if(go=="top"){
-            dx=ox;
-            dy=oy-1;
-        }else if(go=="bot"){
-            dx=ox;
-            dy=oy+1;
-        }else if(go=="left"){
-            dx=ox-1;
-            dy=oy;
-        }else if(go=="right"){
-            dx=ox+1;
-            dy=oy;
+        if(go=="bot"&&des.rank==2){
+            let gg=1;
+            while(board[oy+gg][ox]!="water"&&board[oy+gg][ox]==undefined&&(oy+gg)<=9){
+                if(gg==9){
+                    dy=9;
+                    dx=ox;
+                }
+                gg++;
+            }
+            if(board[oy+gg][ox].team=2){
+                dy=oy+gg;
+            }else{
+                dy=oy+1;
+            }
+
         }else{
-            console.log("wrong des pass through: "+go)
+            if(go=="top"){
+                dx=ox;
+                dy=oy-1;
+            }else if(go=="bot"){
+                dx=ox;
+                dy=oy+1;
+            }else if(go=="left"){
+                dx=ox-1;
+                dy=oy;
+            }else if(go=="right"){
+                dx=ox+1;
+                dy=oy;
+            }else{
+                console.log("wrong des pass through: "+go)
+            }
         }
+
+
 
 
         // //move a test random move
@@ -113,6 +152,7 @@ class AI{
 
     makeGuesses(movableArr,board,teamNum){
         //calculate all the score in the minmax array
+
         for (let i =0; i<movableArr.length;i++){
             let temp=this.calScore(movableArr[i],board,teamNum);
             movableArr[i].score=temp.score;
@@ -266,6 +306,21 @@ class AI{
         let temp_x = target.origin.pos.x;
         let temp_y = target.origin.pos.y;
 
+        if(target.origin.rank === 2 && target.below != null){
+            for (let i= temp_y; i < 9, i++;){
+                if(board[i+1][temp_x] !== undefined){
+                    if(board[i+1][temp_x] === "water"){
+                        break;
+                    }
+                    else if(board[i+1][temp_x].team === 2){
+                        let dic = {score:this.chargerScore(target),des:"bot"};
+                        return dic;
+                    }
+                }
+            }
+        }
+
+
         if (target.above !== null){
             let above_x = temp_x;
             let above_y = temp_y -1;
@@ -388,7 +443,7 @@ class AI{
     count_sorce(arr){
         let temp = -999;
         for (let i in arr){
-            if (arr[i]< 0 && arr[i]!=undefined)
+            if (arr[i]< 0 && arr[i]!==undefined)
                 return arr[i];
             if (temp < arr[i])
                 temp = arr[i];
@@ -416,10 +471,27 @@ class AI{
         if (att.origin.rank > def.rank)
             return def.rank;
         if (att.origin.rank < def.rank)
-            return -att.rank;
+            return -att.rank-1;
         else{
             return 0;
         }
+
     }
+
+    chargerScore(target){
+        if (target.rank === 0){
+            return -1;
+        }
+        else if (target.rank === 11){
+            return 999;
+        }
+        else if (target.rank === 1){
+            return  11;
+        }
+        else
+            return target.rank/2.5;
+    }
+
+
 
 }
