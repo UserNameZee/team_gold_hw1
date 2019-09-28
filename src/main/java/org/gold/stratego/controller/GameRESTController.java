@@ -23,7 +23,7 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Maps the REST endpoint for storing game data.
+ * Maps the REST endpoints for storing and retrieving game data.
  * @author Jacob Thomas
  */
 
@@ -39,13 +39,6 @@ public class GameRESTController{
 
     @Autowired
     org.gold.stratego.database.GameRepository repo;
-
-    @GetMapping(path="/anontest")
-    public Map<String, String> anontest(HttpSession session) throws Exception{
-        Map<String,String> map = success(true);
-        map.put("anon", new Boolean(sc.userIsAnonymous(session)).toString());
-        return map;
-    }
 
 
     /**
@@ -91,13 +84,24 @@ public class GameRESTController{
      * @return Array of Games in JSON format that are associated with current user
      *         Nothing if user is Anonymous.
      */
-    @GetMapping(path="/games")
+    @GetMapping(path="/get_games")
     public Iterable<Game> getUserGames(HttpSession session)throws Exception{
         Map<String, Object> hashMap = new HashMap<>();
         String username = sc.loadUserInfo(session);
         if (username.equals("Anonymous"))
             return null;
         return gameDB.findAllGames(username);
+    }
+
+    //TODO: remove DEBUG methods below after testing
+    /**
+     * DEBUG
+     * generic test method
+     */
+    @GetMapping(path="/test")
+    public Map<String, String> test(@RequestBody Game body, HttpSession session) throws Exception{
+        System.out.println(body.toString());
+        return success(true);
     }
 
 
