@@ -47,6 +47,16 @@ public class GameDB{
     }
 
     /**
+     * Returns game associated with id
+     */
+    public Game getGameById(String id){
+        List<Game> game = repo.findById(id);
+        if (game.size() == 0)
+            return null;
+        return game.get(0);
+    }
+
+    /**
      * Updates the game in the Game DB
      * @param game
      */
