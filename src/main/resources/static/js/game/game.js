@@ -103,7 +103,7 @@ function preLoad(stratego, btnSetup) {
                     }
                 }
                 stratego.painter.draw();
-                console.log(chessBoardData[y][x]);
+                //console.log(chessBoardData[y][x]);
             });
             $("#start").prop("disabled", true);
             $("#surrender").prop("disabled", false);
@@ -230,10 +230,10 @@ function preLoad(stratego, btnSetup) {
                 if (this.chessBoardData[y][x] !== undefined && this.chessBoardData[y][x] !== "water"){
                     let rank = this.chessBoardData[y][x].rank;
                     let teamid = this.chessBoardData[y][x].team;
-                    console.log("piece: " + (teamid * 100 + rank) + " at x: " +  x + ", y: " + y);
+                    //console.log("piece: " + (teamid * 100 + rank) + " at x: " +  x + ", y: " + y);
                     board[slots_id] = teamid * 100 + rank;
                     slots_id++;
-                    console.log(board);
+                    //console.log(board);
                 }
             }
         }
