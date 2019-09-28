@@ -15,6 +15,53 @@ Tools = {
         return slotsIdSet;
     },
 
+    createGameJson:function(stratego){
+        let game = {
+            username: "",
+            result: "",
+            finished:"false",
+            board_start: null
+        }
+
+        let board = this.board2d21d(stratego.chessBoardData);
+        game.board_start = board
+        console.log(game);
+        return JSON.stringify(game);
+    },
+
+    createTurnJson:function(stratego){
+        let turn = {
+            player: stratego.player1.isTurn ? 1 : 2,
+            board: Tools.board2d21d(stratego.chessBoardData)
+        }
+        return JSON.stringify(turn);
+    },
+
+
+    board2d21d: function (chessBoardData){
+        let slots_id = 0;
+        var board = Array(100)
+        for(let y = 0; y < 10; y++){
+            for (let x = 0; x < 10; x++){
+                if (chessBoardData[y][x] === undefined ) {
+                    board[slots_id] = 0;
+                }else if  (chessBoardData[y][x] == "water"){
+                    board[slots_id] = -1;
+                }else{
+                    let rank = chessBoardData[y][x].rank;
+                    let teamid = chessBoardData[y][x].team;
+                    let hide = chessBoardData[y][x].isHide ? 1000 : 0;
+                    // console.log("piece: " + (teamid * 100 + rank) + " at x: " +  x + ", y: " + y);
+                    board[slots_id] = teamid * 100 + rank + 1000;
+                }
+                slots_id++;
+            }
+        }
+        return board;
+    },
+
+
+
    getAiIdSet  : function () {
 
         let board = new Array(40);

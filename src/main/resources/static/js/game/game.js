@@ -52,6 +52,14 @@ function preLoad(stratego, btnSetup) {
         this.initButton();
     };
 
+    reset(){
+        this.player1 = new Player(1);
+        this.player1.isTurn = false;
+        this.player2 = new Player(2);
+        this.player2.isTurn = true;
+        this.initChessBoardData();
+        this.painter.draw();
+    }
 
     initButton(){
         let stratego = this;
@@ -74,6 +82,7 @@ function preLoad(stratego, btnSetup) {
         */
         $("#setup").on("click", function (){
             $("#start").prop("disabled", false);
+            stratego.initChessBoardData();
             stratego.chessPieces.init(chessBoardData);
             stratego.painter.draw();
             $("#canvas_cb").on('click', function (e){
@@ -98,8 +107,9 @@ function preLoad(stratego, btnSetup) {
                 if (stratego.player2.isTurn && (chessBoardData[y][x] === undefined || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
                     let result = stratego.moveChessPiece(stratego.player2, x, y);
                     if (result == "TURN_END"){
-                        stratego.switchTurn();
                         stratego.ai.aiMove();
+                    }else{
+                        console.log(result)
                     }
                 }
                 stratego.painter.draw();
@@ -107,6 +117,7 @@ function preLoad(stratego, btnSetup) {
             });
             $("#start").prop("disabled", true);
             $("#surrender").prop("disabled", false);
+            // stratego.postStart(stratego);
         });
 
         $("#quickmove").on("click", function (){
@@ -114,14 +125,14 @@ function preLoad(stratego, btnSetup) {
                 //autoplay 放在这下面
                 stratego.switchTurn();
             }
-        })
+        });
 
-
-        $("#surrender").on("click", function (){
+        $("#newgame").on("click", function (){
             $("#setup").prop("disabled", false);
-            $("#surrender").prop("disabled", true);
-            //send game data to server
-        })
+            $("#newgame").prop("disabled", true);
+            stratego.reset();
+        });
+
     }
 
     initChessBoardData(){
@@ -197,10 +208,8 @@ function preLoad(stratego, btnSetup) {
                 case "WIN":
                     this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
                     if (sPiece.team == 2 ){
-                        console.log("You Win");
                         return "WIN";
                     }else{
-                        console.log("You loss"); this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
                         return "LOSS";
                     }
                     break;
@@ -217,7 +226,7 @@ function preLoad(stratego, btnSetup) {
             player.selectPos.setXY(x, y);
         }
         this.switchTurn();
-        this.postTurn();
+        // this.postTurn();
         return "TURN_END";
     }
 
@@ -230,23 +239,32 @@ function preLoad(stratego, btnSetup) {
         return;
     }
 
-    postTurn(playerTurn){
-        let board = new Array(100);
-        let slots_id = 0;
-        for(let y = 0; y < 10; y++){
-            for (let x = 0; x < 10; x++){
-                if (this.chessBoardData[y][x] !== undefined && this.chessBoardData[y][x] !== "water"){
-                    let rank = this.chessBoardData[y][x].rank;
-                    let teamid = this.chessBoardData[y][x].team;
-                    let hide = this.chessBoardData[y][x].isHide ? 1000 : 0;
-                    console.log("piece: " + (teamid * 100 + rank) + " at x: " +  x + ", y: " + y);
-                    board[slots_id] = teamid * 100 + rank + 1000;
-                    slots_id++;
-                    // console.log(board);
-                }
-            }
-        }
+    postStart(){
+        let game = Tools.createGameJson(this); //return json type game
+        $.ajax({
+            url: '/rest/save_game',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: game
+        });
     }
+
+    postTurn(playerTurn){
+        let turn = Tools.createTurnJson(this)
+        $.ajax({
+            url: '/rest/add_turn',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: turn
+        });
+    }
+
+    postGameEnd(){
+
+    }
+
 }
  var Game ={
     start : function (){

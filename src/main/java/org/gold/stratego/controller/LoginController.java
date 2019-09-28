@@ -65,8 +65,6 @@ public class LoginController{
         model.addAttribute("loginInfo", new LoginInfo());
         return "signup.html";
     }
-    //
-
 
     @ResponseBody
     @PostMapping("/signup")
@@ -80,8 +78,4 @@ public class LoginController{
         return hashMap;
     }
 
-//    @GetMapping("/loginPage")
-//    public String loginPage(HttpSession session) {
-//        return "/login";
-//    }
 }

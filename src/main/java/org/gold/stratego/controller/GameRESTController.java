@@ -197,5 +197,4 @@ public class GameRESTController{
         map.put("details", details);
         return map;
     }
-
 }
