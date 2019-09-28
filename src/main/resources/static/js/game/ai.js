@@ -8,7 +8,6 @@ class AI{
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,2);
         console.log("auto move"+mov_arr)
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData,2);
-        console.log("score array result"+result);
         let des= result.origin;
         let ox=des.pos.x;
         let oy=des.pos.y;
