@@ -7,6 +7,8 @@
   "result":"WIN:LOSS",    //Result of game, either WIN or LOSS (wikipedia says draw is possible but it is not in official rules)
   "finished":"true or false", //whether game is finished or not
   "board_start":[],     //Arrays which represent board states at the start of the game
+  "start_time": "time", //time the gamr was started
+  "pieces_left": [[]], //array of pieces left for each player
   "turns":                //Array of turns starting from first move to game ending move.
         [{
         "player":"0(ai) or 1(player)",  //the player in control this turn
