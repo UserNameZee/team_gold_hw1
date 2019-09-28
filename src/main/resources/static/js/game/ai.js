@@ -399,10 +399,22 @@ class AI{
 
 
     comparePieces(att,def) {
-        if (def == undefined)
+        if (def === undefined)
             return 0;
+        if (def.rank === 0 && att.rank !== 3){
+            return 0;
+        }
+        if (att.rank === 3 &&  def.rank === 0){
+            return 5;
+        }
+        if (att.origin.rank === 1 && def.rank === 10){
+            return 11;
+        }
+        if (def.rank === 11){
+            return 999;
+        }
         if (att.origin.rank > def.rank)
-            return def.rank
+            return def.rank;
         if (att.origin.rank < def.rank)
             return -att.rank;
         else{
