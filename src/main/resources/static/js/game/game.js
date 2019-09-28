@@ -117,13 +117,18 @@ function preLoad(stratego, btnSetup) {
             });
             $("#start").prop("disabled", true);
             $("#surrender").prop("disabled", false);
-            // stratego.postStart(stratego);
+            $("#quickmove").prop("disabled", false);
         });
 
         $("#quickmove").on("click", function (){
             if (stratego.player2.isTurn){
                 //autoplay 放在这下面
-                stratego.switchTurn();
+                console.log("quick move pressed")
+                stratego.ai.aiHelp();
+                //stratego.painter.draw();
+                stratego.ai.aiMove();
+                stratego.painter.draw();
+
             }
         });
 
@@ -260,7 +265,6 @@ function preLoad(stratego, btnSetup) {
             data: turn
         });
     }
-
     postGameEnd(){
 
     }

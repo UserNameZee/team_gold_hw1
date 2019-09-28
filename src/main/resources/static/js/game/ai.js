@@ -4,7 +4,9 @@ class AI{
     }
 
     aiHelp(){
+        console.log("enter auto move")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,2);
+        console.log("auto move"+mov_arr)
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData,2);
         let des= result.origin;
         let ox=des.pos.x;
@@ -28,9 +30,9 @@ class AI{
         }else{
             console.log("wrong des pass through: "+go)
         }
-        this.select(ox,oy);
+        this.select(ox,oy,this.stratego.player2);
         this.stratego.moveChessPiece(this.stratego.player2, dx, dy);
-        this.stratego.switchTurn();
+        //this.stratego.switchTurn();
     }
 
 
@@ -87,22 +89,24 @@ class AI{
         //     dx=ox+1;
         //     dy=oy;
         // }
-        this.select(ox,oy);
+
+        this.select(ox,oy,this.stratego.player1);
         this.stratego.moveChessPiece(this.stratego.player1, dx, dy);
-        this.stratego.switchTurn();
 
     }
 
-    select (x, y) {
+    select (x, y,player) {
         let stratego= this.stratego;
-        if (stratego.chessBoardData[y][x] != null && stratego.chessBoardData[y][x].team == 1){
-            stratego.player1.isSelect = true;
-            stratego.player1.lastSelectPos.assign(stratego.player1.selectPos);
-            stratego.player1.lastSelectPiece = stratego.player1.selectPiece;
-            stratego.player1.selectPos.setXY(x, y);
-            stratego.player1.selectPiece =stratego.chessBoardData[y][x];
+        if (stratego.chessBoardData[y][x] != null && stratego.chessBoardData[y][x].team ==player.id){
+            player.isSelect = true;
+            player.lastSelectPos.assign(player.selectPos);
+            player.lastSelectPiece = player.selectPiece;
+            player.selectPos.setXY(x, y);
+            player.selectPiece =stratego.chessBoardData[y][x];
         }
     }
+
+
 
 
 
@@ -219,7 +223,6 @@ class AI{
         if (x < 0 || y <0 || x > 9 || y > 9){
             return false;
         }
-
         if (target == undefined){
             return true;
         }else if (target == "water"){
@@ -266,7 +269,7 @@ class AI{
             let above_x = temp_x;
             let above_y = temp_y -1;
 
-            top[0] =  this.comparePieces(target,target.above);
+            top[0] =  this.comparePieces(target,target.above)+1;
             if ( above_y > 0 && this.movablePieces(board[above_y-1][above_x],above_y -1,above_x,teamNum)) {
                 top[1] = this.comparePieces(target,board[above_y-1][above_x]);
             }
@@ -290,7 +293,7 @@ class AI{
         if(target.below !== null){
             let below_x = temp_x;
             let below_y = temp_y + 1;
-            bot[0] =  this.comparePieces(target,target.below);
+            bot[0] =  this.comparePieces(target,target.below)+1;
             if ( below_y < 8  && (this.movablePieces(board[below_y+1][below_x],below_y +1,below_x,teamNum)) ) {
                 bot[1] = this.comparePieces(target,board[below_x][below_y+1]);
             }
@@ -314,7 +317,7 @@ class AI{
         if (target.left !== null){
             let left_x = temp_x -1;
             let left_y = temp_y;
-            left[0] = this.comparePieces(target,board[left_y][left_x]);
+            left[0] = this.comparePieces(target,board[left_y][left_x])+1;
             if (left_x > 0 && this.movablePieces(board[left_y][left_x -1],left_y,left_x-1,teamNum)){
                 left[1] = this.comparePieces(target,board[left_y][left_x-1]);
             }
@@ -324,7 +327,7 @@ class AI{
         if (target.right !== null){
             let right_x = temp_x +1;
             let right_y = temp_y;
-            left[0] = this.comparePieces(target,board[right_y][right_x]);
+            right[0] = this.comparePieces(target,board[right_y][right_x])+1;
             if (right_x < 8  && this.movablePieces(board[right_y][right_x+1],right_y,right_x+1,teamNum)){
                 right[1] = this.comparePieces(target,board[right_y][right_x+1]);
             }
@@ -333,46 +336,51 @@ class AI{
         }
 
 
-        let right_score = this.count_sorce(right);
-        let left_score= this.count_sorce(left);
-        let top_score= this.count_sorce(top);
-        let bot_score= this.count_sorce(bot);
+
+        let right_score = {score:this.count_sorce(right),des:"right"};
+        let left_score= {score:this.count_sorce(left),des:"left"};
+        let top_score= {score:this.count_sorce(top),des:"top"};
+        let bot_score= {score:this.count_sorce(bot),des:"bot"};
+
+        let list_score = [right_score,left_score,top_score,bot_score];
+        list_score.sort((b, a) => (a.score > b.score) ? 1 : -1);
+
+        return list_score[0];
 
 
-
-        let dic={score: -999, des: null}
-        if (top_score > bot_score){
-            if (top_score > left_score){
-                if (top_score  > right_score){
-                    dic = {score:top_score,des:"top"};
-                }else {
-                    dic = {score:right_score,des:"right"};
-                }
-            }else {
-                if (left_score > right_score){
-                    dic = {score:left_score,des:"left"};
-                }else {
-                    dic = {score:right_score,des:"right"};
-                }
-            }
-            return dic;
-        }else{
-            if (bot_score > left_score){
-                if (bot_score > right_score){
-                    dic = {score:bot_score,des:"bot"};
-                }else {
-                    dic = {score:right_score,des:"right"};
-                }
-            }else {
-                if (left_score > right_score){
-                    dic = {score:left_score,des:"left"};
-                }else {
-                    dic = {score:right_score,des:"right"};
-
-                }
-            }
-            return dic;
-        }
+        // let dic={score: -999, des: null}
+        // if (top_score > bot_score){
+        //     if (top_score > left_score){
+        //         if (top_score  > right_score){
+        //             dic = {score:top_score,des:"top"};
+        //         }else {
+        //             dic = {score:right_score,des:"right"};
+        //         }
+        //     }else {
+        //         if (left_score > right_score){
+        //             dic = {score:left_score,des:"left"};
+        //         }else {
+        //             dic = {score:right_score,des:"right"};
+        //         }
+        //     }
+        //     return dic;
+        // }else{
+        //     if (bot_score > left_score){
+        //         if (bot_score > right_score){
+        //             dic = {score:bot_score,des:"bot"};
+        //         }else {
+        //             dic = {score:right_score,des:"right"};
+        //         }
+        //     }else {
+        //         if (left_score > right_score){
+        //             dic = {score:left_score,des:"left"};
+        //         }else {
+        //             dic = {score:right_score,des:"right"};
+        //
+        //         }
+        //     }
+        //     return dic;
+        // }
 
     }
 
@@ -400,4 +408,5 @@ class AI{
             return 0;
         }
     }
+
 }
