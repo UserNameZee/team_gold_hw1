@@ -58,12 +58,16 @@ html, body {
     cursor: pointer;
 }
 
-.btn:hover {
+.btn:hover:enabled {
     background-color: #000000;
-    color: #ffffff;
+    color: white;
     opacity: 0.8
 }
-
+.btn:hover:disabled {
+    background-color:  #ffd700;
+    color: black;
+    opacity: 0.8
+}
 
 
 
