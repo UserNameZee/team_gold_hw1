@@ -70,6 +70,8 @@
 </body>
 <script>
   var allgame_arr;
-  $.get("/rest/get_games").
+  $.get("/rest/get_games", function( data ){
+    console.log(data);
+  });
 </script>>
 </html>

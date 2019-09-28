@@ -121,7 +121,7 @@ public class GameRESTController{
      * @return Array of Games in JSON format that are associated with current user
      *         Nothing if user is Anonymous.
      */
-    @GetMapping(path=" ")
+    @GetMapping(path="/get_games")
     public Iterable<Game> getUserGames(HttpSession session)throws Exception{
         Map<String, Object> hashMap = new HashMap<>();
         String username = sc.loadUserInfo(session);
