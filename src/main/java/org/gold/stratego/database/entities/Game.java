@@ -26,8 +26,26 @@ public class Game {
     private String username;
     private String finished;
     private String result;
+    private String time;
     private int[] board_start;
+    private int[][] pieces_left;
     private ArrayList<Turn> turns;
+
+    public int[][] getPieces_left() {
+        return pieces_left;
+    }
+
+    public void setPieces_left(int[][] pieces_left) {
+        this.pieces_left = pieces_left;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public ArrayList<Turn> getTurns() {
         if (turns == null)
