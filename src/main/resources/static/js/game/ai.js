@@ -420,6 +420,13 @@ class AI{
         else{
             return 0;
         }
+
+    }
+
+
+    chargerMove(target,board){
+        
+
     }
 
 }
