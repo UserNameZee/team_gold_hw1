@@ -94,6 +94,19 @@ public class GameRESTController{
     }
 
     /**
+     * Returns the active game for the logged in user if it exists
+     * Null otherwise
+     * @param session
+     * @return Game object in JSON format
+     *         Null if game does not exist
+     */
+    @GetMapping(path="/get_active")
+    public Game get_active(HttpSession session)throws Exception{
+        Game activeGame = gameDB.getActiveGame(sc.loadUserInfo(session));
+        return activeGame;
+    }
+
+    /**
      * Sets active game result to WIN or LOSS, then marks the game inactive by setting
      * finished = "true"
      * @param result - WIN or LOSS
@@ -164,11 +177,12 @@ public class GameRESTController{
      */
     private Game finalizeGameWithResult(HttpSession session, String result) throws Exception{
         result = result.toUpperCase();
-        String id = sc.loadCurrentGame(session);
-        if (id == null)
+        //String id = sc.loadCurrentGame(session);
+        Game game = gameDB.getActiveGame(sc.loadUserInfo(session));
+        if (game == null)
             return null;
         //Set result to result param and mark game as finished
-        Game game = gameDB.getGameById(id);
+        //Game game = gameDB.getGameById(id);
         game.setResult(result);
         game.setFinished("true");
         gameDB.updateGame(game);
