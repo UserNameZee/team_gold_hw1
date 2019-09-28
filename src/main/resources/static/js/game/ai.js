@@ -4,9 +4,10 @@ class AI{
     }
 
     aiHelp(){
-        console.log("enter auto move")
+        let board=this.stratego.chessBoardData;
+        //console.log("enter auto move")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,2);
-        console.log("auto move"+mov_arr)
+        //console.log("auto move"+mov_arr)
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData,2);
         let des= result.origin;
         let ox=des.pos.x;
@@ -15,21 +16,40 @@ class AI{
         let dx=ox;
         let dy=oy;
 
-        if(go=="top"){
-            dx=ox;
-            dy=oy-1;
-        }else if(go=="bot"){
-            dx=ox;
-            dy=oy+1;
-        }else if(go=="left"){
-            dx=ox-1;
-            dy=oy;
-        }else if(go=="right"){
-            dx=ox+1;
-            dy=oy;
+
+        if(go=="top"&&des.rank==2){
+            let gg=1;
+            while(board[oy-gg][ox]!="water"&&board[oy-gg][ox]==undefined&&(oy-gg)>=0){
+                if(gg==0){
+                    dy=9;
+                    dx=ox;
+                }
+                gg++;
+            }
+            if(board[oy-gg][ox].team=1){
+                dy=oy-gg;
+            }else{
+                dy=oy-1;
+            }
+
         }else{
-            console.log("wrong des pass through: "+go)
+            if(go=="top"){
+                dx=ox;
+                dy=oy-1;
+            }else if(go=="bot"){
+                dx=ox;
+                dy=oy+1;
+            }else if(go=="left"){
+                dx=ox-1;
+                dy=oy;
+            }else if(go=="right"){
+                dx=ox+1;
+                dy=oy;
+            }else{
+                console.log("wrong des pass through: "+go)
+            }
         }
+
         this.select(ox,oy,this.stratego.player2);
         return this.stratego.moveChessPiece(this.stratego.player2, dx, dy);
         //this.stratego.switchTurn();
