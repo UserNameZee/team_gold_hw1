@@ -77,5 +77,4 @@ public class LoginController{
         }
         return hashMap;
     }
-
 }

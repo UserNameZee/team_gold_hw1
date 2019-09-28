@@ -82,6 +82,7 @@ function preLoad(stratego, btnSetup) {
         */
         $("#setup").on("click", function (){
             $("#start").prop("disabled", false);
+            $("#newgame").prop("disabled", false);
             stratego.initChessBoardData();
             stratego.chessPieces.init(chessBoardData);
             stratego.painter.draw();
@@ -103,38 +104,41 @@ function preLoad(stratego, btnSetup) {
                 let x = Math.ceil(e.offsetX / cell_w) - 1, y = Math.ceil(e.offsetY / cell_h) - 1;
                 if (chessBoardData[y][x] !== undefined && chessBoardData[y][x].team == 2) {
                     select(x, y);
+                    stratego.painter.draw();
                 }
                 if (stratego.player2.isTurn && (chessBoardData[y][x] === undefined || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
                     let result = stratego.moveChessPiece(stratego.player2, x, y);
                     if (result == "TURN_END"){
                         stratego.ai.aiMove();
+                        stratego.painter.draw();
                     }else{
-                        console.log(result)
+                        alert(result);
                     }
                 }
-                stratego.painter.draw();
                 //console.log(chessBoardData[y][x]);
             });
             $("#start").prop("disabled", true);
-            $("#surrender").prop("disabled", false);
+            $("#newgame").prop("disabled", false);
             $("#quickmove").prop("disabled", false);
         });
 
         $("#quickmove").on("click", function (){
             if (stratego.player2.isTurn){
-                //autoplay 放在这下面
-                console.log("quick move pressed")
-                stratego.ai.aiHelp();
-                //stratego.painter.draw();
-                stratego.ai.aiMove();
-                stratego.painter.draw();
-
+                let result = stratego.ai.aiHelp();
+                if ( result == "TURN_END"){
+                    stratego.ai.aiMove();
+                    stratego.painter.draw();
+                }else{
+                    $("#canvas_cb").off("click");
+                    alert(result);
+                }
             }
         });
 
         $("#newgame").on("click", function (){
             $("#setup").prop("disabled", false);
             $("#newgame").prop("disabled", true);
+            $("#canvas_cb").off("click");
             stratego.reset();
         });
 
@@ -201,8 +205,9 @@ function preLoad(stratego, btnSetup) {
 
         player.lastMove.set(sPiece.pos, new Point(x, y));
 
+        let result = "";
         if (this.chessBoardData[y][x] !== undefined){
-            let result = sPiece.attack(this.chessBoardData[y][x]);
+            result = sPiece.attack(this.chessBoardData[y][x]);
             switch (result) {
                 case "KILL":
                     this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
@@ -213,9 +218,9 @@ function preLoad(stratego, btnSetup) {
                 case "WIN":
                     this.chessPieces.removePiece(this.chessBoardData, this["player" + this.chessBoardData[y][x].team], this.chessBoardData[y][x])
                     if (sPiece.team == 2 ){
-                        return "WIN";
+                        result =  "WIN";
                     }else{
-                        return "LOSS";
+                        result = "LOSS";
                     }
                     break;
                 default:
@@ -231,7 +236,12 @@ function preLoad(stratego, btnSetup) {
             player.selectPos.setXY(x, y);
         }
         this.switchTurn();
+
         // this.postTurn();
+        if (result == "WIN" || result == "LOSS"){
+            $("#canvas_cb").off("click");
+            return result;
+    }
         return "TURN_END";
     }
 

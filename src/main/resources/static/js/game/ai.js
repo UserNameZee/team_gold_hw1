@@ -31,8 +31,9 @@ class AI{
             console.log("wrong des pass through: "+go)
         }
         this.select(ox,oy,this.stratego.player2);
-        this.stratego.moveChessPiece(this.stratego.player2, dx, dy);
+        return this.stratego.moveChessPiece(this.stratego.player2, dx, dy);
         //this.stratego.switchTurn();
+
     }
 
 
