@@ -115,10 +115,8 @@ function preLoad(stratego, btnSetup) {
                 //autoplay 放在这下面
                 console.log("quick move pressed")
                 stratego.ai.aiHelp();
-                stratego.switchTurn();
-                stratego.painter.draw();
+                //stratego.painter.draw();
                 stratego.ai.aiMove();
-                stratego.switchTurn();
                 stratego.painter.draw();
 
             }

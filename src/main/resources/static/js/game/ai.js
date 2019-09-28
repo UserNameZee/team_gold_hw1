@@ -32,7 +32,7 @@ class AI{
         }
         this.select(ox,oy,this.stratego.player2);
         this.stratego.moveChessPiece(this.stratego.player2, dx, dy);
-        this.stratego.switchTurn();
+        //this.stratego.switchTurn();
     }
 
 
@@ -92,7 +92,6 @@ class AI{
 
         this.select(ox,oy,this.stratego.player1);
         this.stratego.moveChessPiece(this.stratego.player1, dx, dy);
-        this.stratego.switchTurn();
 
     }
 
