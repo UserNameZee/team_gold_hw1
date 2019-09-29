@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @EnableWebSecurity
 @ComponentScan({"org.gold.stratego.security"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    //TODO: Enable CSRF, consider page protection.
 
     /**
      * This ensures cookies are created for users.

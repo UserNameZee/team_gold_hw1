@@ -173,28 +173,6 @@ public class GameRESTController{
         return gameDB.findAllGames(username);
     }
 
-    //TODO: remove DEBUG methods below after testing
-    /**
-     * DEBUG
-     * generic test method
-     */
-    @GetMapping(path="/test")
-    public Map<String, String> test(@RequestBody Game body, HttpSession session) throws Exception{
-        System.out.println(body.toString());
-        return success(true);
-    }
-
-
-    /**
-     * DEBUG
-     * method to get all games
-     * @return
-     */
-    @GetMapping(path="/allgames")
-    public Iterable<Game> getAllGames() {
-        return repo.findAll();
-    }
-
     //Below methods are not endpoints.
 
     /**

@@ -76,11 +76,7 @@ public class DemoApplicationTests {
 
 	    String password = "test_user_password";
 
-        try {
-            userDB.insertUser(username, password);
-        } catch (Exception e) {
-            //TODO: do something with this
-        }
+		userDB.insertUser(username, password);
         System.out.println("*** DB_CRUDTest: CREATE: Test user inserted.");
 
 	    System.out.println("*** DB_CRUDTest: RETRIEVE: Retrieving test user...");
@@ -112,11 +108,7 @@ public class DemoApplicationTests {
 		testusernames.add(username);
 
 		String password = "this_is_A_PASSWORD!";
-		try {
-            userDB.insertUser(username, password);
-        } catch (Exception e) {
-		    //TODO: do something with this
-        }
+		userDB.insertUser(username, password);
 		UserAuthenticationStatus status = userDB.authenticateUser(username, password);
 		assertEquals(status, UserAuthenticationStatus.SUCCESSFUL);
 
