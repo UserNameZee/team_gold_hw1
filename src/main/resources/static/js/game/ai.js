@@ -343,14 +343,15 @@ class AI{
         let temp_x = target.origin.pos.x;
         let temp_y = target.origin.pos.y;
 
-        if(target.origin.rank === 2 && target.below != null){
-            for (let i= temp_y; i < 9; i++){
+        if(target.origin.rank === 2 && target.below !== null){
+            let i= temp_y
+            for (; i < 9; i++){
                 if(board[i+1][temp_x] !== undefined){
                     if(board[i+1][temp_x] === "water"){
                         break;
                     }
                     else if(board[i+1][temp_x].team === 2){
-                        let dic = {score:this.chargerScore(target),des:"bot"};
+                        let dic = {score:this.chargerScore(board[i+1][temp_x]),des:"bot"};
                         return dic;
                     }
                 }
@@ -436,6 +437,7 @@ class AI{
         let bot_score= {score:this.count_sorce(bot),des:"bot"};
 
         let list_score = [right_score,left_score,top_score,bot_score];
+        list_score.sort(function(){return Math.random()>0.5?1:-1;});
         list_score.sort((b, a) => (a.score > b.score) ? 1 : -1);
 
         return list_score[0];
@@ -523,7 +525,7 @@ class AI{
             return 999;
         }
         else if (target.rank === 1){
-            return  11;
+            return  8;
         }
         else
             return target.rank/2.5;
