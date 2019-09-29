@@ -59,6 +59,16 @@ Tools = {
         return JSON.stringify(turn);
     },
 
+    createLeftPieceJson:function(stratego){
+        let lp = [new Array (12), new Array (12)]
+
+        for(let r = 0; r < 12; r++){
+            lp[0][r] = stratego.chessPieces.team1[r].length;
+            lp[1][r] = stratego.chessPieces.team2[r].length;
+        }
+        return JSON.stringify(lp);
+    },
+
 
     board2d21d: function (chessBoardData){
         let slots_id = 0;

@@ -66,6 +66,7 @@ function preLoad(stratego, btnSetup) {
                     }else{
                         stratego.player1.isTurn = true;
                         stratego.player2.isTurn = false;
+                        stratego.ai.aiMove();
                     }
                     $("#setup").prop("disabled", true);
                     $("#start").prop("disabled", true);
@@ -125,18 +126,21 @@ function preLoad(stratego, btnSetup) {
             if (stratego.player2.isTurn){
                 let result = stratego.ai.aiHelp();
                 if ( result == "TURN_END"){
-                    result =  stratego.ai.aiMove();
-                    stratego.painter.draw();
+                    setTimeout(function(){
+                        result =  stratego.ai.aiMove();
+                        stratego.gameover(result);
+                    }, 500);
+                    // stratego.painter.draw();
                 }
-
-                if(result == "WIN" || result == "LOSS"){
-                    $("#canvas_cb").off("click");
-                    $("#quickmove").prop("disabled", true);
-                    stratego.painter.draw();
-                    stratego.postGameEnd(result);
-                    stratego.isWin = result == "WIN" ? true : false;
-                    alert(result);
-                }
+                stratego.gameover(result);
+                // if(result == "WIN" || result == "LOSS"){
+                //     $("#canvas_cb").off("click");
+                //     $("#quickmove").prop("disabled", true);
+                //     stratego.painter.draw();
+                //     stratego.postGameEnd(result);
+                //     stratego.isWin = result == "WIN" ? true : false;
+                //     alert(result);
+                // }
             }
         });
 
@@ -181,17 +185,21 @@ function preLoad(stratego, btnSetup) {
             if (stratego.player2.isTurn && (chessBoardData[y][x] === undefined || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
                 let result = stratego.moveChessPiece(stratego.player2, x, y);
                 if (result == "TURN_END"){
-                    result = stratego.ai.aiMove();
-                    stratego.painter.draw();
+                    setTimeout(function(){
+                        result = stratego.ai.aiMove();
+                        stratego.gameover(result);
+                    }, 500);
+
                 }
-                if(result == "WIN" || result == "LOSS"){
-                    $("#canvas_cb").off("click");
-                    $("#quickmove").prop("disabled", true);
-                    stratego.painter.draw();
-                    stratego.postGameEnd(result);
-                    stratego.isWin = result == "WIN" ? true : false;
-                    alert(result);
-                }
+                stratego.gameover(result);
+                // if(result == "WIN" || result == "LOSS"){
+                //     $("#canvas_cb").off("click");
+                //     $("#quickmove").prop("disabled", true);
+                //     stratego.painter.draw();
+                //     stratego.postGameEnd(result);
+                //     stratego.isWin = result == "WIN" ? true : false;
+                //     alert(result);
+                // }
             }
         });
     }
@@ -298,6 +306,17 @@ function preLoad(stratego, btnSetup) {
         return "TURN_END";
     }
 
+    gameover(result){
+        if(result == "WIN" || result == "LOSS"){
+            $("#canvas_cb").off("click");
+            $("#quickmove").prop("disabled", true);
+            this.painter.draw();
+            this.postGameEnd(result);
+            this.isWin = result == "WIN" ? true : false;
+            alert(result);
+        }
+    }
+
      select (x, y) {
          if (this.chessBoardData[y][x] !== undefined && this.chessBoardData[y][x].team == 2){
              this.player2.isSelect = true;
@@ -324,7 +343,7 @@ function preLoad(stratego, btnSetup) {
             type: 'post',
             dataType: 'json',
             contentType: 'application/json',
-            async: false,
+            // async: false,
             data: game
         });
     }
@@ -338,8 +357,18 @@ function preLoad(stratego, btnSetup) {
             type: 'post',
             dataType: 'json',
             contentType: 'application/json',
-            async: false,
+            // async: false,
             data: turn
+        });
+
+        let lp = Tools.createLeftPieceJson(this)
+        $.ajax({
+            url: '/rest/set_left_pieces',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            // async: false,
+            data: lp
         });
     }
     postGameEnd(result){

@@ -103,10 +103,38 @@ public class GameRESTController{
     @GetMapping(path="/get_active")
     public Game get_active(HttpSession session)throws Exception{
         Game activeGame = gameDB.getActiveGame(sc.loadUserInfo(session));
+        //Edit by Zee
+        sc.setCurrentGame(session, activeGame.getId());
         return activeGame;
     }
 
     /**
+     * Returns the active game for the logged in user if it exists
+     * Null otherwise
+     * @param session
+     * @return
+     */
+
+
+
+    @PostMapping(path="/set_left_pieces", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public Map set_left_pieces(@RequestBody int[][] left_piece, HttpSession session)throws Exception{
+        if (sc.userIsAnonymous(session))
+            return success(false, "User is anonymous.");
+        if (sc.loadCurrentGame(session) == null)
+            return success(false, "No currently active game to add moves to.");
+        String currentUser = sc.loadUserInfo(session);
+        Game active = gameDB.getActiveGame(currentUser);
+        if (active == null)
+            return success(false, "No active games for current user: ");
+        active.setPieces_left(left_piece);
+        gameDB.updateGame(active);
+        return success(true);
+    }
+
+
+    /**
+     * Add by Zee
      * Sets active game result to WIN or LOSS, then marks the game inactive by setting
      * finished = "true"
      * @param result - WIN or LOSS
