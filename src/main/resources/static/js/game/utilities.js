@@ -15,7 +15,7 @@ Tools = {
         return slotsIdSet;
     },
 
-    convert2DServer12local(Board, chesspieces, chessBoard){
+    convert2DServer12local(Board, chessBoard, chesspieces){
         let id = 0;
         chesspieces.cleanTeams();
         for(let slot_id = 0; slot_id < board.length; slot_id++) {
