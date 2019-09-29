@@ -148,10 +148,10 @@
     margin:auto;
     margin-left: 302px;
     width: 1000px;
-    length: 900px;
+    length: 800px;
     background: white;
     opacity: 0.8;
-    top: 8%;left: 5%;
+    top: 8%; bottom: 8%; left: 8%; right: 8%;
     box-shadow: 0px 0px 30px #ffe700;
 
 }

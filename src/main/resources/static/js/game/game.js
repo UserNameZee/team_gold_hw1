@@ -133,20 +133,13 @@ function preLoad(stratego, btnSetup) {
                     // stratego.painter.draw();
                 }
                 stratego.gameover(result);
-                // if(result == "WIN" || result == "LOSS"){
-                //     $("#canvas_cb").off("click");
-                //     $("#quickmove").prop("disabled", true);
-                //     stratego.painter.draw();
-                //     stratego.postGameEnd(result);
-                //     stratego.isWin = result == "WIN" ? true : false;
-                //     alert(result);
-                // }
             }
         });
 
         $("#newgame").on("click", function (){
             $("#setup").prop("disabled", false);
             $("#newgame").prop("disabled", true);
+            $("#start").prop("disabled", true);
             $("#quickmove").prop("disabled", true);
             $("#canvas_cb").off("click");
             stratego.postGameEnd(stratego.isWin ? "WIN" : "LOSS");
