@@ -103,6 +103,8 @@ public class GameRESTController{
     @GetMapping(path="/get_active")
     public Game get_active(HttpSession session)throws Exception{
         Game activeGame = gameDB.getActiveGame(sc.loadUserInfo(session));
+        if (activeGame == null)
+            return null;
         //Edit by Zee
         sc.setCurrentGame(session, activeGame.getId());
         return activeGame;
