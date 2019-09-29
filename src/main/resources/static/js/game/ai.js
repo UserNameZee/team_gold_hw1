@@ -20,17 +20,18 @@ class AI{
         if(go=="top"&&des.rank==2){
             let gg=1;
             while(board[oy-gg][ox]!="water"&&board[oy-gg][ox]==undefined&&(oy-gg)>=0){
-                if(gg==0){
-                    dy=9;
+                if(oy-gg==0){
+                    dy=0;
                     dx=ox;
+                    break;
                 }
                 gg++;
             }
-            if(board[oy-gg][ox].team=1){
+            //if(board[oy-gg][ox]!==undefined&&board[oy-gg][ox].team==1){
                 dy=oy-gg;
-            }else{
-                dy=oy-1;
-            }
+            //}else{
+                //dy=oy-1;
+            //}
 
         }else{
             if(go=="top"){
@@ -73,17 +74,18 @@ class AI{
         if(go=="bot"&&des.rank==2){
             let gg=1;
             while(board[oy+gg][ox]!="water"&&board[oy+gg][ox]==undefined&&(oy+gg)<=9){
-                if(gg==9){
+                if(oy+gg==9){
                     dy=9;
                     dx=ox;
+                    break;
                 }
                 gg++;
             }
-            if(board[oy+gg][ox].team=2){
+            //if(board[oy+gg][ox].team==2){
                 dy=oy+gg;
-            }else{
-                dy=oy+1;
-            }
+            //}else{
+                //dy=oy+1;
+            //}
 
         }else{
             if(go=="top"){
@@ -152,7 +154,7 @@ class AI{
 
     makeGuesses(movableArr,board,teamNum){
         //calculate all the score in the minmax array
-
+        let tar=0;
         for (let i =0; i<movableArr.length;i++){
             let temp=this.calScore(movableArr[i],board,teamNum);
             movableArr[i].score=temp.score;
@@ -178,21 +180,56 @@ class AI{
         if(teamNum==1){
             while(temp<result.length){
                 if(result[temp].des=="bot"){
-                    return result[temp];
+                    tar = result[temp];
                 }
                 temp++;
             }
         }else{
             while(temp<result.length){
                 if(result[temp].des=="top"){
-                    return result[temp];
+                    tar = result[temp];
                 }
                 temp++;
             }
         }
+        if(tar==0){
+            let randomNum=Math.floor(Math.random()*result.length)
+            tar=result[randomNum]
+        }
+        //
+        // let flag=this.getTeamFlag(2);
+        // console.log("flag is at:"+flag.x+"--"+flag.y);
+        // console.log("tar is :"+tar);
+        // if(tar.score<=1){
+        //     if(tar.left!==null&&tar.origin.pos.x>flag.x){
+        //         tar.des="left";
+        //     }else if(tar.right!==null&&tar.origin.pos.x<flag.x){
+        //         tar.des="right";
+        //     }else if(tar.bot!==null&&tar.origin.pos.y>flag.y){
+        //         tar.des="bot";
+        //     }else if(tar.top!==null&&tar.origin.pos.y<flag.y){
+        //         tar.des="top";
+        //     }
+        //
+        // }
 
-        let randomNum=Math.floor(Math.random()*result.length)
-        return result[randomNum];
+        return tar;
+
+    }
+
+    getTeamFlag(teamNum){
+        let a=0;
+        let b=0;
+       //console.log(this.stratego.chessPieces.team2[11])
+        if(teamNum==1){
+            a=this.stratego.chessPieces.team1[11][0].pos.x
+            b=this.stratego.chessPieces.team1[11][0].pos.y
+        }else{
+            a=this.stratego.chessPieces.team2[11][0].pos.x
+            b=this.stratego.chessPieces.team2[11][0].pos.y
+        }
+        return {x:a,y:b}
+
 
     }
 
@@ -307,7 +344,7 @@ class AI{
         let temp_y = target.origin.pos.y;
 
         if(target.origin.rank === 2 && target.below != null){
-            for (let i= temp_y; i < 9, i++;){
+            for (let i= temp_y; i < 9; i++){
                 if(board[i+1][temp_x] !== undefined){
                     if(board[i+1][temp_x] === "water"){
                         break;
