@@ -60,30 +60,29 @@
   </div>
 </div>
 </body>
-<script>
-  var allgame_arr;
-  $.get("/rest/get_games", function(data){
-    console.log(data);
-    $(document).ready(function(data){
-      for (let i = 0; i< data.length; i++){
-        tr = $("<tr/>");
-        tr.append("<td>" + Date.now() + "</td>>");
-        tr.append("<td>" + data[i].result + "</td>>");
-        tr.append("<td>" + "1-n" + "</td>>");
-        tr.append("<td>" + Date.now() + "</td>>");
-        $(".hsTable").append(tr);
-      }
-    });
-  });
 
-
-</script>>
+<!--<script>-->
+<!--  var allgame_arr;-->
+<!--  $.get("/rest/get_games", function(data){-->
+<!--    console.log(data);-->
+<!--    $(document).ready(function(data){-->
+<!--      for (let i = 0; i< data.length; i++){-->
+<!--        tr = $("<tr/>");-->
+<!--        tr.append("<td>" + Date.now() + "</td>>");-->
+<!--        tr.append("<td>" + data[i].result + "</td>>");-->
+<!--        tr.append("<td>" + "1-n" + "</td>>");-->
+<!--        tr.append("<td>" + Date.now() + "</td>>");-->
+<!--        $(".hsTable").append(tr);-->
+<!--      }-->
+<!--    });-->
+<!--  });-->
+<!--</script>>-->
 
 <script>
   $("#newgame_btn").on("click", function(){
     $.post("/infoPage/set_continue_game", {isContinue : "false"}, function(result){
       if(result.success == "true"){
-        window.location.href= "/game"
+        window.location.href= "/game";
       }
     })
   })
@@ -99,7 +98,7 @@
   $("#continue_btn").on("click", function(){
     $.post("/infoPage/set_continue_game", {isContinue : "true"}, function(result){
       if(result.success == "true"){
-        window.location.href= "/game"
+        window.location.href= "/game";
       }
     })
   })

@@ -33,12 +33,7 @@ public class InfoController {
             return result;
         }
         session.setAttribute("isContinue", isContinue);
-        String str = session.getAttribute("isContinue").toString();
-
         result.put("success", "true");
         return result;
     }
-
-
-
 }

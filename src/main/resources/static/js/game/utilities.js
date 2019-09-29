@@ -15,9 +15,9 @@ Tools = {
         return slotsIdSet;
     },
 
-    convert2DServer12local(Board, chessBoard, chesspieces){
+    convert2DServer12local(board, chessBoard, chesspieces){
         let id = 0;
-        chesspieces.cleanTeams();
+        chesspieces.continueGameInit();
         for(let slot_id = 0; slot_id < board.length; slot_id++) {
             let pos = this.slotId2Pos(slot_id);
             if (board[slot_id] == 0){
@@ -25,6 +25,7 @@ Tools = {
             }else if (board[slot_id] == -1){
                 chessBoard[pos.y][pos.x] = "water";
             }else{
+                console.log(Math.floor(board[slot_id] / 1000))
                 let isHide = Math.floor(board[slot_id] / 1000) == 1 ? false : true;
                 let team = Math.floor((board[slot_id] % 1000) / 100);
                 let rank = board[slot_id] % 1000 % 100;
@@ -32,6 +33,7 @@ Tools = {
                 chesspieces["team" + team][rank].push(piece);
                 chessBoard[pos.y][pos.x] = piece;
             }
+            id++;
         }
     },
 

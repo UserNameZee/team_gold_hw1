@@ -63,6 +63,7 @@ class Piece {
         this.rank = rank;
         this.movetype = moveType;
         this.pos = pos;
+        this.isHide = isCover;
     }
     attack(piece){
         if (this.rank == 2){
@@ -138,7 +139,6 @@ class ChessPieces {
         }
     }
 
-
     removePiece(chessBoardData, player, piece){
         let team = this["team" + piece.team];
         if (player.selectPiece == piece){
@@ -149,6 +149,5 @@ class ChessPieces {
         })
         chessBoardData[piece.pos.y][piece.pos.x] = undefined;
         team[piece.rank].splice(index, 1);
-
     }
 }

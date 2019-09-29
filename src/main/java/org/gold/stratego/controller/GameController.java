@@ -38,10 +38,9 @@ public class GameController {
             result.put("success", "false");
             return result;
         }
-        session.getAttribute("isContinue");
-
-        if (session.getAttribute("isContinue") != null){
-            result.put("isContinue", session.getAttribute("isContinue").toString());
+        String isContinue = (String)session.getAttribute("isContinue");
+        if (isContinue.equals("true")){
+            result.put("isContinue", (String)session.getAttribute("isContinue"));
             result.put("success", "true");
             return result;
         }

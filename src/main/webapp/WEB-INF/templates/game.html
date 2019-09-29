@@ -47,7 +47,7 @@
         </tr>
         <tr>
             <td>
-                <button  class = btn type = "button" id = back disabled> Back </button>
+                <button  class = btn type = "button" id = back > Back </button>
             </td>
         </tr>
 
@@ -83,6 +83,9 @@
         console.log($("userName").load("/loadUserInfo"));
         $(".userName").load("/loadUserInfo"); // 加载用户信息
     });
+    $("#back").on("click", function(){
+        window.location.href= "/infoPage";
+    })
 </script>
 
 </html>
