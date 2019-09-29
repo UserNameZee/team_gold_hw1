@@ -14,5 +14,8 @@ public interface GameRepository extends MongoRepository<Game, String> {
     @Query("{ 'username' : ?0 , 'finished' : 'false' }")
     public List<Game> findActive(String username);
 
+    @Query("{ 'username' : ?0 , 'finished' : 'true' }")
+    public List<Game> findInactive(String username);
+
 
 }
