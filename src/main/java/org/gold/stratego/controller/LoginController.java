@@ -63,7 +63,7 @@ public class LoginController{
     @GetMapping("/signup")
     public String signupGet(Model model){
         model.addAttribute("loginInfo", new LoginInfo());
-        return "signup.html";
+        return "signup";
     }
 
     @ResponseBody
