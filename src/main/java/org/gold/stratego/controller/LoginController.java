@@ -60,21 +60,5 @@ public class LoginController{
     }
 
 
-    @GetMapping("/signup")
-    public String signupGet(Model model){
-        model.addAttribute("loginInfo", new LoginInfo());
-        return "signup.html";
-    }
 
-    @ResponseBody
-    @PostMapping("/signup")
-    public Map<String, String> signup(@RequestParam("userName") String userName, @RequestParam("password") String password){
-        Map<String, String> hashMap = new HashMap<>();
-        if( userDB.insertUser(userName, password)){
-            hashMap.put("success", "true");
-        }else{
-            hashMap.put("success", "false");
-        }
-        return hashMap;
-    }
 }

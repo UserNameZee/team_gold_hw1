@@ -11,7 +11,7 @@
     $(document).ready(function () {
         $("#signupbtn").click(function(){
             console.log("sign up pressed")
-            $.post("/signup", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
+            $.post("/signupPage/signup", {userName: $("#userName").val(), password: $("#password").val()}, function (result){
                 if(result.success=="true"){
                    window.location.href= "/loginPage";
                 }else{
