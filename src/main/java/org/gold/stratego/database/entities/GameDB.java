@@ -51,6 +51,16 @@ public class GameDB{
     }
 
     /**
+     * Returns all inactive games for the user 'username'
+     */
+    public List<Game> findAllInactiveGames(String username){
+        if (username.equals("Anonymous"))
+            return null;
+        List<Game> inactive_games = repo.findInactive(username);
+        return inactive_games;
+    }
+
+    /**
      * Returns game associated with id
      */
     public Game getGameById(String id){

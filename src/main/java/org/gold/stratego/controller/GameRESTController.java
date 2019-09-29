@@ -159,9 +159,9 @@ public class GameRESTController{
     }
 
     /**
-     * Returns all games in the history of current logged in user.
+     * Returns all inactive games in the history of current logged in user.
      * @param session current session
-     * @return Array of Games in JSON format that are associated with current user
+     * @return Array of inactive Games in JSON format that are associated with current user
      *         Nothing if user is Anonymous.
      */
     @GetMapping(path="/get_games")
@@ -170,7 +170,7 @@ public class GameRESTController{
         String username = sc.loadUserInfo(session);
         if (username.equals("Anonymous"))
             return null;
-        return gameDB.findAllGames(username);
+        return gameDB.findAllInactiveGames(username);
     }
 
     //Below methods are not endpoints.
