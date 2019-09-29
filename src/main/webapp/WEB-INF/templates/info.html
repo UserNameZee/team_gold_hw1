@@ -77,7 +77,7 @@
   var allgame_arr;
   $.get("/rest/get_games", function(data){
     $(document).ready(function(){
-      if(data !== undefined) {
+      if(data != undefined) {
         for (let i = 0; i < data.length; i++) {
           tr = $("<tr/>");
           tr.append("<td>" + data[i].time + "</td>>");
@@ -107,18 +107,16 @@
                   + "</td>>");
           $(".hsTable").append(tr);
 
-          console.log(data[0].pieces_left[0].length);
-
           ai = $("<tr/>");
           ai.append("<td>" + "AI:" + "</td>>");
-          for (let x = 0 ; x < data[i].pieces_left[0].length; i++)
+          for (let x = 0 ; x < data[i].pieces_left[0].length; x++)
             ai.append("<td>" + data[i].pieces_left[0][x] + "</td>>");
           $(".aiTable1").append(ai);
 
           py = $("<tr/>");
           py.append("<td>" + "Player:" + "</td>>");
-          for (let y = 0 ; y < data[i].pieces_left[1].length; j++) {
-            py.append("<td>" + data[i].pieces_left[1][y] + "</td>>");
+          for (let y = 0 ; y < data[i].pieces_left[1].length; y++) {
+            py.append("<td>" + data[i].pieces_left[1][y]+"</td>>");
           }
           $(".pyTable1").append(py);
         }
@@ -171,8 +169,7 @@
               + "</td>>");
       $(".lastTable").append(tr);
 
-      if (game !== undefined) {
-
+      if (game != undefined) {
 
         ai = $("<tr/>");
         ai.append("<td>" + "AI:" + "</td>>");
