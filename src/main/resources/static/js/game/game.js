@@ -49,8 +49,31 @@ function preLoad(stratego, btnSetup) {
 
 
         this.initChessBoardData();
-        this.painter.draw();
         this.initButton();
+
+        let stratego = this;
+
+        $.get("/game/is_continue", function(result){
+            if(result.success == "true"){
+                if (result.isConitnue == "true"){
+                    $.get("/rest/get_active", function(game){
+                        console.log(game);
+                        let total_turns = game.turns.length;
+                        Tools.convert2DServer12local(game.turns[total_turns], stratego.chessBoardData, stratego.chessPieces);
+                        // 0 is player1 turn, 1 is player2 turn
+                        if (total_turns % 2 != 0){
+                            stratego.player1.isTurn = false;
+                            stratego.player2.isTurn = true;
+                        }else{
+                            stratego.player1.isTurn = true;
+                            stratego.player2.isTurn = false;
+                        }
+                    })
+                }
+            }
+        })
+        this.painter.draw();
+
     };
 
     reset(){

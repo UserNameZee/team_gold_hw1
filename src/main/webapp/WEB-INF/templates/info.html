@@ -29,12 +29,12 @@
   <tr></tr>
   <tr>
     <td>
-      <button class = btn2 type = "button" id = "newGame" style="text-align: center"> New Game </button>
+      <button class = btn2 type = "button" id = "newgame_btn" style="text-align: center"> New Game </button>
     </td>
   </tr>
   <tr>
     <td>
-      <button class = btn2 type = "button" id = "Continue" disabled style="text-align: center"> Continue </button>
+      <button class = btn2 type = "button" id = "continue_btn" disabled style="text-align: center"> Continue </button>
     </td>
   </tr>
 </div>
@@ -80,4 +80,30 @@
 
 
 </script>>
+
+<script>
+  $("#newgame_btn").on("click", function(){
+    $.post("/infoPage/set_continue_game", {isContinue : "false"}, function(result){
+      if(result.success == "true"){
+        window.location.href= "/game"
+      }
+    })
+  })
+</script>
+
+<script>
+  $.get("/rest/get_active", function(game){
+    if(game.finished == "false"){
+      $("#continue_btn").prop("disabled", false);
+    }
+    console.log(game);
+  });
+  $("#continue_btn").on("click", function(){
+    $.post("/infoPage/set_continue_game", {isContinue : "true"}, function(result){
+      if(result.success == "true"){
+        window.location.href= "/game"
+      }
+    })
+  })
+</script>
 </html>
