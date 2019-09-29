@@ -63,7 +63,27 @@
       <tr>
         <th class="th-sm">Time</th>
         <th class="th-sm">Game Result</th>
-        <th class="th-sm">Pieces Remaining</th>
+        <th class="th-sm">Pieces Remaining
+          <table  class="table  table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+              <th class=\"th-sm\">Side</th>
+              <th class=\"th-sm\">B</th>
+              <th class=\"th-sm\">1</th>
+              <th class=\"th-sm\">2</th>
+              <th class=\"th-sm\">3</th>
+              <th class=\"th-sm\">4</th>
+              <th class=\"th-sm\">5</th>
+              <th class=\"th-sm\">6</th>
+              <th class=\"th-sm\">7</th>
+              <th class=\"th-sm\">8</th>
+              <th class=\"th-sm\">9</th>
+              <th class=\"th-sm\">10</th>
+              <th class=\"th-sm\">F</th>
+            </tr>
+            </thead>
+          </table>
+        </th>
       </tr>
       </thead>
       <tbody class="info-center hsTable">
@@ -78,47 +98,62 @@
   $.get("/rest/get_games", function(data){
     $(document).ready(function(){
       if(data != undefined) {
+        console.log(data);
         for (let i = 0; i < data.length; i++) {
           tr = $("<tr/>");
           tr.append("<td>" + data[i].time + "</td>>");
           tr.append("<td>" + data[i].result + "</td>>");
           tr.append("<td>" +
-                  "<table class=\"table  table-striped table-bordered table-sm \" cellspacing=\"0\" width=\"100%\">\n" +
+                  "<table class=\"table  table-striped  table-bordered table-sm \" cellspacing=\"5\" width=\"100%\">\n" +
                   "    <thead>\n" +
                   "    <tr>\n" +
-                  "      <th class=\"th-sm\">Side</th>\n" +
-                  "      <th class=\"th-sm\">B</th>\n" +
-                  "      <th class=\"th-sm\">1</th>\n" +
-                  "      <th class=\"th-sm\">2</th>\n" +
-                  "      <th class=\"th-sm\">3</th>\n" +
-                  "      <th class=\"th-sm\">4</th>\n" +
-                  "      <th class=\"th-sm\">5</th>\n" +
-                  "      <th class=\"th-sm\">6</th>\n" +
-                  "      <th class=\"th-sm\">7</th>\n" +
-                  "      <th class=\"th-sm\">8</th>\n" +
-                  "      <th class=\"th-sm\">9</th>\n" +
-                  "      <th class=\"th-sm\">10</th>\n"+
-                  "      <th class=\"th-sm\">F</th>\n" +
+                  "      <th class=\"th-sm\">AI :</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][0] +"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][1] +"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][2] +"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][3] +"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][4] +"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][5] +"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][6] +"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][7] +"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][8] +"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][9] +"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][10] +"</th>\n"+
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[0][11] +"</th>\n" +
+                  "    </tr>\n" +
+                  "    <tr>\n" +
+                  "      <th class=\"th-sm\">Player :</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][0]+"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][1]+"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][2]+"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][3]+"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][4]+"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][5]+"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][6]+"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][7]+"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][8]+"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][9]+"</th>\n" +
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][10]+"</th>\n"+
+                  "      <th class=\"th-sm\">"+ data[i].pieces_left[1][11]+"</th>\n" +
                   "    </tr>\n" +
                   "    </thead>\n" +
-                  "    <tbody class=\"info-center pyTable1 aiTable1\">\n"+
-                  "    </tbody>\n" +
                   "  </table>"
                   + "</td>>");
           $(".hsTable").append(tr);
 
-          ai = $("<tr/>");
-          ai.append("<td>" + "AI:" + "</td>>");
-          for (let x = 0 ; x < data[i].pieces_left[0].length; x++)
-            ai.append("<td>" + data[i].pieces_left[0][x] + "</td>>");
-          $(".aiTable1").append(ai);
+          // ai = $("<tr/>");
+          // ai.append("<td>" + "AI:" + "</td>>");
+          // for (let x = 0 ; x < data[i].pieces_left[0].length; x++)
+          //   ai.append("<td>" + data[i].pieces_left[0][x] + "</td>>");
+          // $(".aiTable1").append(ai);
+          //
+          // py = $("<tr/>");
+          // py.append("<td>" + "Player:" + "</td>>");
+          // for (let y = 0 ; y < data[i].pieces_left[1].length; y++) {
+          //   py.append("<td>" + data[i].pieces_left[1][y]+"</td>>");
+          // }
+          // $(".pyTable1").append(py);
 
-          py = $("<tr/>");
-          py.append("<td>" + "Player:" + "</td>>");
-          for (let y = 0 ; y < data[i].pieces_left[1].length; y++) {
-            py.append("<td>" + data[i].pieces_left[1][y]+"</td>>");
-          }
-          $(".pyTable1").append(py);
         }
       }
     });
