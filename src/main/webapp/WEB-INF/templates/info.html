@@ -47,7 +47,7 @@
     <tr>
       <th class="th-sm">Time</th>
       <th class="th-sm">Game Result</th>
-      <th class="th-sm">Chess Remind</th>
+      <th class="th-sm">Chess Remain</th>
       <th class="th-sm">Replay</th>
     </tr>
     </thead>
@@ -64,17 +64,18 @@
   var allgame_arr;
   $.get("/rest/get_games", function(data){
     console.log(data);
+    $(document).ready(function(data){
+      for (let i = 0; i< data.length; i++){
+        tr = $("<tr/>");
+        tr.append("<td>" + Date.now() + "</td>>");
+        tr.append("<td>" + data[i].result + "</td>>");
+        tr.append("<td>" + "1-n" + "</td>>");
+        tr.append("<td>" + Date.now() + "</td>>");
+        $(".hsTable").append(tr);
+      }
+    });
   });
 
-  $(document).ready(function(data){
-    for (let i = 0; i< data.length; i++){
-      tr = $("<tr/>");
-      tr.append("<td>" + Date.now() + "</td>>");
-      tr.append("<td>" + data[i].result + "</td>>");
-      tr.append("<td>" + "1-n" + "</td>>");
-      tr.append("<td>" + Date.now() + "</td>>");
-      $("hsTable").append(tr);
-    }
-  });
+
 </script>>
 </html>
