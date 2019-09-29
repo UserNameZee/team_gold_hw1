@@ -99,7 +99,7 @@
 }
 .info-title{
     text-align:center;
-    font-size: large;
+    font-size: x-large;
     color: black;
 }
 .info-center{
@@ -194,4 +194,14 @@
 
 .next{
     color: orange;
+}
+
+
+.scrollbar {
+    position: relative;
+    height: 500px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
 }

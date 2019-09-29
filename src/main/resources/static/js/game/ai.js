@@ -362,7 +362,7 @@ class AI{
             let above_x = temp_x;
             let above_y = temp_y -1;
 
-            top[0] =  this.comparePieces(target,target.above)+1;
+            top[0] =  this.comparePieces(target,target.above);
             if ( above_y > 0 && this.movablePieces(board[above_y-1][above_x],above_y -1,above_x,teamNum)) {
                 top[1] = this.comparePieces(target,board[above_y-1][above_x]);
             }
@@ -386,7 +386,7 @@ class AI{
         if(target.below !== null){
             let below_x = temp_x;
             let below_y = temp_y + 1;
-            bot[0] =  this.comparePieces(target,target.below)+1;
+            bot[0] =  this.comparePieces(target,target.below);
             if ( below_y < 8  && (this.movablePieces(board[below_y+1][below_x],below_y +1,below_x,teamNum)) ) {
                 bot[1] = this.comparePieces(target,board[below_x][below_y+1]);
             }
@@ -410,7 +410,7 @@ class AI{
         if (target.left !== null){
             let left_x = temp_x -1;
             let left_y = temp_y;
-            left[0] = this.comparePieces(target,board[left_y][left_x])+1;
+            left[0] = this.comparePieces(target,board[left_y][left_x]);
             if (left_x > 0 && this.movablePieces(board[left_y][left_x -1],left_y,left_x-1,teamNum)){
                 left[1] = this.comparePieces(target,board[left_y][left_x-1]);
             }
@@ -420,7 +420,7 @@ class AI{
         if (target.right !== null){
             let right_x = temp_x +1;
             let right_y = temp_y;
-            right[0] = this.comparePieces(target,board[right_y][right_x])+1;
+            right[0] = this.comparePieces(target,board[right_y][right_x]);
             if (right_x < 8  && this.movablePieces(board[right_y][right_x+1],right_y,right_x+1,teamNum)){
                 right[1] = this.comparePieces(target,board[right_y][right_x+1]);
             }
