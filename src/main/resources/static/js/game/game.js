@@ -55,23 +55,30 @@ function preLoad(stratego, btnSetup) {
 
         $.get("/game/is_continue", function(result){
             if(result.success == "true"){
-                if (result.isConitnue == "true"){
-                    $.get("/rest/get_active", function(game){
-                        console.log(game);
-                        let total_turns = game.turns.length;
-                        Tools.convert2DServer12local(game.turns[total_turns], stratego.chessBoardData, stratego.chessPieces);
-                        // 0 is player1 turn, 1 is player2 turn
-                        if (total_turns % 2 != 0){
-                            stratego.player1.isTurn = false;
-                            stratego.player2.isTurn = true;
-                        }else{
-                            stratego.player1.isTurn = true;
-                            stratego.player2.isTurn = false;
-                        }
-                    })
-                }
+                $.get("/rest/get_active", function(game){
+                    console.log(game);
+                    let total_turns = game.turns.length;
+                    Tools.convert2DServer12local(game.turns[total_turns - 1].board, stratego.chessBoardData, stratego.chessPieces);
+                    // 0 is player1 turn, 1 is player2 turn
+                    if (game.turns[total_turns - 1].player == 2){
+                        stratego.player1.isTurn = false;
+                        stratego.player2.isTurn = true;
+                    }else{
+                        stratego.player1.isTurn = true;
+                        stratego.player2.isTurn = false;
+                        stratego.ai.aiMove();
+                    }
+                    $("#setup").prop("disabled", true);
+                    $("#start").prop("disabled", true);
+                    $("#newgame").prop("disabled", false);
+                    $("#quickmove").prop("disabled", false);
+                    stratego.canvesSetPlayMod()
+                    stratego.painter.draw();
+                })
             }
         })
+        console.log(stratego.chessBoardData);
+        console.log(stratego.chessPieces);
         this.painter.draw();
 
     };
@@ -91,15 +98,7 @@ function preLoad(stratego, btnSetup) {
         let cell_w = this.painter.cell_w, cell_h = this.painter.cell_h;;
         $("#setup").prop("disabled", false);
         //select function
-        let select = function (x, y) {
-            if (chessBoardData[y][x] !== undefined && chessBoardData[y][x].team == 2){
-                stratego.player2.isSelect = true;
-                stratego.player2.lastSelectPos.assign(stratego.player2.selectPos);
-                stratego.player2.lastSelectPiece = stratego.player2.selectPiece;
-                stratego.player2.selectPos.setXY(x, y);
-                stratego.player2.selectPiece = chessBoardData[y][x];
-            }
-        }
+
         /*
         * setup: random the pieces on board, and allow player to switch piece
         * but not allow player to move piece
@@ -110,46 +109,15 @@ function preLoad(stratego, btnSetup) {
             stratego.initChessBoardData();
             stratego.chessPieces.init(chessBoardData);
             stratego.painter.draw();
-            $("#canvas_cb").on('click', function (e){
-                let x = Math.ceil(e.offsetX/cell_w) - 1, y = Math.ceil(e.offsetY/cell_h) - 1;
-                select(x, y);
-                if (stratego.player2.lastSelectPiece != undefined){
-                    stratego.switchPiece(stratego.player2.lastSelectPiece, stratego.player2.selectPiece);
-                    stratego.player2.deSelect();
-                }
-                stratego.painter.draw();
-            })
+            stratego.canvesSetSecletMode();
         });
 
         $("#start").on("click", function() {
             $("#setup").prop("disabled", true);
-            $("#canvas_cb").off("click");
-            $("#canvas_cb").on("click", function (e) {
-                let x = Math.ceil(e.offsetX / cell_w) - 1, y = Math.ceil(e.offsetY / cell_h) - 1;
-                if (chessBoardData[y][x] !== undefined && chessBoardData[y][x].team == 2) {
-                    select(x, y);
-                    stratego.painter.draw();
-                }
-                if (stratego.player2.isTurn && (chessBoardData[y][x] === undefined || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
-                    let result = stratego.moveChessPiece(stratego.player2, x, y);
-                    if (result == "TURN_END"){
-                        result = stratego.ai.aiMove();
-                        stratego.painter.draw();
-                    }
-                    if(result == "WIN" || result == "LOSS"){
-                        $("#canvas_cb").off("click");
-                        $("#quickmove").prop("disabled", true);
-                        stratego.painter.draw();
-                        stratego.postGameEnd(result);
-                        stratego.isWin = result == "WIN" ? true : false;
-                        alert(result);
-                    }
-                }
-                //console.log(chessBoardData[y][x]);
-            });
             $("#start").prop("disabled", true);
             $("#newgame").prop("disabled", false);
             $("#quickmove").prop("disabled", false);
+            stratego.canvesSetPlayMod()
             stratego.postStart();
             stratego.postTurn();
         });
@@ -158,18 +126,21 @@ function preLoad(stratego, btnSetup) {
             if (stratego.player2.isTurn){
                 let result = stratego.ai.aiHelp();
                 if ( result == "TURN_END"){
-                    result =  stratego.ai.aiMove();
-                    stratego.painter.draw();
+                    setTimeout(function(){
+                        result =  stratego.ai.aiMove();
+                        stratego.gameover(result);
+                    }, 500);
+                    // stratego.painter.draw();
                 }
-
-                if(result == "WIN" || result == "LOSS"){
-                    $("#canvas_cb").off("click");
-                    $("#quickmove").prop("disabled", true);
-                    stratego.painter.draw();
-                    stratego.postGameEnd(result);
-                    stratego.isWin = result == "WIN" ? true : false;
-                    alert(result);
-                }
+                stratego.gameover(result);
+                // if(result == "WIN" || result == "LOSS"){
+                //     $("#canvas_cb").off("click");
+                //     $("#quickmove").prop("disabled", true);
+                //     stratego.painter.draw();
+                //     stratego.postGameEnd(result);
+                //     stratego.isWin = result == "WIN" ? true : false;
+                //     alert(result);
+                // }
             }
         });
 
@@ -180,6 +151,56 @@ function preLoad(stratego, btnSetup) {
             $("#canvas_cb").off("click");
             stratego.postGameEnd(stratego.isWin ? "WIN" : "LOSS");
             stratego.reset();
+        });
+    }
+
+    canvesSetSecletMode (){
+        let stratego = this;
+        let chessBoardData = this.chessBoardData;
+        let cell_w = this.painter.cell_w, cell_h = this.painter.cell_h;;
+        $("#canvas_cb").off("click");
+
+        $("#canvas_cb").on('click', function (e){
+            let x = Math.ceil(e.offsetX/cell_w) - 1, y = Math.ceil(e.offsetY/cell_h) - 1;
+            stratego.select(x, y);
+            if (stratego.player2.lastSelectPiece != undefined){
+                stratego.switchPiece(stratego.player2.lastSelectPiece, stratego.player2.selectPiece);
+                stratego.player2.deSelect();
+            }
+            stratego.painter.draw();
+        });
+    }
+
+    canvesSetPlayMod(){
+        let stratego = this;
+        let chessBoardData = this.chessBoardData;
+        let cell_w = this.painter.cell_w, cell_h = this.painter.cell_h;
+        $("#canvas_cb").off("click");
+        $("#canvas_cb").on("click", function (e) {
+            let x = Math.ceil(e.offsetX / cell_w) - 1, y = Math.ceil(e.offsetY / cell_h) - 1;
+            if (chessBoardData[y][x] !== undefined && chessBoardData[y][x].team == 2) {
+                stratego.select(x, y);
+                stratego.painter.draw();
+            }
+            if (stratego.player2.isTurn && (chessBoardData[y][x] === undefined || chessBoardData[y][x].team == 1) && stratego.player2.isSelect == true) {
+                let result = stratego.moveChessPiece(stratego.player2, x, y);
+                if (result == "TURN_END"){
+                    setTimeout(function(){
+                        result = stratego.ai.aiMove();
+                        stratego.gameover(result);
+                    }, 500);
+
+                }
+                stratego.gameover(result);
+                // if(result == "WIN" || result == "LOSS"){
+                //     $("#canvas_cb").off("click");
+                //     $("#quickmove").prop("disabled", true);
+                //     stratego.painter.draw();
+                //     stratego.postGameEnd(result);
+                //     stratego.isWin = result == "WIN" ? true : false;
+                //     alert(result);
+                // }
+            }
         });
     }
 
@@ -276,6 +297,7 @@ function preLoad(stratego, btnSetup) {
             player.selectPiece.pos.setXY(x, y);
             player.selectPos.setXY(x, y);
         }
+        this.painter.draw();
         this.switchTurn();
         this.postTurn();
         if (result == "WIN" || result == "LOSS"){
@@ -283,6 +305,27 @@ function preLoad(stratego, btnSetup) {
         }
         return "TURN_END";
     }
+
+    gameover(result){
+        if(result == "WIN" || result == "LOSS"){
+            $("#canvas_cb").off("click");
+            $("#quickmove").prop("disabled", true);
+            this.painter.draw();
+            this.postGameEnd(result);
+            this.isWin = result == "WIN" ? true : false;
+            alert(result);
+        }
+    }
+
+     select (x, y) {
+         if (this.chessBoardData[y][x] !== undefined && this.chessBoardData[y][x].team == 2){
+             this.player2.isSelect = true;
+             this.player2.lastSelectPos.assign(this.player2.selectPos);
+             this.player2.lastSelectPiece = this.player2.selectPiece;
+             this.player2.selectPos.setXY(x, y);
+             this.player2.selectPiece = this.chessBoardData[y][x];
+         }
+     }
 
     switchPiece(piece1, piece2){
         let pos1 = piece1.pos;
@@ -300,6 +343,7 @@ function preLoad(stratego, btnSetup) {
             type: 'post',
             dataType: 'json',
             contentType: 'application/json',
+            // async: false,
             data: game
         });
     }
@@ -313,14 +357,25 @@ function preLoad(stratego, btnSetup) {
             type: 'post',
             dataType: 'json',
             contentType: 'application/json',
+            // async: false,
             data: turn
+        });
+
+        let lp = Tools.createLeftPieceJson(this)
+        $.ajax({
+            url: '/rest/set_left_pieces',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            // async: false,
+            data: lp
         });
     }
     postGameEnd(result){
         $.post("/rest/set_game_result", {result: result}, function (result){})
     }
-
 }
+
  var Game ={
     start : function (){
         var stratego = new Stratego();
