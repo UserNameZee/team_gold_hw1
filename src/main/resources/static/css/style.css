@@ -210,3 +210,10 @@
 .btn2[disabled=disabled], button:disabled {
     color: rgba(0, 0, 0, 0.10);
 }
+
+.tdhs{
+    width: 3%;
+}
+.tdhsap{
+    width: 10%;
+}

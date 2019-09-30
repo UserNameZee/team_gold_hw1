@@ -185,14 +185,6 @@ function preLoad(stratego, btnSetup) {
 
                 }
                 stratego.gameover(result);
-                // if(result == "WIN" || result == "LOSS"){
-                //     $("#canvas_cb").off("click");
-                //     $("#quickmove").prop("disabled", true);
-                //     stratego.painter.draw();
-                //     stratego.postGameEnd(result);
-                //     stratego.isWin = result == "WIN" ? true : false;
-                //     alert(result);
-                // }
             }
         });
     }
@@ -330,7 +322,7 @@ function preLoad(stratego, btnSetup) {
     }
 
      postStart(){
-        let game = Tools.createGameJson(this); //return json type game
+        let game =JSON.stringify(Tools.createGameServerOjb(this)) //return json type game
         $.ajax({
             url: '/rest/save_game',
             type: 'post',
@@ -344,7 +336,7 @@ function preLoad(stratego, btnSetup) {
 
  // /set_game_result
     postTurn(playerTurn){
-        let turn = Tools.createTurnJson(this)
+        let turn = JSON.stringify(Tools.createTurnServerOjb(this))
         $.ajax({
             url: '/rest/add_turn',
             type: 'post',
@@ -354,7 +346,7 @@ function preLoad(stratego, btnSetup) {
             data: turn
         });
 
-        let lp = Tools.createLeftPieceJson(this)
+        let lp = JSON.stringify(Tools.createPiecesLeftServerOjb(this))
         $.ajax({
             url: '/rest/set_left_pieces',
             type: 'post',
