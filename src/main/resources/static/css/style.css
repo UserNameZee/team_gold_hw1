@@ -21,6 +21,8 @@
     /*z-index: 2;*/
     position:absolute;
     width: 350px;
+    margin:0px;
+    padding: 0px;
     /*border-radius: 5px;*/
     height: 100%;
     background: gold;
@@ -209,4 +211,11 @@
 
 .btn2[disabled=disabled], button:disabled {
     color: rgba(0, 0, 0, 0.10);
+}
+
+.tdhs{
+    width: 3%;
+}
+.tdhsap{
+    width: 10%;
 }

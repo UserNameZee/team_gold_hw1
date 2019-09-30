@@ -6,7 +6,7 @@ Tools = {
         return new Point(x, y);
     },
 
-   getSlotsIdSet : function (startPos){
+    getSlotsIdSet : function (startPos){
         let slotsIdSet = new Array();
         for (let i = 0; i < 40; i++){
             slotsIdSet[i] = startPos + i;
@@ -37,36 +37,34 @@ Tools = {
         }
     },
 
-    createGameJson:function(stratego){
+    createGameServerOjb:function(stratego){
         let game = {
             username: "",
             result: "",
             finished:"false",
-            board_start: null
-        }
-
-        let board = this.board2d21d(stratego.chessBoardData);
-        game.board_start = board
-        console.log(game);
-        return JSON.stringify(game);
+            board_start: this.board2d21d(stratego.chessBoardData),
+            pieces_left: this.createPiecesLeftServerOjb(stratego),
+            turn: [this.createTurnServerOjb(stratego)]
+        };
+        return game;
     },
 
-    createTurnJson:function(stratego){
+    createTurnServerOjb:function(stratego){
         let turn = {
             player: stratego.player1.isTurn ? 1 : 2,
             board: Tools.board2d21d(stratego.chessBoardData)
         }
-        return JSON.stringify(turn);
+        return turn;
     },
 
-    createLeftPieceJson:function(stratego){
+    createPiecesLeftServerOjb:function(stratego){
         let lp = [new Array (12), new Array (12)]
 
         for(let r = 0; r < 12; r++){
             lp[0][r] = stratego.chessPieces.team1[r].length;
             lp[1][r] = stratego.chessPieces.team2[r].length;
         }
-        return JSON.stringify(lp);
+        return lp;
     },
 
 
@@ -92,20 +90,18 @@ Tools = {
         return board;
     },
 
-
-
-   getAiIdSet  : function () {
+    getAiIdSet  : function () {
 
         let board = new Array(40);
         //set flag--1
-       //console.log("flag")
+        //console.log("flag")
 
         let flag= Math.floor(Math.random() * 6)+32
         board[39]=flag;
 
         //set boom--6
         //console.log("boom")
-       let temp=0;
+        let temp=0;
         while(temp<6){
             let boom=Math.floor(Math.random() * 20)+10
             if(!board.includes(boom)){
@@ -116,8 +112,8 @@ Tools = {
         //console.log(board);
 
         //set spy--1
-       //console.log("111")
-       temp=0;
+        //console.log("111")
+        temp=0;
         while(temp<1){
             let spy=Math.floor(Math.random() * 30)+10
             if(!board.includes(spy)){
@@ -126,8 +122,8 @@ Tools = {
             }
         }
         //scout--8
-       //console.log("scout")
-       temp=0;
+        //console.log("scout")
+        temp=0;
         while(temp<8){
             let scout=Math.floor(Math.random() * 10);
             if(!board.includes(scout)){
@@ -136,8 +132,8 @@ Tools = {
             }
         }
         // set 10 -- 1
-       //console.log("1010")
-       temp=0;
+        //console.log("1010")
+        temp=0;
         while(temp<1){
             let chess10=Math.floor(Math.random() * 20)+10;
             if(!board.includes(chess10)){
@@ -147,7 +143,7 @@ Tools = {
         }
 
         // set 9 -- 1
-       //console.log("9999")
+        //console.log("9999")
         while(true){
             let chess9=Math.floor(Math.random() * 39);
             if(!board.includes(chess9)){
@@ -158,8 +154,8 @@ Tools = {
 
 
         // set 8 -- 2
-       //console.log("8888")
-       temp=0;
+        //console.log("8888")
+        temp=0;
         while(temp<2){
             let chess8=Math.floor(Math.random() * 39);
             if(!board.includes(chess8)){
@@ -169,8 +165,8 @@ Tools = {
         }
 
         // set 7 -- 3
-       //console.log("7777")
-       temp=0;
+        //console.log("7777")
+        temp=0;
         while(temp<3){
             let chess7=Math.floor(Math.random() * 39);
             if(!board.includes(chess7)){
@@ -181,8 +177,8 @@ Tools = {
 
 
         // set 6 -- 4
-       //console.log("6666")
-       temp=0;
+        //console.log("6666")
+        temp=0;
         while(temp<4){
             let chess6=Math.floor(Math.random() * 39);
             if(!board.includes(chess6)){
@@ -193,17 +189,17 @@ Tools = {
 
 
 
-       // set 3 -- 5
-       temp=0;
-       while(temp<5){
-           let chess3=this.getFirstFreePos(board);
-           board[15+temp]=chess3;
-           temp++;
-       }
+        // set 3 -- 5
+        temp=0;
+        while(temp<5){
+            let chess3=this.getFirstFreePos(board);
+            board[15+temp]=chess3;
+            temp++;
+        }
         //console.log(board);
         // set 4 -- 4
 
-       temp=0;
+        temp=0;
         while(temp<4){
             let chess4=this.getFirstFreePos(board);
             board[20+temp]=chess4;
@@ -212,11 +208,11 @@ Tools = {
 
         // set 5 -- 4
 
-       temp=0;
+        temp=0;
         while(temp<4){
             let chess5=this.getFirstFreePos(board);
-                board[24+temp]=chess5;
-                temp++;
+            board[24+temp]=chess5;
+            temp++;
         }
 
 
