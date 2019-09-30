@@ -278,19 +278,20 @@ function preLoad(stratego, btnSetup) {
             this.chessBoardData[y][x] = sPiece;
             player.selectPiece.pos.setXY(x, y);
             player.selectPos.setXY(x, y);
-
-            let moveable_piece_num = [0, 0];
-            for (let r = 1; r < 11; r ++){
-                moveable_piece_num[0] += this.chessPieces.team1[r].length;
-                moveable_piece_num[1] += this.chessPieces.team2[r].length;
-            }
-            if(moveable_piece_num[0] == 0){
-                result == "WIN";
-            }else if (moveable_piece_num[1] == 0){
-                result == "LOSS";
-            }
         }
         this.painter.draw();
+
+        let moveable_piece_num = [0, 0];
+        for (let r = 1; r < 11; r ++){
+            moveable_piece_num[0] += this.chessPieces.team1[r].length;
+            moveable_piece_num[1] += this.chessPieces.team2[r].length;
+        }
+        if(moveable_piece_num[0] == 0){
+            result = "WIN";
+        }else if (moveable_piece_num[1] == 0){
+            result = "LOSS";
+        }
+
         this.switchTurn();
         this.postTurn();
         if (result == "WIN" || result == "LOSS"){
