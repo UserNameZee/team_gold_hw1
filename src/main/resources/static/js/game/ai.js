@@ -7,6 +7,9 @@ class AI{
         let board=this.stratego.chessBoardData;
         //console.log("enter auto move")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,2);
+        if(mov_arr.length<1){
+            return false;
+        }
         //console.log("auto move"+mov_arr)
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData,2);
         let des= result.origin;
@@ -61,6 +64,9 @@ class AI{
     aiMove(){
         //console.log("AI turn starts")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,1);
+        if(mov_arr.length<1){
+            return false;
+        }
         let board=this.stratego.chessBoardData;
         //ai make a move
         let result = this.makeGuesses(mov_arr,this.stratego.chessBoardData,1);
