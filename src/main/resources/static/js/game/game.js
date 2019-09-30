@@ -77,10 +77,7 @@ function preLoad(stratego, btnSetup) {
                 })
             }
         })
-        console.log(stratego.chessBoardData);
-        console.log(stratego.chessPieces);
         this.painter.draw();
-
     };
 
     reset(){

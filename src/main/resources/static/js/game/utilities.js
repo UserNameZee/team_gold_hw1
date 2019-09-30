@@ -30,6 +30,7 @@ Tools = {
                 let team = Math.floor((board[slot_id] % 1000) / 100);
                 let rank = board[slot_id] % 1000 % 100;
                 let piece = new Piece(id, team, rank, MOVE_TYPE_WITH_DIFF_RANK[rank], pos, isHide);
+                piece.isHide = isHide;
                 chesspieces["team" + team][rank].push(piece);
                 chessBoard[pos.y][pos.x] = piece;
             }
@@ -80,9 +81,9 @@ Tools = {
                 }else{
                     let rank = chessBoardData[y][x].rank;
                     let teamid = chessBoardData[y][x].team;
-                    let hide = chessBoardData[y][x].isHide ? 1000 : 0;
+                    let hide = chessBoardData[y][x].isHide ? 0 : 1000;
                     // console.log("piece: " + (teamid * 100 + rank) + " at x: " +  x + ", y: " + y);
-                    board[slots_id] = teamid * 100 + rank + 1000;
+                    board[slots_id] = teamid * 100 + rank + hide;
                 }
                 slots_id++;
             }
