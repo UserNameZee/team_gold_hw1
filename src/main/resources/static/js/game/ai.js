@@ -4,6 +4,7 @@ class AI{
     }
 
     aiHelp(){
+        console.log("player turns");
         let board=this.stratego.chessBoardData;
         //console.log("enter auto move")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,2);
@@ -30,11 +31,11 @@ class AI{
                 }
                 gg++;
             }
-            //if(board[oy-gg][ox]!==undefined&&board[oy-gg][ox].team==1){
+            if(board[oy-gg][ox]!==undefined&&board[oy-gg][ox].team==1){
                 dy=oy-gg;
-            //}else{
-                //dy=oy-1;
-            //}
+            }else{
+                dy=oy-1;
+            }
 
         }else{
             if(go=="top"){
@@ -87,11 +88,11 @@ class AI{
                 }
                 gg++;
             }
-            //if(board[oy+gg][ox].team==2){
+            if(board[oy+gg][ox].team==2){
                 dy=oy+gg;
-            //}else{
-                //dy=oy+1;
-            //}
+            }else{
+                dy=oy+1;
+            }
 
         }else{
             if(go=="top"){
@@ -183,24 +184,28 @@ class AI{
         }
         //console.log("result array is here: "+result);
         result.sort(function(){return Math.random()>0.5?-1:1;});
-        let temp=0;
-        if(teamNum==1){
-            while(temp<result.length){
-                if(result[temp].des=="bot"){
-                    tar = result[temp];
+        let randomNum=Math.floor(Math.random()*result.length)
+        if(Math.random()>0.5){
+            let temp=0;
+            if(teamNum==1){
+                while(temp<result.length){
+                    if(result[temp].des=="bot"){
+                        tar = result[temp];
+                    }
+                    temp++;
                 }
-                temp++;
-            }
-        }else{
-            while(temp<result.length){
-                if(result[temp].des=="top"){
-                    tar = result[temp];
+            }else{
+                while(temp<result.length){
+                    if(result[temp].des=="top"){
+                        tar = result[temp];
+                    }
+                    temp++;
                 }
-                temp++;
             }
         }
+
         if(tar==0){
-            let randomNum=Math.floor(Math.random()*result.length)
+
             tar=result[randomNum]
         }
 
