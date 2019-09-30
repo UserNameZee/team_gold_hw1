@@ -62,7 +62,7 @@ class AI{
 
 
     aiMove(){
-        //console.log("AI turn starts")
+        console.log("AI turn starts")
         let mov_arr =  this.findMovablePieces(this.stratego.chessBoardData,1);
         if(mov_arr.length<1){
             return false;
@@ -166,10 +166,11 @@ class AI{
             movableArr[i].score=temp.score;
             movableArr[i].des=temp.des;
         }
-        //console.log("score array is here")
-        //console.log(movableArr)
-        let max=-8888;
+        console.log("score array is here")
+        console.log(movableArr)
+        let max=movableArr[0].score;
         let result=new Array();
+        result.push(movableArr[0])
         //get max score in the minmax array
         for(let j=1;j<movableArr.length;j++){
             if(movableArr[j].score>max){
